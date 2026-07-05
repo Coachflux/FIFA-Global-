@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dashboard - Fans 2026 World Cup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <style>
+        :root {
+            --primary: #0a0a1a;
+            --secondary: #12122a;
+            --accent: #e94560;
+            --gold: #d4af37;
+            --gold-light: #f4d03f;
+            --white: #ffffff;
+            --glass: rgba(255,255,255,0.03);
+            --glass-border: rgba(255,255,255,0.08);
+            --gradient: linear-gradient(135deg, #0a0a1a 0%, #12122a 50%, #1a1a3e 100%);
+            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f4d03f 50%, #d4af37 100%);
+            --shadow-gold: 0 10px 40px rgba(212, 175, 55, 0.3);
+            --shadow-card: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--primary); 
+            color: var(--white); 
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--primary); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+        /* ========== NAVIGATION ========== */
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(10, 10, 26, 0.95); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border); 
+            padding: 0.75rem 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled { 
+            padding: 0.5rem 1.5rem; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
+            background: rgba(10, 10, 26, 0.98);
+        }
+        .nav-brand { 
+            display: flex; align-items: center; gap: 0.75rem; 
+            cursor: pointer; text-decoration: none;
+        }
+        .nav-logo {
+            width: 40px; height: 40px; border-radius: 10px;
+            object-fit: cover; border: 2px solid var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+        .nav-brand-text { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem; font-weight: 800; 
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+        .nav-links { 
+            display: flex; gap: 1.5rem; align-items: center; 
+            list-style: none;
+        }
+        .nav-links a { 
+            color: rgba(255,255,255,0.7); text-decoration: none; 
+            font-weight: 500; font-size: 0.875rem;
+            transition: all 0.3s; position: relative; 
+            padding: 0.5rem 0;
+            cursor: pointer;
+            border: none; background: none;
+            font-family: inherit;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .nav-links a::after { 
+            content: ''; position: absolute; bottom: 0; left: 0; 
+            width: 0; height: 2px; background: var(--gradient-gold); 
+            transition: width 0.3s; border-radius: 2px;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-user { display: flex; align-items: center; gap: 1rem; }
+        .user-avatar { 
+            width: 36px; height: 36px; border-radius: 50%; 
+            object-fit: cover; border: 2px solid var(--gold);
+            cursor: pointer; display: none;
+        }
+        .user-name { 
+            font-weight: 600; color: var(--gold); display: none;
+            font-size: 0.85rem;
+        }
+        .btn { 
+            padding: 0.6rem 1.4rem; border-radius: 12px; border: none; 
+            cursor: pointer; font-weight: 600; transition: all 0.3s; 
+            text-decoration: none; display: inline-flex; 
+            align-items: center; gap: 0.5rem; font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            justify-content: center;
+        }
+        .btn-primary { 
+            background: var(--gradient-gold); color: var(--primary); 
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+        .btn-outline { 
+            background: transparent; border: 2px solid var(--gold); 
+            color: var(--gold); 
+        }
+        .btn-outline:hover { background: var(--gold); color: var(--primary); }
+        .btn-danger { background: var(--accent); color: white; }
+        .btn-danger:hover { background: #c73e54; }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; }
+        .btn-lg { padding: 0.875rem 2rem; font-size: 1rem; }
+        .btn-glow { animation: glow 2s infinite; }
+        @keyframes glow { 
+            0%, 100% { box-shadow: 0 0 5px rgba(212,175,55,0.4); } 
+            50% { box-shadow: 0 0 25px rgba(212,175,55,0.6); } 
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+        .mobile-menu-btn { 
+            display: none; background: none; border: none; 
+            color: var(--white); font-size: 1.5rem; cursor: pointer; 
+        }
+
+        /* ========== DASHBOARD LAYOUT ========== */
+        .dashboard { padding: 6rem 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .dashboard-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+        }
+        .dashboard-header h1 {
+            font-family: 'Space Grotesk'; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800;
+        }
+        .dashboard-header h1 span { color: var(--gold); }
+        .dashboard-header p { color: rgba(255,255,255,0.6); margin-top: 0.5rem; font-size: 0.95rem; }
+
+        .dashboard-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .dash-stat {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 1.5rem; text-align: center;
+            transition: all 0.3s;
+        }
+        .dash-stat:hover { border-color: var(--gold); transform: translateY(-3px); }
+        .dash-stat-icon { 
+            font-size: 2rem; margin-bottom: 0.5rem; 
+            background: var(--gradient-gold);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .dash-stat-value { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
+        .dash-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
+
+        /* ========== TASK CARDS ========== */
+        .tasks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; }
+        .task-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 2rem; transition: all 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .task-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient-gold); opacity: 0; transition: opacity 0.3s;
+        }
+        .task-card:hover::before { opacity: 1; }
+        .task-card:hover { 
+            border-color: var(--gold); transform: translateY(-5px); 
+            box-shadow: var(--shadow-card);
+        }
+        .task-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .task-icon {
+            width: 50px; height: 50px; border-radius: 14px;
+            background: var(--gradient-gold); display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: var(--primary); flex-shrink: 0;
+        }
+        .task-title { font-size: 1.25rem; font-weight: 700; }
+        .task-desc { 
+            color: rgba(255,255,255,0.6); font-size: 0.9rem; 
+            margin-bottom: 1.5rem; line-height: 1.6;
+        }
+        .task-progress {
+            background: rgba(255,255,255,0.05); border-radius: 10px; height: 8px;
+            margin-bottom: 1rem; overflow: hidden;
+        }
+        .task-progress-bar {
+            height: 100%; border-radius: 10px; background: var(--gradient-gold);
+            transition: width 0.5s ease;
+        }
+        .task-progress-text {
+            font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem;
+            display: flex; justify-content: space-between;
+        }
+        .task-btn { width: 100%; }
+        .task-completed {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(52, 168, 83, 0.15); color: #34a853;
+            padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+            border: 1px solid rgba(52, 168, 83, 0.3); width: 100%; justify-content: center;
+        }
+
+        /* ========== PRIZES SECTION ========== */
+        .prizes-section { margin-top: 3rem; }
+        .prizes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+        .prize-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 20px; overflow: hidden;
+            transition: all 0.4s; position: relative;
+        }
+        .prize-card:hover { 
+            transform: translateY(-8px); border-color: var(--gold); 
+            box-shadow: var(--shadow-gold);
+        }
+        .prize-image {
+            width: 100%; height: 180px; object-fit: cover;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .prize-content { padding: 1.5rem; text-align: center; }
+        .prize-amount { 
+            font-size: 1.75rem; font-weight: 900; color: var(--gold);
+            font-family: 'Space Grotesk'; margin-bottom: 0.5rem;
+        }
+        .prize-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .prize-desc { font-size: 0.8rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+        .prize-badge {
+            display: inline-block; background: var(--gradient-gold); color: var(--primary);
+            padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+            margin-top: 1rem;
+        }
+
+        /* ========== MODALS ========== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
+            z-index: 9999; display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s; padding: 1rem;
+            overflow-y: auto;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal {
+            background: var(--secondary); border-radius: 24px; padding: 2rem;
+            max-width: 650px; width: 100%; border: 1px solid var(--glass-border);
+            transform: scale(0.9); transition: transform 0.3s; position: relative;
+            max-height: 90vh; overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+            margin: auto;
+        }
+        .modal-overlay.active .modal { transform: scale(1); }
+        .modal-close { 
+            position: absolute; top: 1.25rem; right: 1.25rem; 
+            background: rgba(255,255,255,0.05); border: none; 
+            color: rgba(255,255,255,0.5); font-size: 1.25rem; 
+            cursor: pointer; transition: all 0.3s; width: 36px; height: 36px;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+        }
+        .modal-close:hover { color: var(--white); background: rgba(233, 69, 96, 0.2); }
+        .modal h2 { font-size: 1.5rem; margin-bottom: 0.5rem; font-family: 'Space Grotesk'; }
+        .modal p { color: rgba(255,255,255,0.6); margin-bottom: 1.5rem; font-size: 0.9rem; }
+
+        .task-modal-content { display: flex; flex-direction: column; gap: 1.5rem; }
+        .task-step {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 1.25rem; transition: all 0.3s;
+        }
+        .task-step:hover { border-color: rgba(212,175,55,0.3); }
+        .task-step-header {
+            display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;
+        }
+        .task-step-num {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--gradient-gold); color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 800; flex-shrink: 0;
+        }
+        .task-step-title { font-weight: 700; font-size: 0.95rem; }
+        .task-step-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 0.75rem; }
+
+        .country-select-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.75rem; max-height: 300px; overflow-y: auto; padding: 0.5rem;
+        }
+        .country-select-item {
+            background: rgba(255,255,255,0.03); border: 2px solid transparent;
+            border-radius: 12px; padding: 0.75rem; text-align: center;
+            cursor: pointer; transition: all 0.3s; position: relative;
+        }
+        .country-select-item:hover { background: rgba(212,175,55,0.05); }
+        .country-select-item.selected {
+            border-color: var(--gold); background: rgba(212,175,55,0.1);
+            box-shadow: 0 0 20px rgba(212,175,55,0.2);
+        }
+        .country-select-item .flag { font-size: 2rem; display: block; margin-bottom: 0.25rem; }
+        .country-select-item .name { font-size: 0.7rem; font-weight: 600; }
+        .country-select-item .check {
+            position: absolute; top: 4px; right: 4px; color: var(--gold);
+            font-size: 0.8rem; display: none;
+        }
+        .country-select-item.selected .check { display: block; }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { 
+            display: block; margin-bottom: 0.5rem; 
+            font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.8);
+        }
+        .form-group input, .form-group select {
+            width: 100%; padding: 0.875rem 1rem; border-radius: 12px;
+            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03);
+            color: var(--white); font-size: 0.95rem; transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none; border-color: var(--gold); 
+            background: rgba(255,255,255,0.06); box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+        }
+        .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+        .form-hint { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 0.5rem; }
+        .form-error { color: #ea4335; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+        .form-success { color: #34a853; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+
+        .confirm-dialog {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 1.5rem; margin-top: 1rem;
+        }
+        .confirm-dialog p { margin-bottom: 1rem; font-size: 0.9rem; }
+        .confirm-dialog strong { color: var(--gold); }
+        .confirm-buttons { display: flex; gap: 1rem; }
+        .confirm-buttons .btn { flex: 1; }
+
+        .permanent-code {
+            background: var(--gradient-gold); color: var(--primary);
+            padding: 1rem 1.5rem; border-radius: 12px; font-family: 'Space Grotesk';
+            font-size: 1.25rem; font-weight: 800; text-align: center;
+            letter-spacing: 2px; margin: 1rem 0;
+            box-shadow: var(--shadow-gold);
+        }
+        .permanent-code-label {
+            font-size: 0.75rem; color: rgba(255,255,255,0.5); text-align: center;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;
+        }
+
+        /* ========== TOAST ========== */
+        .toast-container {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 10000;
+            display: flex; flex-direction: column; gap: 0.5rem;
+            max-width: 90vw;
+        }
+        .toast {
+            background: var(--secondary); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 1rem 1.25rem; color: var(--white);
+            font-size: 0.9rem; font-weight: 500;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            transform: translateX(120%); transition: transform 0.4s ease;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 3px solid #34a853; }
+        .toast.error { border-left: 3px solid #ea4335; }
+        .toast.info { border-left: 3px solid var(--gold); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .navbar { padding: 0.6rem 1rem; }
+            .nav-links { 
+                display: none; position: absolute; top: 100%; left: 0; right: 0;
+                background: var(--primary); flex-direction: column; padding: 1rem;
+                border-top: 1px solid var(--glass-border); gap: 0.5rem;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: 0.75rem 1rem; width: 100%; text-align: center; }
+            .mobile-menu-btn { display: block; }
+            .dashboard { padding: 5rem 1rem 1rem; }
+            .dashboard-header { flex-direction: column; align-items: flex-start; }
+            .tasks-grid { grid-template-columns: 1fr; }
+            .prizes-grid { grid-template-columns: 1fr; }
+            .modal { padding: 1.5rem; border-radius: 20px; }
+            .country-select-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
+        }
+        @media (max-width: 480px) {
+            .confirm-buttons { flex-direction: column; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed; width: 10px; height: 10px; z-index: 2500;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="nav-brand">
+            <img src="https://cdn.vectorstock.com/813f8cbb1498fdb845a818e6575d252ed5b6c49d.jpg" alt="Fans Logo" class="nav-logo" id="navLogo">
+            <span class="nav-brand-text">Fans</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#groups">Groups</a></li>
+            <li><a href="index.html#knockout">Knockout</a></li>
+            <li><a href="index.html#stadiums">Stadiums</a></li>
+            <li><a href="index.html#teams">Teams</a></li>
+            <li><a href="index.html#prizes">Prizes</a></li>
+            <li><a href="#" class="active" onclick="return false;">Dashboard</a></li>
+        </ul>
+        <div class="nav-user">
+            <img src="" alt="User" class="user-avatar" id="userAvatar">
+            <span class="user-name" id="userName"></span>
+            <button class="btn btn-outline btn-sm" id="logoutBtn" onclick="logout()">Logout</button>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <div>
+                <h1>Welcome back, <span id="dashUserName">Fan</span>! 👋</h1>
+                <p>Complete tasks to win amazing prizes during the 2026 World Cup.</p>
+            </div>
+            <a href="index.html" class="btn btn-outline btn-sm">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="dash-stat">
+                <div class="dash-stat-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="dash-stat-value" id="tasksCompleted">0/2</div>
+                <div class="dash-stat-label">Tasks Completed</div>
+            </div>
+            <div class="dash-stat">
+                <div class="dash-stat-icon"><i class="fas fa-gift"></i></div>
+                <div class="dash-stat-value" id="prizesWon">$0</div>
+                <div class="dash-stat-label">Potential Winnings</div>
+            </div>
+            <div class="dash-stat">
+                <div class="dash-stat-icon"><i class="fas fa-flag"></i></div>
+                <div class="dash-stat-value" id="teamsSelected">0</div>
+                <div class="dash-stat-label">Teams Selected</div>
+            </div>
+            <div class="dash-stat">
+                <div class="dash-stat-icon"><i class="fas fa-ticket-alt"></i></div>
+                <div class="dash-stat-value" id="codeStatus">—</div>
+                <div class="dash-stat-label">Referral Code</div>
+            </div>
+        </div>
+
+        <div class="tasks-grid">
+            <!-- Task 1 Card -->
+            <div class="task-card" id="task1Card">
+                <div class="task-header">
+                    <div class="task-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div>
+                        <div class="task-title">Task 1: App Engagement</div>
+                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Complete 3 simple steps</div>
+                    </div>
+                </div>
+                <div class="task-desc">Download our official Fans app, select your favorite team, and verify your registration details to complete this task.</div>
+                <div class="task-progress">
+                    <div class="task-progress-bar" id="task1Progress" style="width: 0%"></div>
+                </div>
+                <div class="task-progress-text">
+                    <span>Progress</span>
+                    <span id="task1ProgressText">0/3 steps</span>
+                </div>
+                <button class="btn btn-primary task-btn" id="task1Btn" onclick="openTask1Modal()">
+                    <i class="fas fa-play"></i> Start Task 1
+                </button>
+                <div class="task-completed" id="task1Completed" style="display:none;">
+                    <i class="fas fa-check"></i> Task Completed!
+                </div>
+            </div>
+
+            <!-- Task 2 Card -->
+            <div class="task-card" id="task2Card">
+                <div class="task-header">
+                    <div class="task-icon"><i class="fas fa-futbol"></i></div>
+                    <div>
+                        <div class="task-title">Task 2: Predict & Win</div>
+                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Predict semi-finalists & winner</div>
+                    </div>
+                </div>
+                <div class="task-desc">Select 4 countries you think will reach the semi-finals and pick the World Cup winner. Enter your referral code for bonus entries!</div>
+                <div class="task-progress">
+                    <div class="task-progress-bar" id="task2Progress" style="width: 0%"></div>
+                </div>
+                <div class="task-progress-text">
+                    <span>Progress</span>
+                    <span id="task2ProgressText">0/3 steps</span>
+                </div>
+                <button class="btn btn-primary task-btn" id="task2Btn" onclick="openTask2Modal()">
+                    <i class="fas fa-play"></i> Start Task 2
+                </button>
+                <div class="task-completed" id="task2Completed" style="display:none;">
+                    <i class="fas fa-check"></i> Task Completed!
+                </div>
+            </div>
+        </div>
+
+        <!-- Prizes Section -->
+        <div class="prizes-section">
+            <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="font-family: 'Space Grotesk'; font-size: 1.75rem; font-weight: 800; margin-bottom: 0.75rem;">
+                    <i class="fas fa-gift" style="color: var(--gold);"></i> Prizes to Win
+                </h2>
+                <div style="width: 60px; height: 3px; background: var(--gradient-gold); margin: 1rem auto; border-radius: 2px;"></div>
+                <p style="color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto; line-height: 1.7;">Amazing rewards for lucky participants who complete tasks and make accurate predictions!</p>
+            </div>
+            <div class="prizes-grid" id="prizesGrid"></div>
+        </div>
+    </div>
+
+    <!-- Task 1 Modal -->
+    <div class="modal-overlay" id="task1Modal">
+        <div class="modal" style="max-width: 500px;">
+            <button class="modal-close" onclick="closeTask1Modal()"><i class="fas fa-times"></i></button>
+            <h2><i class="fas fa-mobile-alt" style="color: var(--gold);"></i> Task 1: App Engagement</h2>
+            <p>Complete these 3 steps to finish Task 1 and unlock your entry!</p>
+
+            <div class="task-modal-content">
+                <div class="task-step" id="t1Step1">
+                    <div class="task-step-header">
+                        <div class="task-step-num">1</div>
+                        <div class="task-step-title">Download Our App</div>
+                    </div>
+                    <div class="task-step-desc">Get the official Fans app from Google Play Store to stay updated with live scores and news.</div>
+                    <a href="https://play.google.com/store/apps/details?id=com.fifa.worldcup" target="_blank" class="btn btn-play" style="width:100%;" onclick="completeT1Step1()">
+                        <i class="fab fa-google-play"></i> Download on Google Play
+                    </a>
+                    <div class="form-success" id="t1Step1Success" style="margin-top:0.75rem; display:none;">
+                        <i class="fas fa-check"></i> Download marked as complete!
+                    </div>
+                </div>
+
+                <div class="task-step" id="t1Step2">
+                    <div class="task-step-header">
+                        <div class="task-step-num">2</div>
+                        <div class="task-step-title">Select Your Favorite Team</div>
+                    </div>
+                    <div class="task-step-desc">Visit our app and select your favorite team to support during the tournament.</div>
+                    <div class="form-group">
+                        <label>Which team did you select?</label>
+                        <select id="t1TeamSelect" onchange="checkT1Step2()">
+                            <option value="">Select a team...</option>
+                        </select>
+                    </div>
+                    <div class="form-success" id="t1Step2Success" style="display:none;">
+                        <i class="fas fa-check"></i> Team selection confirmed!
+                    </div>
+                </div>
+
+                <div class="task-step" id="t1Step3">
+                    <div class="task-step-header">
+                        <div class="task-step-num">3</div>
+                        <div class="task-step-title">Verify Your Registration</div>
+                    </div>
+                    <div class="task-step-desc">Paste the email or phone number you used to register on our app.</div>
+                    <div class="form-group">
+                        <input type="text" id="t1RegInput" placeholder="Email or phone number..." oninput="checkT1Step3()">
+                        <div class="form-hint">This must match your app registration details</div>
+                    </div>
+                    <div class="form-success" id="t1Step3Success" style="display:none;">
+                        <i class="fas fa-check"></i> Registration verified!
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="width:100%; margin-top:1rem;" id="t1ConfirmBtn" onclick="confirmTask1()" disabled>
+                    <i class="fas fa-check-circle"></i> Confirm Task 1 Completion
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task 2 Modal -->
+    <div class="modal-overlay" id="task2Modal">
+        <div class="modal" style="max-width: 650px;">
+            <button class="modal-close" onclick="closeTask2Modal()"><i class="fas fa-times"></i></button>
+            <h2><i class="fas fa-futbol" style="color: var(--gold);"></i> Task 2: Predict & Win $50</h2>
+            <p>Make your predictions and enter your referral code for a chance to win amazing prizes!</p>
+
+            <div class="task-modal-content">
+                <div class="task-step" id="t2Step1">
+                    <div class="task-step-header">
+                        <div class="task-step-num">1</div>
+                        <div class="task-step-title">Pick 4 Semi-Finalists</div>
+                    </div>
+                    <div class="task-step-desc">Select 4 countries you believe will reach the semi-finals. Correct predictions win <strong style="color:var(--gold)">$50</strong>!</div>
+                    <div class="country-select-grid" id="semiFinalistsGrid"></div>
+                    <div class="form-hint" style="margin-top:0.75rem;">
+                        <i class="fas fa-info-circle"></i> Selected: <span id="semiCount" style="color:var(--gold); font-weight:700;">0</span>/4 teams
+                    </div>
+                    <div class="form-error" id="semiError">Please select exactly 4 teams</div>
+                </div>
+
+                <div class="task-step" id="t2Step2">
+                    <div class="task-step-header">
+                        <div class="task-step-num">2</div>
+                        <div class="task-step-title">Pick the World Cup Winner</div>
+                    </div>
+                    <div class="task-step-desc">Select 1 team you believe will lift the trophy on July 19, 2026 at MetLife Stadium.</div>
+                    <div class="country-select-grid" id="winnerGrid"></div>
+                    <div class="form-hint" style="margin-top:0.75rem;">
+                        <i class="fas fa-crown"></i> Winner: <span id="winnerSelected" style="color:var(--gold); font-weight:700;">None</span>
+                    </div>
+                </div>
+
+                <div class="task-step" id="t2Step3">
+                    <div class="task-step-header">
+                        <div class="task-step-num">3</div>
+                        <div class="task-step-title">Enter Referral Code</div>
+                    </div>
+                    <div class="task-step-desc">Paste the code you got from our social media channels. This code will be locked permanently.</div>
+                    <div class="form-group">
+                        <input type="text" id="t2CodeInput" placeholder="Enter referral code (e.g., FANS2026)..." maxlength="20">
+                        <div class="form-hint">Get codes from Instagram, Twitter, or Facebook @FansWorldCup</div>
+                    </div>
+
+                    <div class="confirm-dialog" id="codeConfirmDialog" style="display:none;">
+                        <p><i class="fas fa-exclamation-triangle" style="color: var(--gold);"></i> Are you sure this code is correct? <strong id="confirmCodeText"></strong></p>
+                        <p style="font-size:0.8rem; color:rgba(255,255,255,0.5);">This code will be saved permanently and cannot be changed later.</p>
+                        <div class="confirm-buttons">
+                            <button class="btn btn-outline" onclick="cancelCodeConfirm()">No, Change It</button>
+                            <button class="btn btn-primary" onclick="confirmCode()">Yes, I'm Sure</button>
+                        </div>
+                    </div>
+
+                    <div id="permanentCodeDisplay" style="display:none;">
+                        <div class="permanent-code-label">Your Permanent Referral Code</div>
+                        <div class="permanent-code" id="permanentCode"></div>
+                        <div style="text-align:center; font-size:0.8rem; color:#34a853;">
+                            <i class="fas fa-lock"></i> This code is locked and cannot be changed
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="width:100%; margin-top:1rem;" id="t2ConfirmBtn" onclick="confirmTask2()" disabled>
+                    <i class="fas fa-check-circle"></i> Submit Predictions & Lock Code
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // ==================== FIREBASE CONFIG ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDummy-ForDemoOnly-ReplaceWithRealKey",
+            authDomain: "fans-worldcup-2026.firebaseapp.com",
+            projectId: "fans-worldcup-2026",
+            storageBucket: "fans-worldcup-2026.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        let app, auth, db;
+        try {
+            if (typeof firebase !== 'undefined') {
+                app = firebase.initializeApp(firebaseConfig);
+                auth = firebase.auth();
+                db = firebase.firestore();
+            }
+        } catch(e) {
+            console.log("Firebase demo mode");
+        }
+
+        // ==================== STATE ====================
+        let currentUser = null;
+        let task1Data = { step1: false, step2: false, step3: false, team: '', regInfo: '' };
+        let task2Data = { semiFinalists: [], winner: '', code: '', codeLocked: false };
+
+        const flagsData = [
+            { name: 'Argentina', flag: '🇦🇷' }, { name: 'Australia', flag: '🇦🇺' }, { name: 'Austria', flag: '🇦🇹' },
+            { name: 'Belgium', flag: '🇧🇪' }, { name: 'Bosnia & Herz.', flag: '🇧🇦' }, { name: 'Brazil', flag: '🇧🇷' },
+            { name: 'Canada', flag: '🇨🇦' }, { name: 'Cape Verde', flag: '🇨🇻' }, { name: 'Colombia', flag: '🇨🇴' },
+            { name: 'Croatia', flag: '🇭🇷' }, { name: 'Czechia', flag: '🇨🇿' }, { name: 'DR Congo', flag: '🇨🇩' },
+            { name: 'Ecuador', flag: '🇪🇨' }, { name: 'Egypt', flag: '🇪🇬' }, { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
+            { name: 'France', flag: '🇫🇷' }, { name: 'Germany', flag: '🇩🇪' }, { name: 'Ghana', flag: '🇬🇭' },
+            { name: 'Haiti', flag: '🇭🇹' }, { name: 'Iran', flag: '🇮🇷' }, { name: 'Iraq', flag: '🇮🇶' },
+            { name: 'Ivory Coast', flag: '🇨🇮' }, { name: 'Japan', flag: '🇯🇵' }, { name: 'Mexico', flag: '🇲🇽' },
+            { name: 'Morocco', flag: '🇲🇦' }, { name: 'Netherlands', flag: '🇳🇱' }, { name: 'New Zealand', flag: '🇳🇿' },
+            { name: 'Norway', flag: '🇳🇴' }, { name: 'Panama', flag: '🇵🇦' }, { name: 'Paraguay', flag: '🇵🇾' },
+            { name: 'Portugal', flag: '🇵🇹' }, { name: 'Qatar', flag: '🇶🇦' }, { name: 'Saudi Arabia', flag: '🇸🇦' },
+            { name: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }, { name: 'Senegal', flag: '🇸🇳' }, { name: 'South Africa', flag: '🇿🇦' },
+            { name: 'South Korea', flag: '🇰🇷' }, { name: 'Spain', flag: '🇪🇸' }, { name: 'Sweden', flag: '🇸🇪' },
+            { name: 'Switzerland', flag: '🇨🇭' }, { name: 'Tunisia', flag: '🇹🇳' }, { name: 'USA', flag: '🇺🇸' },
+            { name: 'Uruguay', flag: '🇺🇾' }, { name: 'Uzbekistan', flag: '🇺🇿' }
+        ];
+
+        const prizesData = [
+            { image: 'https://images.unsplash.com/photo-1612287230217-8c7c6c170b95?w=600&q=80', amount: '$50', title: 'Semi-Finalist Prediction', desc: 'Correctly predict all 4 semi-finalist teams and win $50 cash prize!', badge: 'Task 2' },
+            { image: 'https://images.unsplash.com/photo-1574634534894-89d7a3f2f7c6?w=600&q=80', amount: '$500', title: 'World Cup Winner', desc: 'Pick the tournament champion correctly and take home the grand $500 prize!', badge: 'Task 2' },
+            { image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=600&q=80', amount: '$25', title: 'Early Bird Entry', desc: 'Complete Task 1 before July 10th and receive a $25 app credit bonus.', badge: 'Task 1' },
+            { image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=600&q=80', amount: '$100', title: 'Referral Champion', desc: 'Refer 5 friends using your locked code and earn $100 when they complete tasks.', badge: 'Both' },
+            { image: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&q=80', amount: 'Jersey', title: 'Signed Jersey', desc: 'Random draw among all participants who complete both tasks. Win a signed team jersey!', badge: 'Lucky Draw' },
+            { image: 'https://images.unsplash.com/photo-1605901309584-818e25960a8f?w=600&q=80', amount: 'Console', title: 'PS5 / Xbox', desc: 'One lucky winner will receive a brand new gaming console. Complete all tasks to enter!', badge: 'Mega Draw' }
+        ];
+
+        // ==================== AUTH & INIT ====================
+        function loadState() {
+            try {
+                const user = localStorage.getItem('fans_user');
+                const t1 = localStorage.getItem('fans_task1');
+                const t2 = localStorage.getItem('fans_task2');
+                if (user) {
+                    currentUser = JSON.parse(user);
+                    updateUI(currentUser);
+                } else {
+                    // Redirect to login if not authenticated
+                    window.location.href = 'index.html';
+                    return;
+                }
+                if (t1) task1Data = JSON.parse(t1);
+                if (t2) task2Data = JSON.parse(t2);
+            } catch (e) {}
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem('fans_task1', JSON.stringify(task1Data));
+                localStorage.setItem('fans_task2', JSON.stringify(task2Data));
+            } catch (e) {}
+        }
+
+        function updateUI(user) {
+            if (!user) return;
+            const avatar = document.getElementById('userAvatar');
+            const name = document.getElementById('userName');
+            const dashName = document.getElementById('dashUserName');
+
+            if (avatar) {
+                avatar.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=d4af37&color=fff';
+                avatar.style.display = 'block';
+            }
+            if (name) {
+                name.textContent = user.displayName || user.email;
+                name.style.display = 'inline';
+            }
+            if (dashName) dashName.textContent = user.displayName || 'Fan';
+        }
+
+        function logout() {
+            if (auth) auth.signOut();
+            currentUser = null;
+            try {
+                localStorage.removeItem('fans_user');
+                localStorage.removeItem('fans_task1');
+                localStorage.removeItem('fans_task2');
+            } catch(e) {}
+            window.location.href = 'index.html';
+        }
+
+        // ==================== DASHBOARD ====================
+        function updateDashboard() {
+            if (!currentUser) return;
+
+            // Task 1 progress
+            let t1Progress = 0;
+            if (task1Data.step1) t1Progress++;
+            if (task1Data.step2) t1Progress++;
+            if (task1Data.step3) t1Progress++;
+            const t1Bar = document.getElementById('task1Progress');
+            const t1Text = document.getElementById('task1ProgressText');
+            const t1Btn = document.getElementById('task1Btn');
+            const t1Completed = document.getElementById('task1Completed');
+
+            if (t1Bar) t1Bar.style.width = (t1Progress / 3 * 100) + '%';
+            if (t1Text) t1Text.textContent = t1Progress + '/3 steps';
+            if (t1Progress === 3) {
+                if (t1Btn) t1Btn.style.display = 'none';
+                if (t1Completed) t1Completed.style.display = 'flex';
+            }
+
+            // Task 2 progress
+            let t2Progress = 0;
+            if (task2Data.semiFinalists.length === 4) t2Progress++;
+            if (task2Data.winner) t2Progress++;
+            if (task2Data.codeLocked) t2Progress++;
+            const t2Bar = document.getElementById('task2Progress');
+            const t2Text = document.getElementById('task2ProgressText');
+            const t2Btn = document.getElementById('task2Btn');
+            const t2Completed = document.getElementById('task2Completed');
+
+            if (t2Bar) t2Bar.style.width = (t2Progress / 3 * 100) + '%';
+            if (t2Text) t2Text.textContent = t2Progress + '/3 steps';
+            if (t2Progress === 3) {
+                if (t2Btn) t2Btn.style.display = 'none';
+                if (t2Completed) t2Completed.style.display = 'flex';
+            }
+
+            // Stats
+            const tasksCompleted = document.getElementById('tasksCompleted');
+            const prizesWon = document.getElementById('prizesWon');
+            const teamsSelected = document.getElementById('teamsSelected');
+            const codeStatus = document.getElementById('codeStatus');
+
+            if (tasksCompleted) tasksCompleted.textContent = (t1Progress === 3 ? 1 : 0) + (t2Progress === 3 ? 1 : 0) + '/2';
+            if (prizesWon) prizesWon.textContent = '$' + ((t1Progress === 3 ? 10 : 0) + (t2Progress === 3 ? 50 : 0));
+            if (teamsSelected) teamsSelected.textContent = task2Data.semiFinalists.length;
+            if (codeStatus) codeStatus.textContent = task2Data.codeLocked ? '✓' : '—';
+        }
+
+        // ==================== TASK 1 ====================
+        function openTask1Modal() {
+            const modal = document.getElementById('task1Modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            const select = document.getElementById('t1TeamSelect');
+            if (select) {
+                select.innerHTML = '<option value="">Select a team...</option>';
+                flagsData.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.name;
+                    opt.textContent = c.flag + ' ' + c.name;
+                    select.appendChild(opt);
+                });
+            }
+
+            if (task1Data.step1) {
+                const s1 = document.getElementById('t1Step1Success');
+                if (s1) s1.style.display = 'block';
+            }
+            if (task1Data.step2 && select) {
+                select.value = task1Data.team;
+                const s2 = document.getElementById('t1Step2Success');
+                if (s2) s2.style.display = 'block';
+            }
+            if (task1Data.step3) {
+                const input = document.getElementById('t1RegInput');
+                const s3 = document.getElementById('t1Step3Success');
+                if (input) input.value = task1Data.regInfo;
+                if (s3) s3.style.display = 'block';
+            }
+            checkT1Complete();
+        }
+
+        function closeTask1Modal() {
+            const modal = document.getElementById('task1Modal');
+            if (modal) modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function completeT1Step1() {
+            task1Data.step1 = true;
+            const s1 = document.getElementById('t1Step1Success');
+            if (s1) s1.style.display = 'block';
+            checkT1Complete();
+            saveState();
+            showToast('Step 1 completed!', 'success');
+        }
+
+        function checkT1Step2() {
+            const select = document.getElementById('t1TeamSelect');
+            if (!select) return;
+            const val = select.value;
+            if (val) {
+                task1Data.step2 = true;
+                task1Data.team = val;
+                const s2 = document.getElementById('t1Step2Success');
+                if (s2) s2.style.display = 'block';
+                checkT1Complete();
+                saveState();
+            }
+        }
+
+        function checkT1Step3() {
+            const input = document.getElementById('t1RegInput');
+            if (!input) return;
+            const val = input.value;
+            if (val.length >= 5) {
+                task1Data.step3 = true;
+                task1Data.regInfo = val;
+                const s3 = document.getElementById('t1Step3Success');
+                if (s3) s3.style.display = 'block';
+                checkT1Complete();
+                saveState();
+            }
+        }
+
+        function checkT1Complete() {
+            const btn = document.getElementById('t1ConfirmBtn');
+            if (btn) btn.disabled = !(task1Data.step1 && task1Data.step2 && task1Data.step3);
+        }
+
+        function confirmTask1() {
+            saveState();
+            closeTask1Modal();
+            updateDashboard();
+            showToast('Task 1 completed! You earned $10 entry bonus!', 'success');
+            createConfetti();
+        }
+
+        // ==================== TASK 2 ====================
+        function openTask2Modal() {
+            const modal = document.getElementById('task2Modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            populateCountryGrid('semiFinalistsGrid', task2Data.semiFinalists, 'semi');
+            populateCountryGrid('winnerGrid', task2Data.winner ? [task2Data.winner] : [], 'winner');
+
+            if (task2Data.codeLocked) {
+                const codeInput = document.getElementById('t2CodeInput');
+                const confirmDialog = document.getElementById('codeConfirmDialog');
+                const permDisplay = document.getElementById('permanentCodeDisplay');
+                const permCode = document.getElementById('permanentCode');
+
+                if (codeInput) codeInput.style.display = 'none';
+                if (confirmDialog) confirmDialog.style.display = 'none';
+                if (permDisplay) permDisplay.style.display = 'block';
+                if (permCode) permCode.textContent = task2Data.code;
+            }
+
+            checkT2Complete();
+        }
+
+        function closeTask2Modal() {
+            const modal = document.getElementById('task2Modal');
+            if (modal) modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function populateCountryGrid(gridId, selected, mode) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+            grid.innerHTML = '';
+            flagsData.forEach(c => {
+                const item = document.createElement('div');
+                item.className = 'country-select-item';
+                if (selected.includes(c.name)) item.classList.add('selected');
+                item.innerHTML = `
+                    <span class="flag">${c.flag}</span>
+                    <span class="name">${c.name}</span>
+                    <span class="check"><i class="fas fa-check-circle"></i></span>
+                `;
+                item.onclick = () => selectCountry(c.name, mode, item);
+                grid.appendChild(item);
+            });
+        }
+
+        function selectCountry(name, mode, element) {
+            if (mode === 'semi') {
+                const idx = task2Data.semiFinalists.indexOf(name);
+                if (idx > -1) {
+                    task2Data.semiFinalists.splice(idx, 1);
+                    element.classList.remove('selected');
+                } else if (task2Data.semiFinalists.length < 4) {
+                    task2Data.semiFinalists.push(name);
+                    element.classList.add('selected');
+                } else {
+                    showToast('You can only select 4 teams!', 'error');
+                    return;
+                }
+                const semiCount = document.getElementById('semiCount');
+                const semiError = document.getElementById('semiError');
+                if (semiCount) semiCount.textContent = task2Data.semiFinalists.length;
+                if (semiError) semiError.style.display = task2Data.semiFinalists.length === 4 ? 'none' : 'block';
+            } else {
+                document.querySelectorAll('#winnerGrid .country-select-item').forEach(el => el.classList.remove('selected'));
+                task2Data.winner = name;
+                element.classList.add('selected');
+                const winnerSelected = document.getElementById('winnerSelected');
+                if (winnerSelected) winnerSelected.textContent = name;
+            }
+            saveState();
+            checkT2Complete();
+        }
+
+        // Code handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const t2CodeInput = document.getElementById('t2CodeInput');
+            if (t2CodeInput) {
+                t2CodeInput.addEventListener('blur', function() {
+                    const val = this.value.trim();
+                    if (val && !task2Data.codeLocked) {
+                        const confirmDialog = document.getElementById('codeConfirmDialog');
+                        const confirmCodeText = document.getElementById('confirmCodeText');
+                        if (confirmDialog) confirmDialog.style.display = 'block';
+                        if (confirmCodeText) confirmCodeText.textContent = val;
+                    }
+                });
+            }
+        });
+
+        function cancelCodeConfirm() {
+            const confirmDialog = document.getElementById('codeConfirmDialog');
+            const codeInput = document.getElementById('t2CodeInput');
+            if (confirmDialog) confirmDialog.style.display = 'none';
+            if (codeInput) codeInput.value = '';
+        }
+
+        function confirmCode() {
+            const codeInput = document.getElementById('t2CodeInput');
+            const code = codeInput ? codeInput.value.trim() : '';
+            if (!code) return;
+
+            task2Data.code = code;
+            task2Data.codeLocked = true;
+            saveState();
+
+            const codeInputEl = document.getElementById('t2CodeInput');
+            const confirmDialog = document.getElementById('codeConfirmDialog');
+            const permDisplay = document.getElementById('permanentCodeDisplay');
+            const permCode = document.getElementById('permanentCode');
+
+            if (codeInputEl) codeInputEl.style.display = 'none';
+            if (confirmDialog) confirmDialog.style.display = 'none';
+            if (permDisplay) permDisplay.style.display = 'block';
+            if (permCode) permCode.textContent = code;
+
+            showToast('Referral code locked permanently!', 'success');
+            checkT2Complete();
+        }
+
+        function checkT2Complete() {
+            const btn = document.getElementById('t2ConfirmBtn');
+            const complete = task2Data.semiFinalists.length === 4 && task2Data.winner && task2Data.codeLocked;
+            if (btn) btn.disabled = !complete;
+        }
+
+        function confirmTask2() {
+            saveState();
+            closeTask2Modal();
+            updateDashboard();
+            showToast('Task 2 submitted! You are entered to win $50!', 'success');
+            createConfetti();
+        }
+
+        // ==================== PRIZES ====================
+        function renderPrizes() {
+            const grid = document.getElementById('prizesGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            prizesData.forEach((prize) => {
+                const card = document.createElement('div');
+                card.className = 'prize-card';
+                card.innerHTML = `
+                    <img src="${prize.image}" alt="${prize.title}" class="prize-image" loading="lazy" onerror="this.style.display='none'">
+                    <div class="prize-content">
+                        <div class="prize-amount">${prize.amount}</div>
+                        <div class="prize-title">${prize.title}</div>
+                        <div class="prize-desc">${prize.desc}</div>
+                        <span class="prize-badge">${prize.badge}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ==================== TOAST ====================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
+
+        // ==================== CONFETTI ====================
+        function createConfetti() {
+            const colors = ['#d4af37', '#e94560', '#34a853', '#f4d03f', '#667eea', '#fff'];
+            for (let i = 0; i < 60; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.width = (5 + Math.random() * 8) + 'px';
+                confetti.style.height = (5 + Math.random() * 8) + 'px';
+                confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        // ==================== MOBILE MENU ====================
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            updateDashboard();
+            renderPrizes();
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeTask1Modal();
+                    closeTask2Modal();
+                }
+            });
+
+            ['task1Modal', 'task2Modal'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('click', (e) => {
+                        if (e.target === e.currentTarget) {
+                            if (id === 'task1Modal') closeTask1Modal();
+                            if (id === 'task2Modal') closeTask2Modal();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
