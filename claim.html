@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Claim Reward - Fans 2026 World Cup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a0a1a;
+            --secondary: #12122a;
+            --accent: #e94560;
+            --gold: #d4af37;
+            --gold-light: #f4d03f;
+            --white: #ffffff;
+            --glass: rgba(255,255,255,0.03);
+            --glass-border: rgba(255,255,255,0.08);
+            --gradient: linear-gradient(135deg, #0a0a1a 0%, #12122a 50%, #1a1a3e 100%);
+            --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f4d03f 50%, #d4af37 100%);
+            --shadow-gold: 0 10px 40px rgba(212, 175, 55, 0.3);
+            --shadow-card: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--primary); 
+            color: var(--white); 
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            display: flex; align-items: center; justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--primary); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+        .claim-container {
+            max-width: 600px; width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .claim-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 3rem 2rem;
+            backdrop-filter: blur(20px);
+            position: relative; overflow: hidden;
+            animation: slideUp 0.6s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .claim-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: var(--gradient-gold);
+        }
+        .claim-card::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .success-icon {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: var(--gradient-gold); display: flex;
+            align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem; font-size: 2rem; color: var(--primary);
+            box-shadow: var(--shadow-gold);
+            animation: scaleIn 0.5s ease 0.2s both;
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .claim-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 2.25rem); font-weight: 800;
+            margin-bottom: 0.75rem; position: relative;
+        }
+        .claim-title span {
+            background: var(--gradient-gold);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .claim-subtitle {
+            color: rgba(255,255,255,0.6); font-size: 1rem;
+            margin-bottom: 2rem; line-height: 1.7;
+        }
+
+        .reward-box {
+            background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;
+            position: relative;
+        }
+        .reward-label {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--gold); font-weight: 700; margin-bottom: 0.5rem;
+        }
+        .reward-amount {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem; font-weight: 900; color: var(--gold);
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+        .reward-desc {
+            font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;
+        }
+
+        .next-steps {
+            text-align: left; margin-bottom: 2rem;
+        }
+        .next-steps h3 {
+            font-size: 1rem; font-weight: 700; margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .next-steps h3 i { color: var(--gold); }
+        .step-item {
+            display: flex; align-items: flex-start; gap: 0.875rem;
+            padding: 0.875rem; border-radius: 12px;
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+            margin-bottom: 0.75rem; transition: all 0.3s;
+        }
+        .step-item:hover { border-color: rgba(212,175,55,0.3); }
+        .step-num {
+            width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+            background: var(--gradient-gold); color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 800;
+        }
+        .step-content { flex: 1; }
+        .step-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .step-desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+        .btn { 
+            padding: 0.875rem 1.75rem; border-radius: 14px; border: none; 
+            cursor: pointer; font-weight: 700; transition: all 0.3s; 
+            text-decoration: none; display: inline-flex; 
+            align-items: center; gap: 0.5rem; font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            justify-content: center;
+        }
+        .btn-primary { 
+            background: var(--gradient-gold); color: var(--primary); 
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+        .btn-outline { 
+            background: transparent; border: 2px solid var(--gold); 
+            color: var(--gold); 
+        }
+        .btn-outline:hover { background: var(--gold); color: var(--primary); }
+
+        .buttons-row {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+        }
+
+        .deadline-note {
+            margin-top: 1.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.4);
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .deadline-note i { color: var(--accent); }
+
+        .confetti {
+            position: fixed; width: 10px; height: 10px; z-index: 1;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .bg-glow {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212,175,55,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(233,69,96,0.05) 0%, transparent 50%);
+            pointer-events: none; z-index: 0;
+        }
+
+        @media (max-width: 480px) {
+            .claim-card { padding: 2rem 1.25rem; }
+            .reward-amount { font-size: 2.5rem; }
+            .buttons-row { flex-direction: column; }
+            .buttons-row .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <div class="claim-container">
+        <div class="claim-card">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1 class="claim-title">Task 1 <span>Completed!</span></h1>
+            <p class="claim-subtitle">Great work! You have successfully completed the App Engagement task. Your reward is ready to be claimed.</p>
+
+            <div class="reward-box">
+                <div class="reward-label">Your Reward</div>
+                <div class="reward-amount">$25</div>
+                <div class="reward-desc">App credit bonus + entry into the Early Bird draw</div>
+            </div>
+
+            <div class="next-steps">
+                <h3><i class="fas fa-rocket"></i> What is Next?</h3>
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Complete Task 2: Predict & Win</div>
+                        <div class="step-desc">Pick 4 semi-finalists, the winner, and invite 10 friends to win up to $500.</div>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Share Your Referral Link</div>
+                        <div class="step-desc">Invite friends using your personal link to earn extra bonus entries.</div>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Stay Tuned for Results</div>
+                        <div class="step-desc">Winners will be announced after the World Cup Final on 19 July 2026.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons-row">
+                <a href="dashboard.html" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+                <a href="dashboard.html" class="btn btn-outline" onclick="localStorage.setItem('fans_open_task2', 'true');">
+                    <i class="fas fa-futbol"></i> Start Task 2
+                </a>
+            </div>
+
+            <div class="deadline-note">
+                <i class="fas fa-clock"></i> Task 2 deadline: 15 July 2026 — Don't miss out!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createConfetti() {
+            const colors = ['#d4af37', '#e94560', '#34a853', '#f4d03f', '#667eea', '#fff'];
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.width = (5 + Math.random() * 10) + 'px';
+                confetti.style.height = (5 + Math.random() * 10) + 'px';
+                confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+                confetti.style.animationDelay = (Math.random() * 2) + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createConfetti();
+            // Check if user came from task completion
+            const t1 = localStorage.getItem('fans_task1');
+            if (!t1) {
+                // If no task1 data, maybe redirect to dashboard
+                // But allow viewing for demo purposes
+            }
+        });
+    </script>
+</body>
+</html>
