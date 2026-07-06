@@ -654,7 +654,7 @@
     </div>
 
     <!-- Task 1 Modal -->
-    <div class="modal-overlay" id="task1Modal">
+    <div class="modal-overlay" id="task1Modal" style="display:none;">
         <div class="modal" style="max-width: 500px;">
             <button class="modal-close" onclick="closeTask1Modal()"><i class="fas fa-times"></i></button>
             <h2><i class="fas fa-mobile-alt" style="color: var(--gold);"></i> Task 1: App Engagement</h2>
@@ -715,7 +715,7 @@
     </div>
 
     <!-- Task 2 Modal -->
-    <div class="modal-overlay" id="task2Modal">
+    <div class="modal-overlay" id="task2Modal" style="display:none;">
         <div class="modal" style="max-width: 650px;">
             <button class="modal-close" onclick="closeTask2Modal()"><i class="fas fa-times"></i></button>
             <h2><i class="fas fa-futbol" style="color: var(--gold);"></i> Task 2: Predict & Win $50</h2>
@@ -874,10 +874,11 @@
         // ==================== AUTH & INIT ====================
         function loadState() {
             try {
-                const user = localStorage.getItem('fans_user');
-                const t1 = localStorage.getItem('fans_task1');
-                const t2 = localStorage.getItem('fans_task2');
-                const ref = localStorage.getItem('fans_referral_code');
+                var user = localStorage.getItem('fans_user');
+                var t1 = localStorage.getItem('fans_task1');
+                var t2 = localStorage.getItem('fans_task2');
+                var ref = localStorage.getItem('fans_referral_code');
+
                 if (user) {
                     currentUser = JSON.parse(user);
                     updateUI(currentUser);
@@ -885,18 +886,23 @@
                     window.location.href = 'index.html';
                     return;
                 }
+
                 if (t1) task1Data = JSON.parse(t1);
                 if (t2) task2Data = JSON.parse(t2);
-                if (ref) referralCode = ref;
-                else generateReferralCode();
+
+                if (ref) {
+                    referralCode = ref;
+                } else {
+                    generateReferralCode();
+                }
 
                 // Load real referral count from registry
-                const registry = JSON.parse(localStorage.getItem('fans_referral_registry') || '{}');
+                var registry = JSON.parse(localStorage.getItem('fans_referral_registry') || '{}');
                 if (registry[referralCode]) {
                     task2Data.invited = registry[referralCode].count || 0;
                 }
             } catch (e) {
-                generateReferralCode();
+                console.log('Load state error:', e);
             }
         }
 
@@ -913,15 +919,40 @@
         }
 
         function generateReferralCode() {
-            const base = currentUser ? (currentUser.uid || currentUser.email || 'user') : 'guest';
-            const hash = base.split('').reduce((a,b)=>{a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
-            const random = Math.abs(hash).toString(36).substring(0, 4).toUpperCase();
-            referralCode = 'FANS' + random + Math.floor(Math.random()*100);
-            try { localStorage.setItem('fans_referral_code', referralCode); } catch(e) {}
+            // Wait for currentUser to be available
+            if (!currentUser) {
+                setTimeout(generateReferralCode, 100);
+                return;
+            }
+            var base = currentUser.uid || currentUser.email || currentUser.displayName || 'user';
+            var hash = 0;
+            for (var i = 0; i < base.length; i++) {
+                hash = ((hash << 5) - hash) + base.charCodeAt(i);
+                hash = hash & hash;
+            }
+            var random = Math.abs(hash).toString(36).substring(0, 4).toUpperCase();
+            referralCode = 'FANS' + random + Math.floor(Math.random() * 100);
+            try { 
+                localStorage.setItem('fans_referral_code', referralCode); 
+            } catch(e) {}
+            // Update UI immediately
+            var linkDisplay = document.getElementById('referralLinkDisplay');
+            var modalLink = document.getElementById('modalReferralLink');
+            if (linkDisplay) linkDisplay.textContent = getReferralLink();
+            if (modalLink) modalLink.textContent = getReferralLink();
         }
 
         function getReferralLink() {
-            return window.location.origin + window.location.pathname.replace('dashboard.html', 'index.html') + '?ref=' + referralCode;
+            // Build the link using the current page's origin
+            var base = window.location.origin || '';
+            var path = window.location.pathname || '';
+            // Replace dashboard.html with index.html, or append index.html if at root
+            var target = path.replace('dashboard.html', 'index.html');
+            if (target === path) {
+                // If path didn't change (no dashboard.html in it), just use index.html
+                target = 'index.html';
+            }
+            return base + target + '?ref=' + referralCode;
         }
 
         function updateUI(user) {
@@ -1073,21 +1104,52 @@
             const text = 'Join me on Fans 2026 World Cup! Complete tasks and win amazing prizes. ' + link;
             let url = '';
             switch(platform) {
-                case 'facebook': url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link); break;
-                case 'twitter': url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text); break;
-                case 'whatsapp': url = 'https://wa.me/?text=' + encodeURIComponent(text); break;
+                case 'facebook': 
+                    url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link); 
+                    break;
+                case 'twitter': 
+                    url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text); 
+                    break;
+                case 'whatsapp': 
+                    url = 'https://wa.me/?text=' + encodeURIComponent(text); 
+                    break;
                 case 'native':
                     if (navigator.share) {
                         navigator.share({ title: 'Fans 2026 World Cup', text: 'Join me and win prizes!', url: link });
                         return;
                     }
-                    copyReferralLink(); return;
+                    copyReferralLink(); 
+                    return;
             }
-            if (url) window.open(url, '_blank', 'width=600,height=400');
+            if (url) {
+                var win = window.open(url, '_blank');
+                if (!win || win.closed || typeof win.closed === 'undefined') {
+                    // Popup blocked, fallback to copy
+                    copyReferralLink();
+                }
+            }
         }
 
         function inviteFriend(platform) {
-            shareOn(platform);
+            var link = getReferralLink();
+            var text = 'Join me on Fans 2026 World Cup! Complete tasks and win amazing prizes. ' + link;
+            var url = '';
+            if (platform === 'facebook') {
+                url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link);
+            } else if (platform === 'twitter') {
+                url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+            } else if (platform === 'whatsapp') {
+                url = 'https://wa.me/?text=' + encodeURIComponent(text);
+            } else if (platform === 'copy') {
+                copyReferralLink();
+                return;
+            }
+            if (url) {
+                var win = window.open(url, '_blank');
+                if (!win || win.closed || typeof win.closed === 'undefined') {
+                    copyReferralLink();
+                }
+            }
             showToast('Link shared! Friends will appear after they sign up.', 'info');
         }
 
@@ -1112,35 +1174,37 @@
                 showToast('Task 1 has ended (31 July 2026)', 'error');
                 return;
             }
-            const modal = document.getElementById('task1Modal');
+            var modal = document.getElementById('task1Modal');
             if (modal) {
-                modal.classList.add('active');
+                modal.style.display = 'flex';
+                setTimeout(function() { modal.classList.add('active'); }, 10);
                 document.body.style.overflow = 'hidden';
             }
 
-            const select = document.getElementById('t1TeamSelect');
+            var select = document.getElementById('t1TeamSelect');
             if (select) {
                 select.innerHTML = '<option value="">Select a team...</option>';
-                flagsData.forEach(c => {
-                    const opt = document.createElement('option');
+                for (var i = 0; i < flagsData.length; i++) {
+                    var c = flagsData[i];
+                    var opt = document.createElement('option');
                     opt.value = c.name;
                     opt.textContent = c.flag + ' ' + c.name;
                     select.appendChild(opt);
-                });
+                }
             }
 
             if (task1Data.step1) {
-                const s1 = document.getElementById('t1Step1Success');
+                var s1 = document.getElementById('t1Step1Success');
                 if (s1) s1.style.display = 'block';
             }
             if (task1Data.step2 && select) {
                 select.value = task1Data.team;
-                const s2 = document.getElementById('t1Step2Success');
+                var s2 = document.getElementById('t1Step2Success');
                 if (s2) s2.style.display = 'block';
             }
             if (task1Data.step3) {
-                const input = document.getElementById('t1RegInput');
-                const s3 = document.getElementById('t1Step3Success');
+                var input = document.getElementById('t1RegInput');
+                var s3 = document.getElementById('t1Step3Success');
                 if (input) input.value = task1Data.regInfo;
                 if (s3) s3.style.display = 'block';
             }
@@ -1148,8 +1212,11 @@
         }
 
         function closeTask1Modal() {
-            const modal = document.getElementById('task1Modal');
-            if (modal) modal.classList.remove('active');
+            var modal = document.getElementById('task1Modal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(function() { modal.style.display = 'none'; }, 300);
+            }
             document.body.style.overflow = '';
         }
 
@@ -1216,9 +1283,10 @@
                 showToast('Task 2 has ended (15 July 2026)', 'error');
                 return;
             }
-            const modal = document.getElementById('task2Modal');
+            var modal = document.getElementById('task2Modal');
             if (modal) {
-                modal.classList.add('active');
+                modal.style.display = 'flex';
+                setTimeout(function() { modal.classList.add('active'); }, 10);
                 document.body.style.overflow = 'hidden';
             }
 
@@ -1226,10 +1294,10 @@
             populateCountryGrid('winnerGrid', task2Data.winner ? [task2Data.winner] : [], 'winner');
 
             // Code input
-            const codeInput = document.getElementById('t2CodeInput');
+            var codeInput = document.getElementById('t2CodeInput');
             if (codeInput && task2Data.code) codeInput.value = task2Data.code;
             if (task2Data.code && task2Data.code.trim().length > 0) {
-                const s3 = document.getElementById('t2Step3Success');
+                var s3 = document.getElementById('t2Step3Success');
                 if (s3) s3.style.display = 'block';
             }
 
@@ -1240,8 +1308,11 @@
         }
 
         function closeTask2Modal() {
-            const modal = document.getElementById('task2Modal');
-            if (modal) modal.classList.remove('active');
+            var modal = document.getElementById('task2Modal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(function() { modal.style.display = 'none'; }, 300);
+            }
             document.body.style.overflow = '';
         }
 
@@ -1397,10 +1468,10 @@
                 }
             });
 
-            ['task1Modal', 'task2Modal'].forEach(id => {
-                const el = document.getElementById(id);
+            ['task1Modal', 'task2Modal'].forEach(function(id) {
+                var el = document.getElementById(id);
                 if (el) {
-                    el.addEventListener('click', (e) => {
+                    el.addEventListener('click', function(e) {
                         if (e.target === e.currentTarget) {
                             if (id === 'task1Modal') closeTask1Modal();
                             if (id === 'task2Modal') closeTask2Modal();
