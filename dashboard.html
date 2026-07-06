@@ -127,18 +127,6 @@
             50% { box-shadow: 0 0 25px rgba(212,175,55,0.6); } 
         }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
-        .btn-social {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-            color: var(--white); padding: 0.6rem 1rem; border-radius: 10px;
-            font-size: 0.85rem; transition: all 0.3s; cursor: pointer;
-            display: inline-flex; align-items: center; gap: 0.5rem;
-        }
-        .btn-social:hover { border-color: var(--gold); background: rgba(212,175,55,0.1); }
-        .btn-social i { font-size: 1rem; }
-        .btn-facebook:hover { color: #1877f2; border-color: #1877f2; }
-        .btn-twitter:hover { color: #1da1f2; border-color: #1da1f2; }
-        .btn-whatsapp:hover { color: #25d366; border-color: #25d366; }
-        .btn-copy:hover { color: var(--gold); border-color: var(--gold); }
         .mobile-menu-btn { 
             display: none; background: none; border: none; 
             color: var(--white); font-size: 1.5rem; cursor: pointer; 
@@ -174,40 +162,6 @@
         .dash-stat-value { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
         .dash-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
 
-        /* Referral Link Card */
-        .referral-card {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 20px; padding: 2rem; margin-bottom: 2rem;
-            text-align: center; position: relative; overflow: hidden;
-        }
-        .referral-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: var(--gradient-gold);
-        }
-        .referral-card h3 {
-            font-family: 'Space Grotesk'; font-size: 1.25rem; margin-bottom: 0.5rem;
-        }
-        .referral-card p {
-            color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1.25rem;
-        }
-        .referral-link-box {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-            border-radius: 12px; padding: 1rem 1.25rem;
-            display: flex; align-items: center; justify-content: space-between;
-            gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap;
-        }
-        .referral-link-text {
-            font-family: 'Space Grotesk', monospace; font-size: 1rem; color: var(--gold);
-            font-weight: 600; word-break: break-all;
-        }
-        .referral-socials {
-            display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
-        }
-        .referral-count {
-            margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.6);
-        }
-        .referral-count strong { color: var(--gold); }
-
         /* ========== TASK CARDS ========== */
         .tasks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; }
         .task-card {
@@ -234,19 +188,6 @@
         .task-desc { 
             color: rgba(255,255,255,0.6); font-size: 0.9rem; 
             margin-bottom: 1.5rem; line-height: 1.6;
-        }
-        .task-deadline {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            background: rgba(233, 69, 96, 0.1); color: var(--accent);
-            padding: 0.4rem 0.875rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
-            margin-bottom: 1rem; border: 1px solid rgba(233, 69, 96, 0.2);
-        }
-        .task-deadline.ending-soon {
-            animation: pulse-red 2s infinite;
-        }
-        @keyframes pulse-red {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.3); }
-            50% { box-shadow: 0 0 0 8px rgba(233, 69, 96, 0); }
         }
         .task-progress {
             background: rgba(255,255,255,0.05); border-radius: 10px; height: 8px;
@@ -407,35 +348,6 @@
             text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;
         }
 
-        /* Invite Friends Step */
-        .invite-progress {
-            display: flex; align-items: center; gap: 1rem; margin: 1rem 0;
-        }
-        .invite-progress-bar {
-            flex: 1; height: 10px; background: rgba(255,255,255,0.05);
-            border-radius: 5px; overflow: hidden;
-        }
-        .invite-progress-fill {
-            height: 100%; background: var(--gradient-gold);
-            border-radius: 5px; transition: width 0.5s ease;
-        }
-        .invite-progress-text {
-            font-size: 0.9rem; font-weight: 700; color: var(--gold);
-            min-width: 50px; text-align: right;
-        }
-        .invite-actions {
-            display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;
-        }
-        .invite-simulate {
-            margin-top: 0.75rem; text-align: center;
-        }
-        .invite-simulate button {
-            background: rgba(52, 168, 83, 0.1); color: #34a853;
-            border: 1px solid rgba(52, 168, 83, 0.3); padding: 0.4rem 1rem;
-            border-radius: 8px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s;
-        }
-        .invite-simulate button:hover { background: rgba(52, 168, 83, 0.2); }
-
         /* ========== TOAST ========== */
         .toast-container {
             position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 10000;
@@ -472,12 +384,9 @@
             .prizes-grid { grid-template-columns: 1fr; }
             .modal { padding: 1.5rem; border-radius: 20px; }
             .country-select-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
-            .referral-link-box { flex-direction: column; align-items: stretch; }
         }
         @media (max-width: 480px) {
             .confirm-buttons { flex-direction: column; }
-            .referral-socials { justify-content: stretch; }
-            .referral-socials .btn-social { flex: 1; justify-content: center; }
         }
 
         /* Confetti */
@@ -533,32 +442,13 @@
         <div class="dashboard-stats">
             <div class="dash-stat">
                 <div class="dash-stat-icon"><i class="fas fa-check-circle"></i></div>
-                <div class="dash-stat-value" id="tasksCompleted">0/2</div>
-                <div class="dash-stat-label">Tasks Completed</div>
-            </div>
-            <div class="dash-stat">
-                <div class="dash-stat-icon"><i class="fas fa-gift"></i></div>
-                <div class="dash-stat-value" id="prizesWon">$0</div>
-                <div class="dash-stat-label">Potential Winnings</div>
-            </div>
-            <div class="dash-stat">
-                <div class="dash-stat-icon"><i class="fas fa-flag"></i></div>
-                <div class="dash-stat-value" id="teamsSelected">0</div>
-                <div class="dash-stat-label">Teams Selected</div>
-            </div>
-            <div class="dash-stat">
-                <div class="dash-stat-icon"><i class="fas fa-users"></i></div>
-                <div class="dash-stat-value" id="friendsInvited">0</div>
-                <div class="dash-stat-label">Friends Invited</div>
-            </div>
-        </div>
 
         <!-- Personal Referral Link -->
         <div class="referral-card">
             <h3><i class="fas fa-share-alt" style="color: var(--gold);"></i> Your Personal Referral Link</h3>
             <p>Share this link on your social media to invite friends and earn bonus entries!</p>
             <div class="referral-link-box">
-                <span class="referral-link-text" id="referralLinkDisplay">fans2026.com/ref/...</span>
+                <span class="referral-link-text" id="referralLinkDisplay">Loading...</span>
                 <button class="btn btn-sm btn-outline" onclick="copyReferralLink()">
                     <i class="fas fa-copy"></i> Copy
                 </button>
@@ -579,6 +469,26 @@
             </div>
             <div class="referral-count">
                 <i class="fas fa-user-plus"></i> You have invited <strong id="referralCountDisplay">0</strong> friends so far
+            </div>
+        </div>
+
+                <div class="dash-stat-value" id="tasksCompleted">0/2</div>
+                <div class="dash-stat-label">Tasks Completed</div>
+            </div>
+            <div class="dash-stat">
+                <div class="dash-stat-icon"><i class="fas fa-gift"></i></div>
+                <div class="dash-stat-value" id="prizesWon">$0</div>
+                <div class="dash-stat-label">Potential Winnings</div>
+            </div>
+            <div class="dash-stat">
+                <div class="dash-stat-icon"><i class="fas fa-flag"></i></div>
+                <div class="dash-stat-value" id="teamsSelected">0</div>
+                <div class="dash-stat-label">Teams Selected</div>
+            </div>
+            <div class="dash-stat">
+                <div class="dash-stat-icon"><i class="fas fa-users"></i></div>
+                <div class="dash-stat-value" id="friendsInvited">0</div>
+                <div class="dash-stat-label">Friends Invited</div>
             </div>
         </div>
 
@@ -654,7 +564,7 @@
     </div>
 
     <!-- Task 1 Modal -->
-    <div class="modal-overlay" id="task1Modal" style="display:none;">
+    <div class="modal-overlay" id="task1Modal">
         <div class="modal" style="max-width: 500px;">
             <button class="modal-close" onclick="closeTask1Modal()"><i class="fas fa-times"></i></button>
             <h2><i class="fas fa-mobile-alt" style="color: var(--gold);"></i> Task 1: App Engagement</h2>
@@ -667,8 +577,8 @@
                         <div class="task-step-title">Download Our App</div>
                     </div>
                     <div class="task-step-desc">Get the official Fans app from Google Play Store to stay updated with live scores and news.</div>
-                    <a href="https://play.google.com/store/apps/details?id=com.fifa.worldcup" target="_blank" class="btn btn-play" style="width:100%; background:#000; color:#fff; border:1px solid #333;" onclick="completeT1Step1()">
-                        <i class="fab fa-google-play" style="color:#34a853; font-size:1.2rem;"></i> Download on Google Play
+                    <a href="https://play.google.com/store/apps/details?id=com.fifa.worldcup" target="_blank" class="btn btn-play" style="width:100%;" onclick="completeT1Step1()">
+                        <i class="fab fa-google-play"></i> Download on Google Play
                     </a>
                     <div class="form-success" id="t1Step1Success" style="margin-top:0.75rem; display:none;">
                         <i class="fas fa-check"></i> Download marked as complete!
@@ -715,7 +625,7 @@
     </div>
 
     <!-- Task 2 Modal -->
-    <div class="modal-overlay" id="task2Modal" style="display:none;">
+    <div class="modal-overlay" id="task2Modal">
         <div class="modal" style="max-width: 650px;">
             <button class="modal-close" onclick="closeTask2Modal()"><i class="fas fa-times"></i></button>
             <h2><i class="fas fa-futbol" style="color: var(--gold);"></i> Task 2: Predict & Win $50</h2>
@@ -754,7 +664,7 @@
                     </div>
                     <div class="task-step-desc">Type any code or words of your choice. This can be anything you like — be creative!</div>
                     <div class="form-group">
-                        <input type="text" id="t2CodeInput" placeholder="Enter any code or words..." maxlength="30" oninput="checkT2Step3()">
+                        <input type="text" id="t2CodeInput" placeholder="Enter any code or words..." maxlength="30">
                         <div class="form-hint">Examples: FANS2026, MyLuckyCode, WorldCupWinner</div>
                     </div>
                     <div class="form-success" id="t2Step3Success" style="display:none;">
@@ -777,7 +687,7 @@
                     </div>
 
                     <div class="referral-link-box" style="margin-bottom: 0.75rem;">
-                        <span class="referral-link-text" id="modalReferralLink">fans2026.com/ref/...</span>
+                        <span class="referral-link-text" id="modalReferralLink">Loading...</span>
                         <button class="btn btn-sm btn-outline" onclick="copyModalReferralLink()">
                             <i class="fas fa-copy"></i>
                         </button>
@@ -798,8 +708,6 @@
                         </button>
                     </div>
 
-                    
-
                     <div class="form-success" id="t2Step4Success" style="display:none; margin-top:0.75rem;">
                         <i class="fas fa-check"></i> 10 friends invited! Step complete.
                     </div>
@@ -815,7 +723,7 @@
     <script>
 
         // ==================== FIREBASE CONFIG ====================
-        const firebaseConfig = {
+        var firebaseConfig = {
             apiKey: "AIzaSyDummy-ForDemoOnly-ReplaceWithRealKey",
             authDomain: "fans-worldcup-2026.firebaseapp.com",
             projectId: "fans-worldcup-2026",
@@ -824,7 +732,7 @@
             appId: "1:123456789:web:abcdef123456"
         };
 
-        let app, auth, db;
+        var app, auth, db;
         try {
             if (typeof firebase !== 'undefined') {
                 app = firebase.initializeApp(firebaseConfig);
@@ -836,15 +744,15 @@
         }
 
         // ==================== STATE ====================
-        let currentUser = null;
-        let task1Data = { step1: false, step2: false, step3: false, team: '', regInfo: '' };
-        let task2Data = { semiFinalists: [], winner: '', code: '', invited: 0 };
-        let referralCode = '';
+        var currentUser = null;
+        var task1Data = { step1: false, step2: false, step3: false, team: '', regInfo: '' };
+        var task2Data = { semiFinalists: [], winner: '', code: '', invited: 0 };
+        var referralCode = '';
 
-        const TASK1_DEADLINE = new Date('2026-07-31T23:59:59');
-        const TASK2_DEADLINE = new Date('2026-07-15T23:59:59');
+        var TASK1_DEADLINE = new Date('2026-07-31T23:59:59');
+        var TASK2_DEADLINE = new Date('2026-07-15T23:59:59');
 
-        const flagsData = [
+        var flagsData = [
             { name: 'Argentina', flag: '🇦🇷' }, { name: 'Australia', flag: '🇦🇺' }, { name: 'Austria', flag: '🇦🇹' },
             { name: 'Belgium', flag: '🇧🇪' }, { name: 'Bosnia & Herz.', flag: '🇧🇦' }, { name: 'Brazil', flag: '🇧🇷' },
             { name: 'Canada', flag: '🇨🇦' }, { name: 'Cape Verde', flag: '🇨🇻' }, { name: 'Colombia', flag: '🇨🇴' },
@@ -862,7 +770,7 @@
             { name: 'Uruguay', flag: '🇺🇾' }, { name: 'Uzbekistan', flag: '🇺🇿' }
         ];
 
-        const prizesData = [
+        var prizesData = [
             { image: 'https://images.unsplash.com/photo-1612287230217-8c7c6c170b95?w=600&q=80', amount: '$50', title: 'Semi-Finalist Prediction', desc: 'Correctly predict all 4 semi-finalist teams and win $50 cash prize!', badge: 'Task 2' },
             { image: 'https://images.unsplash.com/photo-1574634534894-89d7a3f2f7c6?w=600&q=80', amount: '$500', title: 'World Cup Winner', desc: 'Pick the tournament champion correctly and take home the grand $500 prize!', badge: 'Task 2' },
             { image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=600&q=80', amount: '$25', title: 'Early Bird Entry', desc: 'Complete Task 1 before July 31st and receive a $25 app credit bonus.', badge: 'Task 1' },
@@ -896,7 +804,7 @@
                     generateReferralCode();
                 }
 
-                // Load real referral count from registry
+                // Load real referral count from shared registry
                 var registry = JSON.parse(localStorage.getItem('fans_referral_registry') || '{}');
                 if (registry[referralCode]) {
                     task2Data.invited = registry[referralCode].count || 0;
@@ -911,15 +819,14 @@
                 localStorage.setItem('fans_task1', JSON.stringify(task1Data));
                 localStorage.setItem('fans_task2', JSON.stringify(task2Data));
                 localStorage.setItem('fans_referral_code', referralCode);
-                // Save referral count to registry
-                const registry = JSON.parse(localStorage.getItem('fans_referral_registry') || '{}');
+                // Save referral count to shared registry
+                var registry = JSON.parse(localStorage.getItem('fans_referral_registry') || '{}');
                 registry[referralCode] = { count: task2Data.invited || 0, user: currentUser.email || currentUser.uid };
                 localStorage.setItem('fans_referral_registry', JSON.stringify(registry));
             } catch (e) {}
         }
 
         function generateReferralCode() {
-            // Wait for currentUser to be available
             if (!currentUser) {
                 setTimeout(generateReferralCode, 100);
                 return;
@@ -935,21 +842,13 @@
             try { 
                 localStorage.setItem('fans_referral_code', referralCode); 
             } catch(e) {}
-            // Update UI immediately
-            var linkDisplay = document.getElementById('referralLinkDisplay');
-            var modalLink = document.getElementById('modalReferralLink');
-            if (linkDisplay) linkDisplay.textContent = getReferralLink();
-            if (modalLink) modalLink.textContent = getReferralLink();
         }
 
         function getReferralLink() {
-            // Build the link using the current page's origin
             var base = window.location.origin || '';
             var path = window.location.pathname || '';
-            // Replace dashboard.html with index.html, or append index.html if at root
             var target = path.replace('dashboard.html', 'index.html');
             if (target === path) {
-                // If path didn't change (no dashboard.html in it), just use index.html
                 target = 'index.html';
             }
             return base + target + '?ref=' + referralCode;
@@ -957,9 +856,9 @@
 
         function updateUI(user) {
             if (!user) return;
-            const avatar = document.getElementById('userAvatar');
-            const name = document.getElementById('userName');
-            const dashName = document.getElementById('dashUserName');
+            var avatar = document.getElementById('userAvatar');
+            var name = document.getElementById('userName');
+            var dashName = document.getElementById('dashUserName');
 
             if (avatar) {
                 avatar.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=d4af37&color=fff';
@@ -991,7 +890,7 @@
             return new Date() < TASK2_DEADLINE;
         }
         function getDaysLeft(deadline) {
-            const diff = deadline - new Date();
+            var diff = deadline - new Date();
             return Math.ceil(diff / (1000 * 60 * 60 * 24));
         }
 
@@ -999,28 +898,30 @@
         function updateDashboard() {
             if (!currentUser) return;
 
-            // Referral link
-            const linkDisplay = document.getElementById('referralLinkDisplay');
-            const modalLink = document.getElementById('modalReferralLink');
-            if (linkDisplay) linkDisplay.textContent = getReferralLink();
-            if (modalLink) modalLink.textContent = getReferralLink();
+            // Update referral link display
+            var linkDisplay = document.getElementById('referralLinkDisplay');
+            var modalLink = document.getElementById('modalReferralLink');
+            var link = getReferralLink();
+            if (linkDisplay) linkDisplay.textContent = link;
+            if (modalLink) modalLink.textContent = link;
 
-            // Referral count
-            const refCount = document.getElementById('referralCountDisplay');
-            const friendsInvited = document.getElementById('friendsInvited');
-            if (refCount) refCount.textContent = task2Data.invited || 0;
-            if (friendsInvited) friendsInvited.textContent = task2Data.invited || 0;
+            // Update referral count
+            var refCount = document.getElementById('referralCountDisplay');
+            var friendsInvited = document.getElementById('friendsInvited');
+            var count = task2Data.invited || 0;
+            if (refCount) refCount.textContent = count;
+            if (friendsInvited) friendsInvited.textContent = count;
 
             // Task 1 progress
-            let t1Progress = 0;
+            var t1Progress = 0;
             if (task1Data.step1) t1Progress++;
             if (task1Data.step2) t1Progress++;
             if (task1Data.step3) t1Progress++;
-            const t1Bar = document.getElementById('task1Progress');
-            const t1Text = document.getElementById('task1ProgressText');
-            const t1Btn = document.getElementById('task1Btn');
-            const t1Completed = document.getElementById('task1Completed');
-            const t1Deadline = document.getElementById('task1Deadline');
+            var t1Bar = document.getElementById('task1Progress');
+            var t1Text = document.getElementById('task1ProgressText');
+            var t1Btn = document.getElementById('task1Btn');
+            var t1Completed = document.getElementById('task1Completed');
+            var t1Deadline = document.getElementById('task1Deadline');
 
             if (t1Bar) t1Bar.style.width = (t1Progress / 3 * 100) + '%';
             if (t1Text) t1Text.textContent = t1Progress + '/3 steps';
@@ -1029,9 +930,9 @@
                 if (t1Completed) t1Completed.style.display = 'flex';
             }
             if (t1Deadline) {
-                const daysLeft = getDaysLeft(TASK1_DEADLINE);
+                var daysLeft = getDaysLeft(TASK1_DEADLINE);
                 if (daysLeft > 0) {
-                    t1Deadline.innerHTML = '<i class="fas fa-hourglass-half"></i> Ends 31 July 2026 &mdash; ' + daysLeft + ' days left';
+                    t1Deadline.innerHTML = '<i class="fas fa-hourglass-half"></i> Ends 31 July 2026 — ' + daysLeft + ' days left';
                 } else {
                     t1Deadline.innerHTML = '<i class="fas fa-lock"></i> Task 1 Closed';
                     t1Deadline.style.background = 'rgba(255,255,255,0.05)';
@@ -1041,17 +942,17 @@
                 }
             }
 
-            // Task 2 progress (now 4 steps)
-            let t2Progress = 0;
+            // Task 2 progress (4 steps)
+            var t2Progress = 0;
             if (task2Data.semiFinalists.length === 4) t2Progress++;
             if (task2Data.winner) t2Progress++;
             if (task2Data.code && task2Data.code.trim().length > 0) t2Progress++;
             if ((task2Data.invited || 0) >= 10) t2Progress++;
-            const t2Bar = document.getElementById('task2Progress');
-            const t2Text = document.getElementById('task2ProgressText');
-            const t2Btn = document.getElementById('task2Btn');
-            const t2Completed = document.getElementById('task2Completed');
-            const t2Deadline = document.getElementById('task2Deadline');
+            var t2Bar = document.getElementById('task2Progress');
+            var t2Text = document.getElementById('task2ProgressText');
+            var t2Btn = document.getElementById('task2Btn');
+            var t2Completed = document.getElementById('task2Completed');
+            var t2Deadline = document.getElementById('task2Deadline');
 
             if (t2Bar) t2Bar.style.width = (t2Progress / 4 * 100) + '%';
             if (t2Text) t2Text.textContent = t2Progress + '/4 steps';
@@ -1060,9 +961,9 @@
                 if (t2Completed) t2Completed.style.display = 'flex';
             }
             if (t2Deadline) {
-                const daysLeft = getDaysLeft(TASK2_DEADLINE);
-                if (daysLeft > 0) {
-                    t2Deadline.innerHTML = '<i class="fas fa-hourglass-half"></i> Ends 15 July 2026 &mdash; ' + daysLeft + ' days left';
+                var t2DaysLeft = getDaysLeft(TASK2_DEADLINE);
+                if (t2DaysLeft > 0) {
+                    t2Deadline.innerHTML = '<i class="fas fa-hourglass-half"></i> Ends 15 July 2026 — ' + t2DaysLeft + ' days left';
                 } else {
                     t2Deadline.innerHTML = '<i class="fas fa-lock"></i> Task 2 Closed';
                     t2Deadline.style.background = 'rgba(255,255,255,0.05)';
@@ -1073,9 +974,9 @@
             }
 
             // Stats
-            const tasksCompleted = document.getElementById('tasksCompleted');
-            const prizesWon = document.getElementById('prizesWon');
-            const teamsSelected = document.getElementById('teamsSelected');
+            var tasksCompleted = document.getElementById('tasksCompleted');
+            var prizesWon = document.getElementById('prizesWon');
+            var teamsSelected = document.getElementById('teamsSelected');
 
             if (tasksCompleted) tasksCompleted.textContent = (t1Progress === 3 ? 1 : 0) + (t2Progress === 4 ? 1 : 0) + '/2';
             if (prizesWon) prizesWon.textContent = '$' + ((t1Progress === 3 ? 25 : 0) + (t2Progress === 4 ? 50 : 0));
@@ -1084,13 +985,18 @@
 
         // ==================== REFERRAL LINK ACTIONS ====================
         function copyReferralLink() {
-            const link = getReferralLink();
+            var link = getReferralLink();
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(link).then(() => showToast('Referral link copied!', 'success'));
+                navigator.clipboard.writeText(link).then(function() {
+                    showToast('Referral link copied!', 'success');
+                });
             } else {
-                const ta = document.createElement('textarea');
-                ta.value = link; document.body.appendChild(ta); ta.select();
-                document.execCommand('copy'); document.body.removeChild(ta);
+                var ta = document.createElement('textarea');
+                ta.value = link; 
+                document.body.appendChild(ta); 
+                ta.select();
+                document.execCommand('copy'); 
+                document.body.removeChild(ta);
                 showToast('Referral link copied!', 'success');
             }
         }
@@ -1100,31 +1006,26 @@
         }
 
         function shareOn(platform) {
-            const link = getReferralLink();
-            const text = 'Join me on Fans 2026 World Cup! Complete tasks and win amazing prizes. ' + link;
-            let url = '';
-            switch(platform) {
-                case 'facebook': 
-                    url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link); 
-                    break;
-                case 'twitter': 
-                    url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text); 
-                    break;
-                case 'whatsapp': 
-                    url = 'https://wa.me/?text=' + encodeURIComponent(text); 
-                    break;
-                case 'native':
-                    if (navigator.share) {
-                        navigator.share({ title: 'Fans 2026 World Cup', text: 'Join me and win prizes!', url: link });
-                        return;
-                    }
-                    copyReferralLink(); 
+            var link = getReferralLink();
+            var text = 'Join me on Fans 2026 World Cup! Complete tasks and win amazing prizes. ' + link;
+            var url = '';
+            if (platform === 'facebook') {
+                url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link);
+            } else if (platform === 'twitter') {
+                url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+            } else if (platform === 'whatsapp') {
+                url = 'https://wa.me/?text=' + encodeURIComponent(text);
+            } else if (platform === 'native') {
+                if (navigator.share) {
+                    navigator.share({ title: 'Fans 2026 World Cup', text: 'Join me and win prizes!', url: link });
                     return;
+                }
+                copyReferralLink(); 
+                return;
             }
             if (url) {
                 var win = window.open(url, '_blank');
                 if (!win || win.closed || typeof win.closed === 'undefined') {
-                    // Popup blocked, fallback to copy
                     copyReferralLink();
                 }
             }
@@ -1142,27 +1043,24 @@
                 url = 'https://wa.me/?text=' + encodeURIComponent(text);
             } else if (platform === 'copy') {
                 copyReferralLink();
+                showToast('Link copied! Share it anywhere.', 'success');
                 return;
             }
             if (url) {
                 var win = window.open(url, '_blank');
                 if (!win || win.closed || typeof win.closed === 'undefined') {
                     copyReferralLink();
+                } else {
+                    showToast('Link shared! Friends will appear after they sign up.', 'info');
                 }
-            }
-            showToast('Link shared! Friends will appear after they sign up.', 'info');
-        }
-
-         else {
-                showToast('You already invited 10 friends!', 'info');
             }
         }
 
         function updateInviteUI() {
-            const fill = document.getElementById('inviteProgressFill');
-            const text = document.getElementById('inviteProgressText');
-            const success = document.getElementById('t2Step4Success');
-            const count = task2Data.invited || 0;
+            var fill = document.getElementById('inviteProgressFill');
+            var text = document.getElementById('inviteProgressText');
+            var success = document.getElementById('t2Step4Success');
+            var count = task2Data.invited || 0;
             if (fill) fill.style.width = (Math.min(count, 10) / 10 * 100) + '%';
             if (text) text.textContent = count + '/10';
             if (success) success.style.display = count >= 10 ? 'block' : 'none';
@@ -1176,8 +1074,7 @@
             }
             var modal = document.getElementById('task1Modal');
             if (modal) {
-                modal.style.display = 'flex';
-                setTimeout(function() { modal.classList.add('active'); }, 10);
+                modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
 
@@ -1215,14 +1112,13 @@
             var modal = document.getElementById('task1Modal');
             if (modal) {
                 modal.classList.remove('active');
-                setTimeout(function() { modal.style.display = 'none'; }, 300);
             }
             document.body.style.overflow = '';
         }
 
         function completeT1Step1() {
             task1Data.step1 = true;
-            const s1 = document.getElementById('t1Step1Success');
+            var s1 = document.getElementById('t1Step1Success');
             if (s1) s1.style.display = 'block';
             checkT1Complete();
             saveState();
@@ -1230,13 +1126,13 @@
         }
 
         function checkT1Step2() {
-            const select = document.getElementById('t1TeamSelect');
+            var select = document.getElementById('t1TeamSelect');
             if (!select) return;
-            const val = select.value;
+            var val = select.value;
             if (val) {
                 task1Data.step2 = true;
                 task1Data.team = val;
-                const s2 = document.getElementById('t1Step2Success');
+                var s2 = document.getElementById('t1Step2Success');
                 if (s2) s2.style.display = 'block';
                 checkT1Complete();
                 saveState();
@@ -1244,13 +1140,13 @@
         }
 
         function checkT1Step3() {
-            const input = document.getElementById('t1RegInput');
+            var input = document.getElementById('t1RegInput');
             if (!input) return;
-            const val = input.value;
+            var val = input.value;
             if (val.length >= 5) {
                 task1Data.step3 = true;
                 task1Data.regInfo = val;
-                const s3 = document.getElementById('t1Step3Success');
+                var s3 = document.getElementById('t1Step3Success');
                 if (s3) s3.style.display = 'block';
                 checkT1Complete();
                 saveState();
@@ -1258,7 +1154,7 @@
         }
 
         function checkT1Complete() {
-            const btn = document.getElementById('t1ConfirmBtn');
+            var btn = document.getElementById('t1ConfirmBtn');
             if (btn) btn.disabled = !(task1Data.step1 && task1Data.step2 && task1Data.step3);
         }
 
@@ -1272,7 +1168,7 @@
             updateDashboard();
             showToast('Task 1 completed! Redirecting to claim page...', 'success');
             createConfetti();
-            setTimeout(() => {
+            setTimeout(function() {
                 window.location.href = 'claim.html';
             }, 1500);
         }
@@ -1285,15 +1181,13 @@
             }
             var modal = document.getElementById('task2Modal');
             if (modal) {
-                modal.style.display = 'flex';
-                setTimeout(function() { modal.classList.add('active'); }, 10);
+                modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
 
             populateCountryGrid('semiFinalistsGrid', task2Data.semiFinalists, 'semi');
             populateCountryGrid('winnerGrid', task2Data.winner ? [task2Data.winner] : [], 'winner');
 
-            // Code input
             var codeInput = document.getElementById('t2CodeInput');
             if (codeInput && task2Data.code) codeInput.value = task2Data.code;
             if (task2Data.code && task2Data.code.trim().length > 0) {
@@ -1301,9 +1195,7 @@
                 if (s3) s3.style.display = 'block';
             }
 
-            // Invite friends UI
             updateInviteUI();
-
             checkT2Complete();
         }
 
@@ -1311,32 +1203,30 @@
             var modal = document.getElementById('task2Modal');
             if (modal) {
                 modal.classList.remove('active');
-                setTimeout(function() { modal.style.display = 'none'; }, 300);
             }
             document.body.style.overflow = '';
         }
 
         function populateCountryGrid(gridId, selected, mode) {
-            const grid = document.getElementById(gridId);
+            var grid = document.getElementById(gridId);
             if (!grid) return;
             grid.innerHTML = '';
-            flagsData.forEach(c => {
-                const item = document.createElement('div');
+            for (var i = 0; i < flagsData.length; i++) {
+                var c = flagsData[i];
+                var item = document.createElement('div');
                 item.className = 'country-select-item';
-                if (selected.includes(c.name)) item.classList.add('selected');
-                item.innerHTML = `
-                    <span class="flag">${c.flag}</span>
-                    <span class="name">${c.name}</span>
-                    <span class="check"><i class="fas fa-check-circle"></i></span>
-                `;
-                item.onclick = () => selectCountry(c.name, mode, item);
+                if (selected.indexOf(c.name) > -1) item.classList.add('selected');
+                item.innerHTML = '<span class="flag">' + c.flag + '</span><span class="name">' + c.name + '</span><span class="check"><i class="fas fa-check-circle"></i></span>';
+                item.onclick = (function(name, mode, el) {
+                    return function() { selectCountry(name, mode, el); };
+                })(c.name, mode, item);
                 grid.appendChild(item);
-            });
+            }
         }
 
         function selectCountry(name, mode, element) {
             if (mode === 'semi') {
-                const idx = task2Data.semiFinalists.indexOf(name);
+                var idx = task2Data.semiFinalists.indexOf(name);
                 if (idx > -1) {
                     task2Data.semiFinalists.splice(idx, 1);
                     element.classList.remove('selected');
@@ -1347,15 +1237,18 @@
                     showToast('You can only select 4 teams!', 'error');
                     return;
                 }
-                const semiCount = document.getElementById('semiCount');
-                const semiError = document.getElementById('semiError');
+                var semiCount = document.getElementById('semiCount');
+                var semiError = document.getElementById('semiError');
                 if (semiCount) semiCount.textContent = task2Data.semiFinalists.length;
                 if (semiError) semiError.style.display = task2Data.semiFinalists.length === 4 ? 'none' : 'block';
             } else {
-                document.querySelectorAll('#winnerGrid .country-select-item').forEach(el => el.classList.remove('selected'));
+                var items = document.querySelectorAll('#winnerGrid .country-select-item');
+                for (var i = 0; i < items.length; i++) {
+                    items[i].classList.remove('selected');
+                }
                 task2Data.winner = name;
                 element.classList.add('selected');
-                const winnerSelected = document.getElementById('winnerSelected');
+                var winnerSelected = document.getElementById('winnerSelected');
                 if (winnerSelected) winnerSelected.textContent = name;
             }
             saveState();
@@ -1363,12 +1256,12 @@
         }
 
         function checkT2Step3() {
-            const input = document.getElementById('t2CodeInput');
+            var input = document.getElementById('t2CodeInput');
             if (!input) return;
-            const val = input.value.trim();
+            var val = input.value.trim();
             if (val.length > 0) {
                 task2Data.code = val;
-                const s3 = document.getElementById('t2Step3Success');
+                var s3 = document.getElementById('t2Step3Success');
                 if (s3) s3.style.display = 'block';
                 saveState();
                 checkT2Complete();
@@ -1376,8 +1269,8 @@
         }
 
         function checkT2Complete() {
-            const btn = document.getElementById('t2ConfirmBtn');
-            const complete = task2Data.semiFinalists.length === 4 && 
+            var btn = document.getElementById('t2ConfirmBtn');
+            var complete = task2Data.semiFinalists.length === 4 && 
                            task2Data.winner && 
                            task2Data.code && task2Data.code.trim().length > 0 &&
                            (task2Data.invited || 0) >= 10;
@@ -1398,46 +1291,40 @@
 
         // ==================== PRIZES ====================
         function renderPrizes() {
-            const grid = document.getElementById('prizesGrid');
+            var grid = document.getElementById('prizesGrid');
             if (!grid) return;
             grid.innerHTML = '';
-            prizesData.forEach((prize) => {
-                const card = document.createElement('div');
+            for (var i = 0; i < prizesData.length; i++) {
+                var prize = prizesData[i];
+                var card = document.createElement('div');
                 card.className = 'prize-card';
-                card.innerHTML = `
-                    <img src="${prize.image}" alt="${prize.title}" class="prize-image" loading="lazy" onerror="this.style.display='none'">
-                    <div class="prize-content">
-                        <div class="prize-amount">${prize.amount}</div>
-                        <div class="prize-title">${prize.title}</div>
-                        <div class="prize-desc">${prize.desc}</div>
-                        <span class="prize-badge">${prize.badge}</span>
-                    </div>
-                `;
+                card.innerHTML = '<img src="' + prize.image + '" alt="' + prize.title + '" class="prize-image" loading="lazy" onerror="this.style.display='none'"><div class="prize-content"><div class="prize-amount">' + prize.amount + '</div><div class="prize-title">' + prize.title + '</div><div class="prize-desc">' + prize.desc + '</div><span class="prize-badge">' + prize.badge + '</span></div>';
                 grid.appendChild(card);
-            });
+            }
         }
 
         // ==================== TOAST ====================
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
+        function showToast(message, type) {
+            type = type || 'info';
+            var container = document.getElementById('toastContainer');
             if (!container) return;
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
-            toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+            var toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            var icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            toast.innerHTML = '<i class="fas ' + icon + '"></i> ' + message;
             container.appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => {
+            setTimeout(function() { toast.classList.add('show'); }, 10);
+            setTimeout(function() {
                 toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 400);
+                setTimeout(function() { toast.remove(); }, 400);
             }, 4000);
         }
 
         // ==================== CONFETTI ====================
         function createConfetti() {
-            const colors = ['#d4af37', '#e94560', '#34a853', '#f4d03f', '#667eea', '#fff'];
-            for (let i = 0; i < 60; i++) {
-                const confetti = document.createElement('div');
+            var colors = ['#d4af37', '#e94560', '#34a853', '#f4d03f', '#667eea', '#fff'];
+            for (var i = 0; i < 60; i++) {
+                var confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
@@ -1446,7 +1333,7 @@
                 confetti.style.height = (5 + Math.random() * 8) + 'px';
                 confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
                 document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 4000);
+                setTimeout(function(el) { return function() { el.remove(); }; }(confetti), 4000);
             }
         }
 
@@ -1456,12 +1343,12 @@
         }
 
         // ==================== INIT ====================
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             loadState();
             updateDashboard();
             renderPrizes();
 
-            document.addEventListener('keydown', (e) => {
+            document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeTask1Modal();
                     closeTask2Modal();
@@ -1481,11 +1368,11 @@
             });
 
             // Bind code input
-            const codeInput = document.getElementById('t2CodeInput');
+            var codeInput = document.getElementById('t2CodeInput');
             if (codeInput) {
                 codeInput.addEventListener('input', checkT2Step3);
             }
         });
-    </script>
+</script>
 </body>
 </html>
