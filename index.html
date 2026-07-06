@@ -727,17 +727,14 @@
     <script>
 
         // ==================== FIREBASE CONFIG ====================
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDJ1zgLmA5sb_oVXfwxzh9tHIp4WvvFris",
-  authDomain: "fanbase-4eba3.firebaseapp.com",
-  databaseURL: "https://fanbase-4eba3-default-rtdb.firebaseio.com",
-  projectId: "fanbase-4eba3",
-  storageBucket: "fanbase-4eba3.firebasestorage.app",
-  messagingSenderId: "264324879296",
-  appId: "1:264324879296:web:5832c926bbc6e0ab442e25",
-  measurementId: "G-542CS5CMS8"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyDummy-ForDemoOnly-ReplaceWithRealKey",
+            authDomain: "fans-worldcup-2026.firebaseapp.com",
+            projectId: "fans-worldcup-2026",
+            storageBucket: "fans-worldcup-2026.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
 
         let app, auth, db;
         try {
@@ -762,7 +759,7 @@ const firebaseConfig = {
                     currentUser = JSON.parse(user);
                     updateUI(currentUser);
                 }
-                // Check for referral code in URL
+                // Check for referral code in URL on page load
                 checkReferralFromURL();
             } catch (e) {}
         }
@@ -865,7 +862,7 @@ const firebaseConfig = {
             auth.signInWithPopup(provider)
                 .then((result) => { 
                     saveUserToDB(result.user);
-                    creditReferrer(); // Credit referrer on Google sign-in too
+                    creditReferrer();
                     simulateLogin(result.user); 
                 })
                 .catch((error) => { showAuthError(error.message); });
@@ -932,7 +929,7 @@ const firebaseConfig = {
         function simulateLogin(user) {
             currentUser = user;
             try { localStorage.setItem('fans_user', JSON.stringify(user)); } catch(e) {}
-            creditReferrer(); // Credit the referrer if this user came via referral link
+            creditReferrer();
             updateUI(user);
             closeAuthModal();
             showToast('Welcome, ' + (user.displayName || 'Fan') + '! 🎉', 'success');
@@ -974,17 +971,15 @@ const firebaseConfig = {
 
         // ==================== REFERRAL TRACKING ====================
         function checkReferralFromURL() {
-            var params = new URLSearchParams(window.location.search);
-            var refCode = params.get('ref');
+            const params = new URLSearchParams(window.location.search);
+            const refCode = params.get('ref');
             if (refCode && refCode.startsWith('FANS')) {
-                // Store the referral code so we can credit after sign-up
                 try { 
                     localStorage.setItem('fans_pending_referral', refCode); 
-                    console.log('Referral code detected:', refCode);
+                    console.log('Referral code captured:', refCode);
                 } catch(e) {}
-                // Clean URL
                 if (window.history.replaceState) {
-                    var cleanUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
+                    const cleanUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
                     window.history.replaceState({}, document.title, cleanUrl);
                 }
             }
@@ -992,17 +987,16 @@ const firebaseConfig = {
 
         function creditReferrer() {
             try {
-                var pendingRef = localStorage.getItem('fans_pending_referral');
+                const pendingRef = localStorage.getItem('fans_pending_referral');
                 if (!pendingRef) return;
-
-                var registry = JSON.parse(localStorage.getItem('fans_referral_registry') || '{}');
+                const registry = JSON.parse(localStorage.getItem('fans_referral_registry') || '{}');
                 if (!registry[pendingRef]) {
                     registry[pendingRef] = { count: 0, user: 'unknown' };
                 }
                 registry[pendingRef].count = (registry[pendingRef].count || 0) + 1;
                 localStorage.setItem('fans_referral_registry', JSON.stringify(registry));
                 localStorage.removeItem('fans_pending_referral');
-                console.log('Referral credited to:', pendingRef, 'New count:', registry[pendingRef].count);
+                console.log('Referral credited to:', pendingRef, 'Count:', registry[pendingRef].count);
             } catch (e) {
                 console.log('Credit referrer error:', e);
             }
