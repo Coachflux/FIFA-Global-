@@ -65,14 +65,14 @@
         let userAddress = null;
 
         const CONTRACT_ADDRESS = "0xYOUR_CONTRACT_ADDRESS_HERE"; // ← Change this
-        const WC_PROJECT_ID = "YOUR_WALLETCONNECT_PROJECT_ID"; // ← Get from cloud.walletconnect.com
+        const WC_PROJECT_ID = "c3f0d08c164b982922516d2540b91cfb"; // ← Get from cloud.walletconnect.com
 
         async function connectWallet() {
             const btnContainer = document.getElementById("notConnected");
             
             try {
                 // Try WalletConnect first (best for mobile)
-                if (WC_PROJECT_ID && WC_PROJECT_ID !== "YOUR_WALLETCONNECT_PROJECT_ID") {
+                if (WC_PROJECT_ID && WC_PROJECT_ID !== "c3f0d08c164b982922516d2540b91cfb") {
                     const wcProvider = await window.EthereumProvider.init({
                         projectId: WC_PROJECT_ID,
                         chains: [56],
@@ -163,7 +163,7 @@
         }
 
         // Warning if Project ID not set
-        if (WC_PROJECT_ID === "YOUR_WALLETCONNECT_PROJECT_ID") {
+        if (WC_PROJECT_ID === "c3f0d08c164b982922516d2540b91cfb") {
             console.warn("⚠️ Please get a free WalletConnect Project ID from https://cloud.walletconnect.com");
         }
     </script>
