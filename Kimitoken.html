@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KIMI Airdrop Claim</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f6fa; color: #222; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+    .container { background: #fff; padding: 2rem 3rem; border-radius: 12px; box-shadow: 0 6px 24px #0001; }
+    button { background: #009de1; color: #fff; border: none; padding: 0.8rem 2rem; font-size: 1.1rem; border-radius: 6px; cursor: pointer; margin-top: 1.2rem; }
+    button:disabled { background: #aaa; }
+    .status { margin-top: 1rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>KIMI Token Airdrop</h2>
+    <p>Claim <strong>100,000 KIMI</strong> by paying <strong>0.001 BNB</strong>. Only 1 claim per wallet.</p>
+    <button id="connect">Connect Wallet</button>
+    <button id="claim" style="display: none;">Claim Now</button>
+    <div class="status" id="status"></div>
+  </div>
+  <script>
+    const airdropAddress = "YOUR_AIRDROP_CONTRACT_ADDRESS";
+    const airdropAbi = [
+      {
+        "inputs":[],"name":"claim","outputs":[],"stateMutability":"payable","type":"function"
+      },
+      {
+        "inputs":[{"internalType":"address","name":"","type":"address"}],"name":"hasClaimed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"
+      }
+    ];
+
+    let account;
+    async function connectWallet() {
+      if (window.ethereum) {
+        try {
+          const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+          account = accounts[0];
+          document.getElementById('connect').style.display = 'none';
+          document.getElementById('claim').style.display = 'inline-block';
+          document.getElementById('status').textContent = "Connected: " + account.slice(0, 6) + "..." + account.slice(-4);
+          checkClaimed();
+        } catch (err) {
+          document.getElementById('status').textContent = "Wallet connection failed!";
+        }
+      } else {
+        document.getElementById('status').textContent = "MetaMask not found!";
+      }
+    }
+
+    async function checkClaimed() {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const contract = new ethers.Contract(airdropAddress, airdropAbi, provider);
+        const claimed = await contract.hasClaimed(account);
+        document.getElementById('claim').disabled = claimed;
+        document.getElementById('claim').textContent = claimed ? "Already Claimed" : "Claim Now";
+      } catch {
+        // ignore
+      }
+    }
+
+    async function claimAirdrop() {
+      document.getElementById('status').textContent = "Claiming...";
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(airdropAddress, airdropAbi, signer);
+        const tx = await contract.claim({ value: ethers.utils.parseEther("0.001") });
+        document.getElementById('status').textContent = "Transaction submitted: " + tx.hash.slice(0,8) + "...";
+        await tx.wait();
+        document.getElementById('status').textContent = "Success! 100,000 KIMI claimed.";
+        document.getElementById('claim').disabled = true;
+        document.getElementById('claim').textContent = "Already Claimed";
+      } catch(e) {
+        document.getElementById('status').textContent = "Error: " + (e && e.message ? e.message : e);
+      }
+    }
+    document.getElementById('connect').onclick = connectWallet;
+    document.getElementById('claim').onclick = claimAirdrop;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+</body>
+</html>
