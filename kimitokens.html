@@ -127,9 +127,9 @@
         }
 
         function shortenAddress(address) {
-            if (!address) return "";
-            return `\( {address.slice(0, 6)}... \){address.slice(-4)}`;
-        }
+    if (!address) return "No address";
+    return address.slice(0, 6) + "..." + address.slice(-4);
+}
 
         function showElement(id) { document.getElementById(id).classList.remove("hidden-el"); }
         function hideElement(id) { document.getElementById(id).classList.add("hidden-el"); }
