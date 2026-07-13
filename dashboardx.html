@@ -162,6 +162,89 @@
         .dash-stat-value { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
         .dash-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
 
+        /* ========== REFERRAL SECTION ========== */
+        .referral-section {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 2rem; margin-bottom: 2rem;
+            position: relative; overflow: hidden;
+        }
+        .referral-section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient-gold);
+        }
+        .referral-header {
+            display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+        }
+        .referral-icon {
+            width: 50px; height: 50px; border-radius: 14px;
+            background: var(--gradient-gold); display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: var(--primary); flex-shrink: 0;
+        }
+        .referral-title { font-size: 1.25rem; font-weight: 700; }
+        .referral-subtitle { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+
+        .referral-link-box {
+            display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .referral-link-input {
+            flex: 1; min-width: 200px;
+            padding: 0.875rem 1rem; border-radius: 12px;
+            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03);
+            color: var(--white); font-size: 0.9rem; font-family: 'Inter', sans-serif;
+            transition: all 0.3s; cursor: text;
+        }
+        .referral-link-input:focus {
+            outline: none; border-color: var(--gold);
+            background: rgba(255,255,255,0.06); box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+        }
+        .referral-code-box {
+            background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1.5rem;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+        }
+        .referral-code-label {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+            color: rgba(255,255,255,0.5); font-weight: 600;
+        }
+        .referral-code-value {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 800;
+            color: var(--gold); letter-spacing: 1px;
+        }
+
+        .share-buttons {
+            display: flex; gap: 0.75rem; flex-wrap: wrap;
+        }
+        .share-btn {
+            width: 44px; height: 44px; border-radius: 12px; border: none;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: white; cursor: pointer; transition: all 0.3s;
+            text-decoration: none;
+        }
+        .share-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .share-btn.whatsapp { background: #25D366; }
+        .share-btn.facebook { background: #1877F2; }
+        .share-btn.twitter { background: #1DA1F2; }
+        .share-btn.telegram { background: #0088cc; }
+        .share-btn.copy { background: var(--glass); border: 1px solid var(--gold); color: var(--gold); }
+        .share-btn.share { background: var(--gradient-gold); color: var(--primary); }
+
+        .referral-count-box {
+            display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;
+            padding-top: 1.5rem; border-top: 1px solid var(--glass-border);
+        }
+        .referral-stat {
+            flex: 1; min-width: 120px; text-align: center;
+            background: rgba(255,255,255,0.02); border-radius: 12px; padding: 1rem;
+        }
+        .referral-stat-num {
+            font-size: 1.75rem; font-weight: 900; color: var(--gold);
+            font-family: 'Space Grotesk';
+        }
+        .referral-stat-label {
+            font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem;
+        }
+
         /* ========== TASK CARDS ========== */
         .tasks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; }
         .task-card {
@@ -306,6 +389,30 @@
             font-size: 0.8rem; display: none;
         }
         .country-select-item.selected .check { display: block; }
+
+        .score-predict-row {
+            display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+            border-radius: 14px; padding: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap;
+            transition: all 0.3s;
+        }
+        .score-predict-row.filled { border-color: rgba(212,175,55,0.3); background: rgba(212,175,55,0.04); }
+        .score-predict-team {
+            display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+            min-width: 72px; flex: 1;
+        }
+        .score-predict-team .flag { font-size: 1.8rem; line-height: 1; }
+        .score-predict-team .name { font-size: 0.75rem; font-weight: 700; text-align: center; }
+        .score-input {
+            width: 50px; padding: 0.6rem 0.25rem; text-align: center;
+            border-radius: 10px; border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.03); color: var(--white);
+            font-size: 1.1rem; font-weight: 800; font-family: 'Space Grotesk', sans-serif;
+            -moz-appearance: textfield; flex-shrink: 0;
+        }
+        .score-input::-webkit-outer-spin-button, .score-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .score-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.1); }
+        .score-vs { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.4); flex-shrink: 0; }
 
         .form-group { margin-bottom: 1rem; }
         .form-group label { 
@@ -453,12 +560,58 @@
             <div class="dash-stat">
                 <div class="dash-stat-icon"><i class="fas fa-flag"></i></div>
                 <div class="dash-stat-value" id="teamsSelected">0</div>
-                <div class="dash-stat-label">Teams Selected</div>
+                <div class="dash-stat-label">Predictions Made</div>
             </div>
             <div class="dash-stat">
-                <div class="dash-stat-icon"><i class="fas fa-ticket-alt"></i></div>
-                <div class="dash-stat-value" id="codeStatus">—</div>
-                <div class="dash-stat-label">Referral Code</div>
+                <div class="dash-stat-icon"><i class="fas fa-users"></i></div>
+                <div class="dash-stat-value" id="referralCount">0</div>
+                <div class="dash-stat-label">Friends Referred</div>
+            </div>
+        </div>
+
+        <!-- Referral Section -->
+        <div class="referral-section">
+            <div class="referral-header">
+                <div class="referral-icon"><i class="fas fa-share-alt"></i></div>
+                <div>
+                    <div class="referral-title">Your Referral Link</div>
+                    <div class="referral-subtitle">Share this link with friends. When they sign up, your referral count goes up!</div>
+                </div>
+            </div>
+
+            <div class="referral-code-box">
+                <div>
+                    <div class="referral-code-label">Your Referral Code</div>
+                    <div class="referral-code-value" id="referralCodeDisplay">—</div>
+                </div>
+            </div>
+
+            <div class="referral-link-box">
+                <input type="text" class="referral-link-input" id="referralLinkInput" readonly value="Sign in to get your link">
+            </div>
+
+            <div class="share-buttons">
+                <a href="#" class="share-btn whatsapp" id="shareWhatsapp" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="share-btn facebook" id="shareFacebook" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="share-btn twitter" id="shareTwitter" title="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="share-btn telegram" id="shareTelegram" title="Share on Telegram"><i class="fab fa-telegram"></i></a>
+                <button class="share-btn copy" id="copyLinkBtn" title="Copy Link"><i class="fas fa-copy"></i></button>
+                <button class="share-btn share" id="nativeShareBtn" title="Share via..."><i class="fas fa-share-alt"></i></button>
+            </div>
+
+            <div class="referral-count-box">
+                <div class="referral-stat">
+                    <div class="referral-stat-num" id="totalReferrals">0</div>
+                    <div class="referral-stat-label">Total Referrals</div>
+                </div>
+                <div class="referral-stat">
+                    <div class="referral-stat-num" id="successfulReferrals">0</div>
+                    <div class="referral-stat-label">Signed Up</div>
+                </div>
+                <div class="referral-stat">
+                    <div class="referral-stat-num" id="referralProgress">0/5</div>
+                    <div class="referral-stat-label">Toward $100 Prize</div>
+                </div>
             </div>
         </div>
 
@@ -494,10 +647,10 @@
                     <div class="task-icon"><i class="fas fa-futbol"></i></div>
                     <div>
                         <div class="task-title">Task 2: Predict & Win</div>
-                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Predict semi-finalists & winner</div>
+                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Predict exact scores & winner</div>
                     </div>
                 </div>
-                <div class="task-desc">Select 4 countries you think will reach the semi-finals and pick the World Cup winner. Enter your referral code for bonus entries!</div>
+                <div class="task-desc">Predict the exact scores for two upcoming matches and pick the World Cup winner. Enter your referral code for bonus entries!</div>
                 <div class="task-progress">
                     <div class="task-progress-bar" id="task2Progress" style="width: 0%"></div>
                 </div>
@@ -599,14 +752,41 @@
                 <div class="task-step" id="t2Step1">
                     <div class="task-step-header">
                         <div class="task-step-num">1</div>
-                        <div class="task-step-title">Pick 4 Semi-Finalists</div>
+                        <div class="task-step-title">Predict The Scores</div>
                     </div>
-                    <div class="task-step-desc">Select 4 countries you believe will reach the semi-finals. Correct predictions win <strong style="color:var(--gold)">$50</strong>!</div>
-                    <div class="country-select-grid" id="semiFinalistsGrid"></div>
+                    <div class="task-step-desc">Predict the exact final score for these 2 matches. Correct predictions win <strong style="color:var(--gold)">$50</strong>!</div>
+
+                    <div class="score-predict-row" id="scoreRowMatch1">
+                        <div class="score-predict-team">
+                            <span class="flag">🇫🇷</span>
+                            <span class="name">France</span>
+                        </div>
+                        <input type="number" min="0" max="20" class="score-input" id="match1HomeScore" placeholder="0" oninput="handleScoreInput()">
+                        <span class="score-vs">VS</span>
+                        <input type="number" min="0" max="20" class="score-input" id="match1AwayScore" placeholder="0" oninput="handleScoreInput()">
+                        <div class="score-predict-team">
+                            <span class="flag">🇪🇸</span>
+                            <span class="name">Spain</span>
+                        </div>
+                    </div>
+
+                    <div class="score-predict-row" id="scoreRowMatch2">
+                        <div class="score-predict-team">
+                            <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+                            <span class="name">England</span>
+                        </div>
+                        <input type="number" min="0" max="20" class="score-input" id="match2HomeScore" placeholder="0" oninput="handleScoreInput()">
+                        <span class="score-vs">VS</span>
+                        <input type="number" min="0" max="20" class="score-input" id="match2AwayScore" placeholder="0" oninput="handleScoreInput()">
+                        <div class="score-predict-team">
+                            <span class="flag">🇦🇷</span>
+                            <span class="name">Argentina</span>
+                        </div>
+                    </div>
+
                     <div class="form-hint" style="margin-top:0.75rem;">
-                        <i class="fas fa-info-circle"></i> Selected: <span id="semiCount" style="color:var(--gold); font-weight:700;">0</span>/4 teams
+                        <i class="fas fa-info-circle"></i> Predictions made: <span id="scorePredictCount" style="color:var(--gold); font-weight:700;">0</span>/2
                     </div>
-                    <div class="form-error" id="semiError">Please select exactly 4 teams</div>
                 </div>
 
                 <div class="task-step" id="t2Step2">
@@ -683,7 +863,15 @@
         // ==================== STATE ====================
         let currentUser = null;
         let task1Data = { step1: false, step2: false, step3: false, team: '', regInfo: '' };
-        let task2Data = { semiFinalists: [], winner: '', code: '', codeLocked: false };
+        let task2Data = {
+            predictions: {
+                match1: { home: '', away: '' },
+                match2: { home: '', away: '' }
+            },
+            winner: '',
+            code: '',
+            codeLocked: false
+        };
 
         const flagsData = [
             { name: 'Argentina', flag: '🇦🇷' }, { name: 'Australia', flag: '🇦🇺' }, { name: 'Austria', flag: '🇦🇹' },
@@ -704,13 +892,31 @@
         ];
 
         const prizesData = [
-            { image: 'https://images.unsplash.com/photo-1612287230217-8c7c6c170b95?w=600&q=80', amount: '$50', title: 'Semi-Finalist Prediction', desc: 'Correctly predict all 4 semi-finalist teams and win $50 cash prize!', badge: 'Task 2' },
+            { image: 'https://images.unsplash.com/photo-1612287230217-8c7c6c170b95?w=600&q=80', amount: '$50', title: 'Score Prediction', desc: 'Correctly predict the exact score of France vs Spain or England vs Argentina and win $50 cash prize!', badge: 'Task 2' },
             { image: 'https://images.unsplash.com/photo-1574634534894-89d7a3f2f7c6?w=600&q=80', amount: '$500', title: 'World Cup Winner', desc: 'Pick the tournament champion correctly and take home the grand $500 prize!', badge: 'Task 2' },
             { image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=600&q=80', amount: '$25', title: 'Early Bird Entry', desc: 'Complete Task 1 before July 10th and receive a $25 app credit bonus.', badge: 'Task 1' },
             { image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=600&q=80', amount: '$100', title: 'Referral Champion', desc: 'Refer 5 friends using your locked code and earn $100 when they complete tasks.', badge: 'Both' },
             { image: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&q=80', amount: 'Jersey', title: 'Signed Jersey', desc: 'Random draw among all participants who complete both tasks. Win a signed team jersey!', badge: 'Lucky Draw' },
             { image: 'https://images.unsplash.com/photo-1605901309584-818e25960a8f?w=600&q=80', amount: 'Console', title: 'PS5 / Xbox', desc: 'One lucky winner will receive a brand new gaming console. Complete all tasks to enter!', badge: 'Mega Draw' }
         ];
+
+        // ==================== REFERRAL HELPERS ====================
+        function generateReferralCode(uid) {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = 'FANS-';
+            const seed = uid || String(Date.now());
+            for (let i = 0; i < 6; i++) {
+                code += chars[(seed.charCodeAt(i % seed.length) + i * 7) % chars.length];
+            }
+            return code;
+        }
+
+        function getReferralLink(user) {
+            const base = window.location.origin + window.location.pathname.replace(/dashboard\.html$/, '');
+            const baseUrl = base.endsWith('/') ? base : base + '/';
+            const code = user.referralCode || generateReferralCode(user.uid);
+            return baseUrl + 'index.html?ref=' + encodeURIComponent(code);
+        }
 
         // ==================== AUTH & INIT ====================
         function loadState() {
@@ -720,6 +926,46 @@
                 const t2 = localStorage.getItem('fans_task2');
                 if (user) {
                     currentUser = JSON.parse(user);
+                    // Ensure referral fields exist
+                    if (!currentUser.referralCode) {
+                        currentUser.referralCode = generateReferralCode(currentUser.uid);
+                        localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                    }
+                    if (!currentUser.referralLink) {
+                        currentUser.referralLink = getReferralLink(currentUser);
+                        localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                    }
+                    if (currentUser.referralCount === undefined) {
+                        currentUser.referralCount = 0;
+                        localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                    }
+                    // Check for locally stored referral count updates
+                    const stored = localStorage.getItem('fans_referral_counts');
+                    if (stored) {
+                        const counts = JSON.parse(stored);
+                        if (counts[currentUser.referralCode] !== undefined) {
+                            currentUser.referralCount = counts[currentUser.referralCode];
+                            localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                        }
+                    }
+
+                    // Also try to fetch from Firestore if available (source of truth across devices)
+                    if (db && currentUser.uid) {
+                        db.collection('users').doc(currentUser.uid).get()
+                            .then(doc => {
+                                if (doc.exists) {
+                                    const data = doc.data();
+                                    if (data.referralCount !== undefined) {
+                                        currentUser.referralCount = data.referralCount;
+                                        localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                                        updateReferralStats(currentUser);
+                                        const refCountEl = document.getElementById('referralCount');
+                                        if (refCountEl) refCountEl.textContent = data.referralCount;
+                                    }
+                                }
+                            })
+                            .catch(e => console.log('Firestore referral count fetch skipped:', e));
+                    }
                     updateUI(currentUser);
                 } else {
                     // Redirect to login if not authenticated
@@ -727,7 +973,17 @@
                     return;
                 }
                 if (t1) task1Data = JSON.parse(t1);
-                if (t2) task2Data = JSON.parse(t2);
+                if (t2) {
+                    const parsed = JSON.parse(t2);
+                    // Migrate old data shape (semiFinalists array) to new predictions shape
+                    if (!parsed.predictions) {
+                        parsed.predictions = {
+                            match1: { home: '', away: '' },
+                            match2: { home: '', away: '' }
+                        };
+                    }
+                    task2Data = parsed;
+                }
             } catch (e) {}
         }
 
@@ -753,6 +1009,105 @@
                 name.style.display = 'inline';
             }
             if (dashName) dashName.textContent = user.displayName || 'Fan';
+
+            // Update referral section
+            const refCodeDisplay = document.getElementById('referralCodeDisplay');
+            const refLinkInput = document.getElementById('referralLinkInput');
+            const refCount = document.getElementById('referralCount');
+
+            if (refCodeDisplay) refCodeDisplay.textContent = user.referralCode || '—';
+            if (refLinkInput) refLinkInput.value = user.referralLink || getReferralLink(user);
+            if (refCount) refCount.textContent = user.referralCount || 0;
+
+            setupShareButtons(user);
+            updateReferralStats(user);
+        }
+
+        function updateReferralStats(user) {
+            const count = user.referralCount || 0;
+            const totalEl = document.getElementById('totalReferrals');
+            const successEl = document.getElementById('successfulReferrals');
+            const progressEl = document.getElementById('referralProgress');
+
+            if (totalEl) totalEl.textContent = count;
+            if (successEl) successEl.textContent = count;
+            if (progressEl) progressEl.textContent = Math.min(count, 5) + '/5';
+        }
+
+        // ==================== SHARE BUTTONS ====================
+        function setupShareButtons(user) {
+            const link = user.referralLink || getReferralLink(user);
+            const shareText = 'Join me on Fans for the 2026 FIFA World Cup! Predict, compete, and win prizes. Use my link to sign up:';
+            const fullText = shareText + ' ' + link;
+
+            // WhatsApp
+            const wa = document.getElementById('shareWhatsapp');
+            if (wa) wa.href = 'https://wa.me/?text=' + encodeURIComponent(fullText);
+
+            // Facebook
+            const fb = document.getElementById('shareFacebook');
+            if (fb) fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link) + '&quote=' + encodeURIComponent(shareText);
+
+            // Twitter / X
+            const tw = document.getElementById('shareTwitter');
+            if (tw) tw.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(link);
+
+            // Telegram
+            const tg = document.getElementById('shareTelegram');
+            if (tg) tg.href = 'https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + encodeURIComponent(shareText);
+
+            // Copy link
+            const copyBtn = document.getElementById('copyLinkBtn');
+            if (copyBtn) {
+                copyBtn.onclick = function(e) {
+                    e.preventDefault();
+                    copyToClipboard(link);
+                };
+            }
+
+            // Native share (Web Share API)
+            const nativeBtn = document.getElementById('nativeShareBtn');
+            if (nativeBtn) {
+                nativeBtn.onclick = function(e) {
+                    e.preventDefault();
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'Fans - 2026 FIFA World Cup',
+                            text: shareText,
+                            url: link
+                        }).catch(function(err) {});
+                    } else {
+                        // Fallback: copy link
+                        copyToClipboard(link);
+                    }
+                };
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showToast('Referral link copied to clipboard!', 'success');
+                }).catch(function() {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const input = document.getElementById('referralLinkInput');
+            if (input) {
+                input.select();
+                input.setSelectionRange(0, 99999);
+                try {
+                    document.execCommand('copy');
+                    showToast('Referral link copied!', 'success');
+                } catch(e) {
+                    showToast('Could not copy. Please copy manually.', 'error');
+                }
+            }
         }
 
         function logout() {
@@ -788,8 +1143,9 @@
             }
 
             // Task 2 progress
+            const predictionsCount = countFilledPredictions();
             let t2Progress = 0;
-            if (task2Data.semiFinalists.length === 4) t2Progress++;
+            if (predictionsCount === 2) t2Progress++;
             if (task2Data.winner) t2Progress++;
             if (task2Data.codeLocked) t2Progress++;
             const t2Bar = document.getElementById('task2Progress');
@@ -808,12 +1164,21 @@
             const tasksCompleted = document.getElementById('tasksCompleted');
             const prizesWon = document.getElementById('prizesWon');
             const teamsSelected = document.getElementById('teamsSelected');
-            const codeStatus = document.getElementById('codeStatus');
+            const referralCount = document.getElementById('referralCount');
 
             if (tasksCompleted) tasksCompleted.textContent = (t1Progress === 3 ? 1 : 0) + (t2Progress === 3 ? 1 : 0) + '/2';
             if (prizesWon) prizesWon.textContent = '$' + ((t1Progress === 3 ? 10 : 0) + (t2Progress === 3 ? 50 : 0));
-            if (teamsSelected) teamsSelected.textContent = task2Data.semiFinalists.length;
-            if (codeStatus) codeStatus.textContent = task2Data.codeLocked ? '✓' : '—';
+            if (teamsSelected) teamsSelected.textContent = predictionsCount;
+            if (referralCount) referralCount.textContent = currentUser.referralCount || 0;
+
+            // Update referral stats section
+            updateReferralStats(currentUser);
+
+            // Check if we should auto-open task 2 (from claim page)
+            if (localStorage.getItem('fans_open_task2') === 'true') {
+                localStorage.removeItem('fans_open_task2');
+                setTimeout(function() { openTask2Modal(); }, 500);
+            }
         }
 
         // ==================== TASK 1 ====================
@@ -917,7 +1282,17 @@
                 document.body.style.overflow = 'hidden';
             }
 
-            populateCountryGrid('semiFinalistsGrid', task2Data.semiFinalists, 'semi');
+            // Restore score predictions
+            const m1h = document.getElementById('match1HomeScore');
+            const m1a = document.getElementById('match1AwayScore');
+            const m2h = document.getElementById('match2HomeScore');
+            const m2a = document.getElementById('match2AwayScore');
+            if (m1h) m1h.value = task2Data.predictions.match1.home;
+            if (m1a) m1a.value = task2Data.predictions.match1.away;
+            if (m2h) m2h.value = task2Data.predictions.match2.home;
+            if (m2a) m2a.value = task2Data.predictions.match2.away;
+            updateScorePredictUI();
+
             populateCountryGrid('winnerGrid', task2Data.winner ? [task2Data.winner] : [], 'winner');
 
             if (task2Data.codeLocked) {
@@ -941,6 +1316,46 @@
             document.body.style.overflow = '';
         }
 
+        // ---- Score prediction handling ----
+        function handleScoreInput() {
+            const m1h = document.getElementById('match1HomeScore');
+            const m1a = document.getElementById('match1AwayScore');
+            const m2h = document.getElementById('match2HomeScore');
+            const m2a = document.getElementById('match2AwayScore');
+
+            task2Data.predictions.match1.home = m1h ? m1h.value : '';
+            task2Data.predictions.match1.away = m1a ? m1a.value : '';
+            task2Data.predictions.match2.home = m2h ? m2h.value : '';
+            task2Data.predictions.match2.away = m2a ? m2a.value : '';
+
+            updateScorePredictUI();
+            saveState();
+            checkT2Complete();
+        }
+
+        function isMatchFilled(match) {
+            return match.home !== '' && match.home !== null && match.home !== undefined &&
+                   match.away !== '' && match.away !== null && match.away !== undefined;
+        }
+
+        function countFilledPredictions() {
+            let count = 0;
+            if (isMatchFilled(task2Data.predictions.match1)) count++;
+            if (isMatchFilled(task2Data.predictions.match2)) count++;
+            return count;
+        }
+
+        function updateScorePredictUI() {
+            const count = countFilledPredictions();
+            const countEl = document.getElementById('scorePredictCount');
+            if (countEl) countEl.textContent = count;
+
+            const row1 = document.getElementById('scoreRowMatch1');
+            const row2 = document.getElementById('scoreRowMatch2');
+            if (row1) row1.classList.toggle('filled', isMatchFilled(task2Data.predictions.match1));
+            if (row2) row2.classList.toggle('filled', isMatchFilled(task2Data.predictions.match2));
+        }
+
         function populateCountryGrid(gridId, selected, mode) {
             const grid = document.getElementById(gridId);
             if (!grid) return;
@@ -960,23 +1375,7 @@
         }
 
         function selectCountry(name, mode, element) {
-            if (mode === 'semi') {
-                const idx = task2Data.semiFinalists.indexOf(name);
-                if (idx > -1) {
-                    task2Data.semiFinalists.splice(idx, 1);
-                    element.classList.remove('selected');
-                } else if (task2Data.semiFinalists.length < 4) {
-                    task2Data.semiFinalists.push(name);
-                    element.classList.add('selected');
-                } else {
-                    showToast('You can only select 4 teams!', 'error');
-                    return;
-                }
-                const semiCount = document.getElementById('semiCount');
-                const semiError = document.getElementById('semiError');
-                if (semiCount) semiCount.textContent = task2Data.semiFinalists.length;
-                if (semiError) semiError.style.display = task2Data.semiFinalists.length === 4 ? 'none' : 'block';
-            } else {
+            if (mode === 'winner') {
                 document.querySelectorAll('#winnerGrid .country-select-item').forEach(el => el.classList.remove('selected'));
                 task2Data.winner = name;
                 element.classList.add('selected');
@@ -1035,7 +1434,7 @@
 
         function checkT2Complete() {
             const btn = document.getElementById('t2ConfirmBtn');
-            const complete = task2Data.semiFinalists.length === 4 && task2Data.winner && task2Data.codeLocked;
+            const complete = countFilledPredictions() === 2 && task2Data.winner && task2Data.codeLocked;
             if (btn) btn.disabled = !complete;
         }
 
