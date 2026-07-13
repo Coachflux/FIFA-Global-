@@ -690,12 +690,6 @@
             <h2 id="modalTitle">Get Started</h2>
             <p id="modalSubtitle">Join millions of fans tracking the 2026 World Cup</p>
 
-            <button class="btn btn-google" style="margin-bottom:1rem" onclick="signInWithGoogle()">
-                <i class="fab fa-google"></i> Continue with Google
-            </button>
-
-            <div class="divider">or continue with email</div>
-
             <form id="authForm" onsubmit="handleAuth(event)">
                 <div class="form-group" id="nameGroup" style="display:none">
                     <label>Full Name</label>
@@ -708,6 +702,11 @@
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" id="password" placeholder="Min 6 characters" minlength="6" required>
+                </div>
+                <div class="form-group" id="referralGroup" style="display:none">
+                    <label>Referral Code <span style="color:rgba(255,255,255,0.4);font-weight:400">(optional)</span></label>
+                    <input type="text" id="signupReferralCode" placeholder="e.g., FANS-A7KQ3M">
+                    <div class="form-hint" style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:0.5rem">Got invited by a friend? Enter their code here.</div>
                 </div>
                 <div class="form-error" id="authError"></div>
                 <div class="form-success" id="authSuccess"></div>
@@ -727,7 +726,7 @@
     <script>
 
         // ==================== FIREBASE CONFIG ====================
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDJ1zgLmA5sb_oVXfwxzh9tHIp4WvvFris",
   authDomain: "fanbase-4eba3.firebaseapp.com",
@@ -738,7 +737,6 @@ const firebaseConfig = {
   appId: "1:264324879296:web:5832c926bbc6e0ab442e25",
   measurementId: "G-542CS5CMS8"
 };
-        
 
         let app, auth, db;
         try {
@@ -755,16 +753,76 @@ const firebaseConfig = {
         let currentUser = null;
         let isSignUp = false;
 
+        // ==================== REFERRAL SYSTEM ====================
+        // Returns the base URL of the site (no trailing slash)
+        function getBaseUrl() {
+            return window.location.origin + window.location.pathname.replace(/\/index\.html$/, '').replace(/\/[^/]*$/, '');
+        }
+
+        // Generate a unique referral code for a user
+        function generateReferralCode(uid) {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = 'FANS-';
+            const seed = uid || String(Date.now());
+            for (let i = 0; i < 6; i++) {
+                code += chars[(seed.charCodeAt(i % seed.length) + i * 7) % chars.length];
+            }
+            return code;
+        }
+
+        // Build the personal referral link for a user
+        function getReferralLink(user) {
+            const base = window.location.origin + window.location.pathname.replace(/index\.html$/, '');
+            const baseUrl = base.endsWith('/') ? base : base + '/';
+            const code = user.referralCode || generateReferralCode(user.uid);
+            return baseUrl + 'index.html?ref=' + encodeURIComponent(code);
+        }
+
+        // Check for a ref= query param on page load and store it
+        function captureReferralCode() {
+            const params = new URLSearchParams(window.location.search);
+            const ref = params.get('ref');
+            if (ref) {
+                try {
+                    sessionStorage.setItem('fans_ref_pending', ref);
+                    localStorage.setItem('fans_ref_pending', ref);
+                } catch(e) {}
+            }
+        }
+
+        // Referral processing now happens inside saveUserToDB() and incrementReferrerCount()
+        // called only during a new signup (not login).
+
         // Load user from localStorage
         function loadState() {
             try {
                 const user = localStorage.getItem('fans_user');
                 if (user) {
                     currentUser = JSON.parse(user);
+                    // Ensure referral fields exist
+                    if (!currentUser.referralCode) {
+                        currentUser.referralCode = generateReferralCode(currentUser.uid);
+                        localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                    }
+                    if (!currentUser.referralLink) {
+                        currentUser.referralLink = getReferralLink(currentUser);
+                        localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                    }
+                    if (currentUser.referralCount === undefined) {
+                        currentUser.referralCount = 0;
+                        localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                    }
+                    // Check for locally stored referral count updates
+                    const stored = localStorage.getItem('fans_referral_counts');
+                    if (stored) {
+                        const counts = JSON.parse(stored);
+                        if (counts[currentUser.referralCode] !== undefined) {
+                            currentUser.referralCount = counts[currentUser.referralCode];
+                            localStorage.setItem('fans_user', JSON.stringify(currentUser));
+                        }
+                    }
                     updateUI(currentUser);
                 }
-                // Check for referral code in URL
-                checkReferralFromURL();
             } catch (e) {}
         }
 
@@ -831,9 +889,21 @@ const firebaseConfig = {
         }
 
         // ==================== AUTH ====================
+        function populateReferralInputFromPending() {
+            const refInput = document.getElementById('signupReferralCode');
+            if (!refInput) return;
+            const pendingRef = sessionStorage.getItem('fans_ref_pending') || localStorage.getItem('fans_ref_pending') || '';
+            refInput.value = pendingRef;
+        }
+
         function openAuthModal() {
+            const pendingRef = sessionStorage.getItem('fans_ref_pending') || localStorage.getItem('fans_ref_pending') || '';
+            if (pendingRef && !isSignUp) {
+                toggleAuthMode();
+            }
             document.getElementById('authModal').classList.add('active');
             document.body.style.overflow = 'hidden';
+            if (isSignUp) populateReferralInputFromPending();
         }
 
         function closeAuthModal() {
@@ -850,26 +920,8 @@ const firebaseConfig = {
             document.getElementById('switchText').textContent = isSignUp ? 'Already have an account?' : "Don't have an account?";
             document.getElementById('switchLink').textContent = isSignUp ? 'Sign In' : 'Sign Up';
             document.getElementById('nameGroup').style.display = isSignUp ? 'block' : 'none';
-        }
-
-        function signInWithGoogle() {
-            if (!auth) {
-                simulateLogin({ 
-                    displayName: 'Demo User', 
-                    email: 'demo@fans.com', 
-                    photoURL: 'https://ui-avatars.com/api/?name=Demo+User&background=d4af37&color=fff',
-                    uid: 'demo123'
-                });
-                return;
-            }
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => { 
-                    saveUserToDB(result.user);
-                    creditReferrer(); // Credit referrer on Google sign-in too
-                    simulateLogin(result.user); 
-                })
-                .catch((error) => { showAuthError(error.message); });
+            document.getElementById('referralGroup').style.display = isSignUp ? 'block' : 'none';
+            if (isSignUp) populateReferralInputFromPending();
         }
 
         function handleAuth(e) {
@@ -883,14 +935,28 @@ const firebaseConfig = {
             spinner.style.display = 'inline-block';
             btnText.style.display = 'none';
 
+            // Grab the referral code from the signup form (if in signup mode)
+            let formReferralCode = '';
+            if (isSignUp) {
+                const refInput = document.getElementById('signupReferralCode');
+                if (refInput) formReferralCode = refInput.value.trim().toUpperCase();
+            }
+
+            // Also check for a ?ref= URL param or previously stored pending referral
+            const urlRef = sessionStorage.getItem('fans_ref_pending') || localStorage.getItem('fans_ref_pending');
+            // The signup form field takes priority; fall back to the URL/session ref
+            const effectiveRefCode = formReferralCode || urlRef || '';
+
             if (!auth) {
+                // Demo mode — simulate signup or login
                 setTimeout(() => {
-                    simulateLogin({ 
-                        displayName: name || 'Demo User', 
-                        email: email, 
+                    const uid = 'demo_' + Date.now();
+                    simulateLogin({
+                        displayName: name || 'Demo User',
+                        email: email,
                         photoURL: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name || 'User') + '&background=d4af37&color=fff',
-                        uid: 'demo_' + Date.now()
-                    });
+                        uid: uid
+                    }, isSignUp, effectiveRefCode);
                     spinner.style.display = 'none';
                     btnText.style.display = 'inline';
                 }, 1000);
@@ -903,41 +969,171 @@ const firebaseConfig = {
                         return cred.user.updateProfile({ displayName: name }).then(() => cred.user);
                     })
                     .then((user) => {
-                        saveUserToDB(user);
-                        simulateLogin(user);
+                        return saveUserToDB(user, effectiveRefCode).then(() => {
+                            return simulateLogin(user, true, effectiveRefCode);
+                        });
                     })
                     .catch((err) => showAuthError(err.message))
                     .finally(() => { spinner.style.display = 'none'; btnText.style.display = 'inline'; });
             } else {
                 auth.signInWithEmailAndPassword(email, password)
-                    .then((cred) => { 
-                        saveUserToDB(cred.user);
-                        simulateLogin(cred.user); 
+                    .then((cred) => {
+                        return saveUserToDB(cred.user, '').then(() => {
+                            return simulateLogin(cred.user, false, '');
+                        });
                     })
                     .catch((err) => showAuthError(err.message))
                     .finally(() => { spinner.style.display = 'none'; btnText.style.display = 'inline'; });
             }
         }
 
-        function saveUserToDB(user) {
-            if (!db || !user) return;
-            db.collection('users').doc(user.uid).set({
+        function saveUserToDB(user, referredByCode) {
+            if (!db || !user) return Promise.resolve();
+
+            const refCode = generateReferralCode(user.uid);
+            const refLink = getReferralLink({ uid: user.uid, referralCode: refCode });
+            const normalizedReferralCode = (referredByCode || '').trim().toUpperCase();
+
+            const userData = {
                 displayName: user.displayName || 'Fan',
                 email: user.email,
                 photoURL: user.photoURL || '',
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                referralCode: refCode,
+                referralLink: refLink,
                 lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true }).catch(e => console.log('DB save skipped:', e.message));
+            };
+
+            // Only set referralCount/createdAt/referredBy on first write so we never
+            // clobber an existing count on subsequent logins.
+            return db.collection('users').doc(user.uid).get().then(existingDoc => {
+                if (!existingDoc.exists) {
+                    userData.referralCount = 0;
+                    userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    if (normalizedReferralCode && normalizedReferralCode !== refCode) {
+                        userData.referredBy = normalizedReferralCode;
+                        userData.referredAt = firebase.firestore.FieldValue.serverTimestamp();
+                    }
+                }
+                return db.collection('users').doc(user.uid).set(userData, { merge: true });
+            }).catch(e => console.log('DB save skipped:', e.message));
         }
 
-        function simulateLogin(user) {
+        function markReferralProcessedLocally(refCode, referredUserKey) {
+            try {
+                const raw = localStorage.getItem('fans_referral_registry');
+                const registry = raw ? JSON.parse(raw) : {};
+                if (!registry[refCode]) registry[refCode] = [];
+                if (registry[refCode].includes(referredUserKey)) return false;
+                registry[refCode].push(referredUserKey);
+                localStorage.setItem('fans_referral_registry', JSON.stringify(registry));
+
+                const stored = localStorage.getItem('fans_referral_counts');
+                const counts = stored ? JSON.parse(stored) : {};
+                counts[refCode] = registry[refCode].length;
+                localStorage.setItem('fans_referral_counts', JSON.stringify(counts));
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+
+        // Increments the referrer's count only if this referred user has never been counted before.
+        // Uses an atomic Firestore increment + batched write so the referrer's count can never
+        // be corrupted by a stale read, and returns a Promise so callers can wait for it to
+        // finish (important because we navigate away shortly after signup).
+        function incrementReferrerCount(refCode, referredUser) {
+            const normalizedRefCode = (refCode || '').trim().toUpperCase();
+            if (!normalizedRefCode || !referredUser) return Promise.resolve();
+
+            const referredUserKey = referredUser.uid || referredUser.email;
+            if (!referredUserKey) return Promise.resolve();
+
+            // Local fallback (works even without Firestore, e.g. demo mode)
+            const localIncremented = markReferralProcessedLocally(normalizedRefCode, referredUserKey);
+            if (localIncremented) {
+                try { localStorage.setItem('fans_referred_by', normalizedRefCode); } catch(e) {}
+            }
+
+            if (!db || !referredUser.uid) return Promise.resolve();
+
+            const referredUserRef = db.collection('users').doc(referredUser.uid);
+
+            return referredUserRef.get().then(referredDoc => {
+                const referredData = referredDoc.exists ? (referredDoc.data() || {}) : {};
+                // Already processed for this user — never double count.
+                if (referredData.referralProcessed === true) return;
+
+                return db.collection('users').where('referralCode', '==', normalizedRefCode).limit(1).get()
+                    .then(snapshot => {
+                        if (snapshot.empty) return;
+
+                        const referrerDoc = snapshot.docs[0];
+                        const referrerUid = referrerDoc.id;
+                        if (referrerUid === referredUser.uid) return; // no self-referral
+
+                        const batch = db.batch();
+                        batch.update(db.collection('users').doc(referrerUid), {
+                            referralCount: firebase.firestore.FieldValue.increment(1),
+                            lastReferredAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        batch.set(referredUserRef, {
+                            referredBy: normalizedRefCode,
+                            referredAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            referralProcessed: true
+                        }, { merge: true });
+                        return batch.commit();
+                    });
+            }).catch(e => console.log('Referral increment skipped:', e));
+        }
+
+        // user: the user object
+        // isNewSignup: true if this is a brand-new signup, false if it's a login
+        // referredByCode: the referral code entered in the form or from the URL
+        // Returns a Promise that resolves once the referral count (if any) has been
+        // safely written, so the caller can wait before navigating away.
+        function simulateLogin(user, isNewSignup, referredByCode) {
+            if (!user.referralCode) {
+                user.referralCode = generateReferralCode(user.uid);
+            }
+            if (!user.referralLink) {
+                user.referralLink = getReferralLink(user);
+            }
+            if (user.referralCount === undefined) {
+                user.referralCount = 0;
+            }
+
+            const normalizedReferralCode = (referredByCode || '').trim().toUpperCase();
+            let referralPromise = Promise.resolve();
+            if (isNewSignup && normalizedReferralCode && normalizedReferralCode !== user.referralCode) {
+                referralPromise = incrementReferrerCount(normalizedReferralCode, user);
+            }
+
+            sessionStorage.removeItem('fans_ref_pending');
+            localStorage.removeItem('fans_ref_pending');
+
+            const stored = localStorage.getItem('fans_referral_counts');
+            if (stored) {
+                const counts = JSON.parse(stored);
+                if (counts[user.referralCode] !== undefined) {
+                    user.referralCount = counts[user.referralCode];
+                }
+            }
+
             currentUser = user;
             try { localStorage.setItem('fans_user', JSON.stringify(user)); } catch(e) {}
-            creditReferrer(); // Credit the referrer if this user came via referral link
             updateUI(user);
             closeAuthModal();
             showToast('Welcome, ' + (user.displayName || 'Fan') + '! 🎉', 'success');
-            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+
+            // Wait for the referral write to finish (capped at 2.5s) before navigating away —
+            // otherwise the page unload can cancel the in-flight Firestore request and the
+            // referrer's count silently never increments.
+            return Promise.race([
+                referralPromise,
+                new Promise(resolve => setTimeout(resolve, 2500))
+            ]).finally(() => {
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 400);
+            });
         }
 
         function logout() {
@@ -971,38 +1167,6 @@ const firebaseConfig = {
             el.textContent = msg;
             el.style.display = 'block';
             setTimeout(() => el.style.display = 'none', 5000);
-        }
-
-        // ==================== REFERRAL TRACKING ====================
-        function checkReferralFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            const refCode = params.get('ref');
-            if (refCode && refCode.startsWith('FANS')) {
-                // Store the referral code so we can credit after sign-up
-                try { localStorage.setItem('fans_pending_referral', refCode); } catch(e) {}
-                // Clean URL
-                if (window.history.replaceState) {
-                    const cleanUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
-                    window.history.replaceState({}, document.title, cleanUrl);
-                }
-            }
-        }
-
-        function creditReferrer() {
-            try {
-                const pendingRef = localStorage.getItem('fans_pending_referral');
-                if (!pendingRef) return;
-
-                const registry = JSON.parse(localStorage.getItem('fans_referral_registry') || '{}');
-                if (registry[pendingRef]) {
-                    registry[pendingRef].count = (registry[pendingRef].count || 0) + 1;
-                } else {
-                    registry[pendingRef] = { count: 1, user: 'unknown' };
-                }
-                localStorage.setItem('fans_referral_registry', JSON.stringify(registry));
-                localStorage.removeItem('fans_pending_referral');
-                console.log('Referral credited to:', pendingRef);
-            } catch (e) {}
         }
 
         // ==================== DATA ====================
@@ -1148,8 +1312,8 @@ const firebaseConfig = {
             { 
                 image: 'https://images.unsplash.com/photo-1612287230217-8c7c6c170b95?w=600&q=80',
                 amount: '$50', 
-                title: 'Semi-Finalist Prediction', 
-                desc: 'Correctly predict all 4 semi-finalist teams and win $50 cash prize!', 
+                title: 'Score Prediction', 
+                desc: 'Correctly predict the exact score of France vs Spain or England vs Argentina and win $50 cash prize!', 
                 badge: 'Task 2' 
             },
             { 
@@ -1200,7 +1364,7 @@ const firebaseConfig = {
             { name: 'Gillette Stadium', city: 'Foxborough, MA, USA', capacity: '65,878', matches: 7, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Gillette_Stadium_%28Top_View%29.jpg/640px-Gillette_Stadium_%28Top_View%29.jpg' },
             { name: 'Lumen Field', city: 'Seattle, WA, USA', capacity: '69,000', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Lumen_Field_2011.jpg/640px-Lumen_Field_2011.jpg' },
             { name: 'BMO Field', city: 'Toronto, Canada', capacity: '30,000', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/BMO_Field_2016_East_Stand.jpg/640px-BMO_Field_2016_East_Stand.jpg' },
-            { name: "Levi's Stadium", city: 'Santa Clara, CA, USA', capacity: '68,500', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Levi%27s_Stadium_2014.jpg/640px-Levi%27s_Stadium_2014.jpg' },
+            { name: "Levi's Stadium", city: 'Santa Clara, CA, USA', capacity: '68,500', matches: 6, image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Levi%27s_Stadium_2014.jpg/640px-Levi%27s_Stadium_2014.jpg" },
             { name: 'Lincoln Financial Field', city: 'Philadelphia, PA, USA', capacity: '69,596', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Lincoln_Financial_Field_%28Aerial_view%29.jpg/640px-Lincoln_Financial_Field_%28Aerial_view%29.jpg' },
             { name: 'Arrowhead Stadium', city: 'Kansas City, MO, USA', capacity: '76,416', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Arrowhead_Stadium_2017.jpg/640px-Arrowhead_Stadium_2017.jpg' },
             { name: 'NRG Stadium', city: 'Houston, TX, USA', capacity: '72,220', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/NRG_Stadium_2017.jpg/640px-NRG_Stadium_2017.jpg' },
@@ -1420,6 +1584,7 @@ const firebaseConfig = {
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
+            captureReferralCode();
             loadState();
             loadLogo();
             createParticles();
