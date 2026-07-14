@@ -623,10 +623,10 @@
                     <div class="task-icon"><i class="fas fa-futbol"></i></div>
                     <div>
                         <div class="task-title">Task 2: Predict & Win</div>
-                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Predict scores for key matches</div>
+                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">Predict semi-finalists & winner</div>
                     </div>
                 </div>
-                <div class="task-desc">Predict the scores for France vs Spain and England vs Argentina. Enter your referral code for bonus entries!</div>
+                <div class="task-desc">Select 4 countries you think will reach the semi-finals and pick the World Cup winner. Enter your referral code for bonus entries!</div>
                 <div class="task-progress">
                     <div class="task-progress-bar" id="task2Progress" style="width: 0%"></div>
                 </div>
@@ -717,43 +717,39 @@
         </div>
     </div>
 
-    <!-- Task 2 Modal (UPDATED) -->
+    <!-- Task 2 Modal -->
     <div class="modal-overlay" id="task2Modal">
         <div class="modal" style="max-width: 650px;">
             <button class="modal-close" onclick="closeTask2Modal()"><i class="fas fa-times"></i></button>
-            <h2><i class="fas fa-futbol" style="color: var(--gold);"></i> Task 2: Predict Scores & Win</h2>
-            <p>Predict exact scores for these key matches and lock your referral code!</p>
+            <h2><i class="fas fa-futbol" style="color: var(--gold);"></i> Task 2: Predict & Win $50</h2>
+            <p>Make your predictions and enter your referral code for a chance to win amazing prizes!</p>
 
             <div class="task-modal-content">
-                <!-- New Step 1: France vs Spain -->
                 <div class="task-step" id="t2Step1">
                     <div class="task-step-header">
                         <div class="task-step-num">1</div>
-                        <div class="task-step-title">France 🇫🇷 vs Spain 🇪🇸</div>
+                        <div class="task-step-title">Pick 4 Semi-Finalists</div>
                     </div>
-                    <div class="task-step-desc">Enter your predicted score (e.g., 2-1)</div>
-                    <div class="form-group" style="display:flex; gap:1rem; align-items:center;">
-                        <input type="number" id="franceScore" placeholder="0" min="0" style="width:80px; text-align:center;" oninput="checkPredictions()">
-                        <span style="font-size:1.5rem;">-</span>
-                        <input type="number" id="spainScore" placeholder="0" min="0" style="width:80px; text-align:center;" oninput="checkPredictions()">
+                    <div class="task-step-desc">Select 4 countries you believe will reach the semi-finals. Correct predictions win <strong style="color:var(--gold)">$50</strong>!</div>
+                    <div class="country-select-grid" id="semiFinalistsGrid"></div>
+                    <div class="form-hint" style="margin-top:0.75rem;">
+                        <i class="fas fa-info-circle"></i> Selected: <span id="semiCount" style="color:var(--gold); font-weight:700;">0</span>/4 teams
                     </div>
+                    <div class="form-error" id="semiError">Please select exactly 4 teams</div>
                 </div>
 
-                <!-- New Step 2: England vs Argentina -->
                 <div class="task-step" id="t2Step2">
                     <div class="task-step-header">
                         <div class="task-step-num">2</div>
-                        <div class="task-step-title">England 🏴󠁧󠁢󠁥󠁮󠁧󠁿 vs Argentina 🇦🇷</div>
+                        <div class="task-step-title">Pick the World Cup Winner</div>
                     </div>
-                    <div class="task-step-desc">Enter your predicted score (e.g., 1-2)</div>
-                    <div class="form-group" style="display:flex; gap:1rem; align-items:center;">
-                        <input type="number" id="englandScore" placeholder="0" min="0" style="width:80px; text-align:center;" oninput="checkPredictions()">
-                        <span style="font-size:1.5rem;">-</span>
-                        <input type="number" id="argentinaScore" placeholder="0" min="0" style="width:80px; text-align:center;" oninput="checkPredictions()">
+                    <div class="task-step-desc">Select 1 team you believe will lift the trophy on July 19, 2026 at MetLife Stadium.</div>
+                    <div class="country-select-grid" id="winnerGrid"></div>
+                    <div class="form-hint" style="margin-top:0.75rem;">
+                        <i class="fas fa-crown"></i> Winner: <span id="winnerSelected" style="color:var(--gold); font-weight:700;">None</span>
                     </div>
                 </div>
 
-                <!-- Step 3: Referral Code (unchanged) -->
                 <div class="task-step" id="t2Step3">
                     <div class="task-step-header">
                         <div class="task-step-num">3</div>
@@ -791,14 +787,18 @@
     </div>
 
     <script>
+
         // ==================== FIREBASE CONFIG ====================
+        // Must match index.html so both pages share the same project/users collection.
         const firebaseConfig = {
-            apiKey: "AIzaSyDJ1zgLmA5sb_oVXfwxzh9tHIp4WvvFris",
+            apiKey: "@secret:GOOGLE_API_KEY",
             authDomain: "fanbase-4eba3.firebaseapp.com",
+            databaseURL: "https://fanbase-4eba3-default-rtdb.firebaseio.com",
             projectId: "fanbase-4eba3",
             storageBucket: "fanbase-4eba3.firebasestorage.app",
             messagingSenderId: "264324879296",
-            appId: "1:264324879296:web:5832c926bbc6e0ab442e25"
+            appId: "1:264324879296:web:5832c926bbc6e0ab442e25",
+            measurementId: "G-542CS5CMS8"
         };
 
         let app, auth, db;
@@ -815,17 +815,34 @@
         // ==================== STATE ====================
         let currentUser = null;
         let task1Data = { step1: false, step2: false, step3: false, team: '', regInfo: '' };
-        let task2Data = { 
-            franceScore: null, 
-            spainScore: null, 
-            englandScore: null, 
-            argentinaScore: null, 
-            code: '', 
-            codeLocked: false 
-        };
+        let task2Data = { semiFinalists: [], winner: '', code: '', codeLocked: false };
 
-        const flagsData = [ /* ... your full flagsData array ... */ ];
-        const prizesData = [ /* ... your full prizesData array ... */ ];
+        const flagsData = [
+            { name: 'Argentina', flag: '🇦🇷' }, { name: 'Australia', flag: '🇦🇺' }, { name: 'Austria', flag: '🇦🇹' },
+            { name: 'Belgium', flag: '🇧🇪' }, { name: 'Bosnia & Herz.', flag: '🇧🇦' }, { name: 'Brazil', flag: '🇧🇷' },
+            { name: 'Canada', flag: '🇨🇦' }, { name: 'Cape Verde', flag: '🇨🇻' }, { name: 'Colombia', flag: '🇨🇴' },
+            { name: 'Croatia', flag: '🇭🇷' }, { name: 'Czechia', flag: '🇨🇿' }, { name: 'DR Congo', flag: '🇨🇩' },
+            { name: 'Ecuador', flag: '🇪🇨' }, { name: 'Egypt', flag: '🇪🇬' }, { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
+            { name: 'France', flag: '🇫🇷' }, { name: 'Germany', flag: '🇩🇪' }, { name: 'Ghana', flag: '🇬🇭' },
+            { name: 'Haiti', flag: '🇭🇹' }, { name: 'Iran', flag: '🇮🇷' }, { name: 'Iraq', flag: '🇮🇶' },
+            { name: 'Ivory Coast', flag: '🇨🇮' }, { name: 'Japan', flag: '🇯🇵' }, { name: 'Mexico', flag: '🇲🇽' },
+            { name: 'Morocco', flag: '🇲🇦' }, { name: 'Netherlands', flag: '🇳🇱' }, { name: 'New Zealand', flag: '🇳🇿' },
+            { name: 'Norway', flag: '🇳🇴' }, { name: 'Panama', flag: '🇵🇦' }, { name: 'Paraguay', flag: '🇵🇾' },
+            { name: 'Portugal', flag: '🇵🇹' }, { name: 'Qatar', flag: '🇶🇦' }, { name: 'Saudi Arabia', flag: '🇸🇦' },
+            { name: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }, { name: 'Senegal', flag: '🇸🇳' }, { name: 'South Africa', flag: '🇿🇦' },
+            { name: 'South Korea', flag: '🇰🇷' }, { name: 'Spain', flag: '🇪🇸' }, { name: 'Sweden', flag: '🇸🇪' },
+            { name: 'Switzerland', flag: '🇨🇭' }, { name: 'Tunisia', flag: '🇹🇳' }, { name: 'USA', flag: '🇺🇸' },
+            { name: 'Uruguay', flag: '🇺🇾' }, { name: 'Uzbekistan', flag: '🇺🇿' }
+        ];
+
+        const prizesData = [
+            { image: 'https://images.unsplash.com/photo-1612287230217-8c7c6c170b95?w=600&q=80', amount: '$50', title: 'Semi-Finalist Prediction', desc: 'Correctly predict all 4 semi-finalist teams and win $50 cash prize!', badge: 'Task 2' },
+            { image: 'https://images.unsplash.com/photo-1574634534894-89d7a3f2f7c6?w=600&q=80', amount: '$500', title: 'World Cup Winner', desc: 'Pick the tournament champion correctly and take home the grand $500 prize!', badge: 'Task 2' },
+            { image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=600&q=80', amount: '$25', title: 'Early Bird Entry', desc: 'Complete Task 1 before July 10th and receive a $25 app credit bonus.', badge: 'Task 1' },
+            { image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=600&q=80', amount: '$100', title: 'Referral Champion', desc: 'Refer 5 friends using your locked code and earn $100 when they complete tasks.', badge: 'Both' },
+            { image: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&q=80', amount: 'Jersey', title: 'Signed Jersey', desc: 'Random draw among all participants who complete both tasks. Win a signed team jersey!', badge: 'Lucky Draw' },
+            { image: 'https://images.unsplash.com/photo-1605901309584-818e25960a8f?w=600&q=80', amount: 'Console', title: 'PS5 / Xbox', desc: 'One lucky winner will receive a brand new gaming console. Complete all tasks to enter!', badge: 'Mega Draw' }
+        ];
 
         // ==================== REFERRAL HELPERS ====================
         function generateReferralCode(uid) {
@@ -845,23 +862,79 @@
             return baseUrl + 'index.html?ref=' + encodeURIComponent(code);
         }
 
-        // ==================== AUTH & INIT ====================
-        async function loadState() {
-            const user = auth.currentUser;
-            if (!user) {
+        // ==================== AUTH & INIT (Firestore) ====================
+        // Session comes from Firebase Auth; user profile + task progress come from
+        // users/{uid} in Firestore. No localStorage anywhere on this page.
+        let saveTimer = null;
+        let userDocUnsub = null;
+
+        function loadState() {
+            if (!auth) {
+                // Firebase failed to init — nothing we can do without a session.
                 window.location.href = 'index.html';
                 return;
             }
-            try {
-                const doc = await db.collection('users').doc(user.uid).get();
-                if (doc.exists) {
-                    currentUser = doc.data();
+            auth.onAuthStateChanged(async (fbUser) => {
+                if (!fbUser) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+                try {
+                    let data = {};
+                    if (db) {
+                        const doc = await db.collection('users').doc(fbUser.uid).get();
+                        data = doc.exists ? (doc.data() || {}) : {};
+                    }
+
+                    currentUser = {
+                        uid: fbUser.uid,
+                        email: fbUser.email,
+                        displayName: data.displayName || fbUser.displayName || 'Fan',
+                        photoURL: data.photoURL || fbUser.photoURL || '',
+                        referralCode: data.referralCode || generateReferralCode(fbUser.uid),
+                        referralLink: data.referralLink || '',
+                        referralCount: typeof data.referralCount === 'number' ? data.referralCount : 0
+                    };
+                    if (!currentUser.referralLink) currentUser.referralLink = getReferralLink(currentUser);
+
+                    if (data.task1) task1Data = Object.assign(task1Data, data.task1);
+                    if (data.task2) task2Data = Object.assign(task2Data, data.task2);
+
                     updateUI(currentUser);
                     updateDashboard();
+
+                    // Live updates for referral count and any task edits made elsewhere.
+                    if (db && userDocUnsub) userDocUnsub();
+                    if (db) {
+                        userDocUnsub = db.collection('users').doc(fbUser.uid)
+                            .onSnapshot(snap => {
+                                if (!snap.exists) return;
+                                const d = snap.data() || {};
+                                if (typeof d.referralCount === 'number') {
+                                    currentUser.referralCount = d.referralCount;
+                                    updateReferralStats(currentUser);
+                                    const el = document.getElementById('referralCount');
+                                    if (el) el.textContent = d.referralCount;
+                                }
+                            }, err => console.log('User snapshot skipped:', err.message));
+                    }
+                } catch (e) {
+                    console.log('Dashboard load skipped:', e.message);
                 }
-            } catch (e) {
-                console.log('Firebase load failed');
-            }
+            });
+        }
+
+        // Persist task1/task2 progress to Firestore (debounced to coalesce rapid clicks).
+        function saveState() {
+            if (!db || !currentUser || !currentUser.uid) return;
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => {
+                db.collection('users').doc(currentUser.uid).set({
+                    task1: task1Data,
+                    task2: task2Data,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true }).catch(e => console.log('Task save skipped:', e.message));
+            }, 300);
         }
 
         function updateUI(user) {
@@ -880,6 +953,7 @@
             }
             if (dashName) dashName.textContent = user.displayName || 'Fan';
 
+            // Update referral section
             const refCodeDisplay = document.getElementById('referralCodeDisplay');
             const refLinkInput = document.getElementById('referralLinkInput');
             const refCount = document.getElementById('referralCount');
@@ -909,18 +983,23 @@
             const shareText = 'Join me on Fans for the 2026 FIFA World Cup! Predict, compete, and win prizes. Use my link to sign up:';
             const fullText = shareText + ' ' + link;
 
+            // WhatsApp
             const wa = document.getElementById('shareWhatsapp');
             if (wa) wa.href = 'https://wa.me/?text=' + encodeURIComponent(fullText);
 
+            // Facebook
             const fb = document.getElementById('shareFacebook');
             if (fb) fb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link) + '&quote=' + encodeURIComponent(shareText);
 
+            // Twitter / X
             const tw = document.getElementById('shareTwitter');
             if (tw) tw.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(link);
 
+            // Telegram
             const tg = document.getElementById('shareTelegram');
             if (tg) tg.href = 'https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + encodeURIComponent(shareText);
 
+            // Copy link
             const copyBtn = document.getElementById('copyLinkBtn');
             if (copyBtn) {
                 copyBtn.onclick = function(e) {
@@ -929,6 +1008,7 @@
                 };
             }
 
+            // Native share (Web Share API)
             const nativeBtn = document.getElementById('nativeShareBtn');
             if (nativeBtn) {
                 nativeBtn.onclick = function(e) {
@@ -940,6 +1020,7 @@
                             url: link
                         }).catch(function(err) {});
                     } else {
+                        // Fallback: copy link
                         copyToClipboard(link);
                     }
                 };
@@ -973,9 +1054,10 @@
         }
 
         function logout() {
-            if (auth) auth.signOut();
-            currentUser = null;
-            window.location.href = 'index.html';
+            if (userDocUnsub) { try { userDocUnsub(); } catch(e) {} userDocUnsub = null; }
+            const done = () => { window.location.href = 'index.html'; };
+            if (auth) auth.signOut().then(done).catch(done);
+            else done();
         }
 
         // ==================== DASHBOARD ====================
@@ -1001,8 +1083,8 @@
 
             // Task 2 progress
             let t2Progress = 0;
-            if (task2Data.franceScore !== null && task2Data.spainScore !== null) t2Progress++;
-            if (task2Data.englandScore !== null && task2Data.argentinaScore !== null) t2Progress++;
+            if (task2Data.semiFinalists.length === 4) t2Progress++;
+            if (task2Data.winner) t2Progress++;
             if (task2Data.codeLocked) t2Progress++;
             const t2Bar = document.getElementById('task2Progress');
             const t2Text = document.getElementById('task2ProgressText');
@@ -1024,10 +1106,17 @@
 
             if (tasksCompleted) tasksCompleted.textContent = (t1Progress === 3 ? 1 : 0) + (t2Progress === 3 ? 1 : 0) + '/2';
             if (prizesWon) prizesWon.textContent = '$' + ((t1Progress === 3 ? 10 : 0) + (t2Progress === 3 ? 50 : 0));
-            if (teamsSelected) teamsSelected.textContent = '2';
+            if (teamsSelected) teamsSelected.textContent = task2Data.semiFinalists.length;
             if (referralCount) referralCount.textContent = currentUser.referralCount || 0;
 
+            // Update referral stats section
             updateReferralStats(currentUser);
+
+            // Check if we should auto-open task 2 (from claim page)
+            if (sessionStorage.getItem('fans_open_task2') === 'true') {
+                sessionStorage.removeItem('fans_open_task2');
+                setTimeout(function() { openTask2Modal(); }, 500);
+            }
         }
 
         // ==================== TASK 1 ====================
@@ -1078,7 +1167,7 @@
             const s1 = document.getElementById('t1Step1Success');
             if (s1) s1.style.display = 'block';
             checkT1Complete();
-            updateDashboard();
+            saveState();
             showToast('Step 1 completed!', 'success');
         }
 
@@ -1092,7 +1181,7 @@
                 const s2 = document.getElementById('t1Step2Success');
                 if (s2) s2.style.display = 'block';
                 checkT1Complete();
-                updateDashboard();
+                saveState();
             }
         }
 
@@ -1106,7 +1195,7 @@
                 const s3 = document.getElementById('t1Step3Success');
                 if (s3) s3.style.display = 'block';
                 checkT1Complete();
-                updateDashboard();
+                saveState();
             }
         }
 
@@ -1116,6 +1205,7 @@
         }
 
         function confirmTask1() {
+            saveState();
             closeTask1Modal();
             updateDashboard();
             showToast('Task 1 completed! You earned $10 entry bonus!', 'success');
@@ -1130,15 +1220,8 @@
                 document.body.style.overflow = 'hidden';
             }
 
-            const franceScoreEl = document.getElementById('franceScore');
-            const spainScoreEl = document.getElementById('spainScore');
-            const englandScoreEl = document.getElementById('englandScore');
-            const argentinaScoreEl = document.getElementById('argentinaScore');
-
-            if (franceScoreEl && task2Data.franceScore !== null) franceScoreEl.value = task2Data.franceScore;
-            if (spainScoreEl && task2Data.spainScore !== null) spainScoreEl.value = task2Data.spainScore;
-            if (englandScoreEl && task2Data.englandScore !== null) englandScoreEl.value = task2Data.englandScore;
-            if (argentinaScoreEl && task2Data.argentinaScore !== null) argentinaScoreEl.value = task2Data.argentinaScore;
+            populateCountryGrid('semiFinalistsGrid', task2Data.semiFinalists, 'semi');
+            populateCountryGrid('winnerGrid', task2Data.winner ? [task2Data.winner] : [], 'winner');
 
             if (task2Data.codeLocked) {
                 const codeInput = document.getElementById('t2CodeInput');
@@ -1161,19 +1244,67 @@
             document.body.style.overflow = '';
         }
 
-        function checkPredictions() {
-            const france = parseInt(document.getElementById('franceScore').value) || null;
-            const spain = parseInt(document.getElementById('spainScore').value) || null;
-            const england = parseInt(document.getElementById('englandScore').value) || null;
-            const argentina = parseInt(document.getElementById('argentinaScore').value) || null;
+        function populateCountryGrid(gridId, selected, mode) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+            grid.innerHTML = '';
+            flagsData.forEach(c => {
+                const item = document.createElement('div');
+                item.className = 'country-select-item';
+                if (selected.includes(c.name)) item.classList.add('selected');
+                item.innerHTML = `
+                    <span class="flag">${c.flag}</span>
+                    <span class="name">${c.name}</span>
+                    <span class="check"><i class="fas fa-check-circle"></i></span>
+                `;
+                item.onclick = () => selectCountry(c.name, mode, item);
+                grid.appendChild(item);
+            });
+        }
 
-            task2Data.franceScore = france;
-            task2Data.spainScore = spain;
-            task2Data.englandScore = england;
-            task2Data.argentinaScore = argentina;
-
+        function selectCountry(name, mode, element) {
+            if (mode === 'semi') {
+                const idx = task2Data.semiFinalists.indexOf(name);
+                if (idx > -1) {
+                    task2Data.semiFinalists.splice(idx, 1);
+                    element.classList.remove('selected');
+                } else if (task2Data.semiFinalists.length < 4) {
+                    task2Data.semiFinalists.push(name);
+                    element.classList.add('selected');
+                } else {
+                    showToast('You can only select 4 teams!', 'error');
+                    return;
+                }
+                const semiCount = document.getElementById('semiCount');
+                const semiError = document.getElementById('semiError');
+                if (semiCount) semiCount.textContent = task2Data.semiFinalists.length;
+                if (semiError) semiError.style.display = task2Data.semiFinalists.length === 4 ? 'none' : 'block';
+            } else {
+                document.querySelectorAll('#winnerGrid .country-select-item').forEach(el => el.classList.remove('selected'));
+                task2Data.winner = name;
+                element.classList.add('selected');
+                const winnerSelected = document.getElementById('winnerSelected');
+                if (winnerSelected) winnerSelected.textContent = name;
+            }
+            saveState();
             checkT2Complete();
         }
+
+        // Code handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const t2CodeInput = document.getElementById('t2CodeInput');
+            if (t2CodeInput) {
+                t2CodeInput.addEventListener('blur', function() {
+                    const val = this.value.trim();
+                    if (val && !task2Data.codeLocked) {
+                        const confirmDialog = document.getElementById('codeConfirmDialog');
+                        const confirmCodeText = document.getElementById('confirmCodeText');
+                        if (confirmDialog) confirmDialog.style.display = 'block';
+                        if (confirmCodeText) confirmCodeText.textContent = val;
+                    }
+                });
+            }
+        });
 
         function cancelCodeConfirm() {
             const confirmDialog = document.getElementById('codeConfirmDialog');
@@ -1189,6 +1320,7 @@
 
             task2Data.code = code;
             task2Data.codeLocked = true;
+            saveState();
 
             const codeInputEl = document.getElementById('t2CodeInput');
             const confirmDialog = document.getElementById('codeConfirmDialog');
@@ -1206,14 +1338,12 @@
 
         function checkT2Complete() {
             const btn = document.getElementById('t2ConfirmBtn');
-            const complete = 
-                (task2Data.franceScore !== null && task2Data.spainScore !== null) &&
-                (task2Data.englandScore !== null && task2Data.argentinaScore !== null) &&
-                task2Data.codeLocked;
+            const complete = task2Data.semiFinalists.length === 4 && task2Data.winner && task2Data.codeLocked;
             if (btn) btn.disabled = !complete;
         }
 
         function confirmTask2() {
+            saveState();
             closeTask2Modal();
             updateDashboard();
             showToast('Task 2 submitted! You are entered to win $50!', 'success');
@@ -1229,7 +1359,7 @@
                 const card = document.createElement('div');
                 card.className = 'prize-card';
                 card.innerHTML = `
-                    <img src="\( {prize.image}" alt=" \){prize.title}" class="prize-image" loading="lazy" onerror="this.style.display='none'">
+                    <img src="${prize.image}" alt="${prize.title}" class="prize-image" loading="lazy" onerror="this.style.display='none'">
                     <div class="prize-content">
                         <div class="prize-amount">${prize.amount}</div>
                         <div class="prize-title">${prize.title}</div>
