@@ -790,16 +790,17 @@
 
         // ==================== FIREBASE CONFIG ====================
         // Must match index.html so both pages share the same project/users collection.
-        const firebaseConfig = {
-            apiKey: "@secret:GOOGLE_API_KEY",
-            authDomain: "fanbase-4eba3.firebaseapp.com",
-            databaseURL: "https://fanbase-4eba3-default-rtdb.firebaseio.com",
-            projectId: "fanbase-4eba3",
-            storageBucket: "fanbase-4eba3.firebasestorage.app",
-            messagingSenderId: "264324879296",
-            appId: "1:264324879296:web:5832c926bbc6e0ab442e25",
-            measurementId: "G-542CS5CMS8"
-        };
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDJ1zgLmA5sb_oVXfwxzh9tHIp4WvvFris",
+  authDomain: "fanbase-4eba3.firebaseapp.com",
+  databaseURL: "https://fanbase-4eba3-default-rtdb.firebaseio.com",
+  projectId: "fanbase-4eba3",
+  storageBucket: "fanbase-4eba3.firebasestorage.app",
+  messagingSenderId: "264324879296",
+  appId: "1:264324879296:web:5832c926bbc6e0ab442e25",
+  measurementId: "G-542CS5CMS8"
+};
 
         let app, auth, db;
         try {
