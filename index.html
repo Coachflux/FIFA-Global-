@@ -27,10 +27,10 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--primary);
-            color: var(--white);
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--primary); 
+            color: var(--white); 
             overflow-x: hidden;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
@@ -40,21 +40,22 @@
         ::-webkit-scrollbar-track { background: var(--primary); }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
+        /* ========== NAVIGATION ========== */
         .navbar {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: rgba(10, 10, 26, 0.95); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border); 
             padding: 0.75rem 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
             transition: all 0.3s ease;
         }
-        .navbar.scrolled {
-            padding: 0.5rem 1.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        .navbar.scrolled { 
+            padding: 0.5rem 1.5rem; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
             background: rgba(10, 10, 26, 0.98);
         }
-        .nav-brand {
-            display: flex; align-items: center; gap: 0.75rem;
+        .nav-brand { 
+            display: flex; align-items: center; gap: 0.75rem; 
             cursor: pointer; text-decoration: none;
         }
         .nav-logo {
@@ -62,82 +63,83 @@
             object-fit: cover; border: 2px solid var(--gold);
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
-        .nav-brand-text {
+        .nav-brand-text { 
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem; font-weight: 800;
+            font-size: 1.5rem; font-weight: 800; 
             color: var(--white);
             letter-spacing: -0.5px;
         }
-        .nav-links {
-            display: flex; gap: 1.5rem; align-items: center;
+        .nav-links { 
+            display: flex; gap: 1.5rem; align-items: center; 
             list-style: none;
         }
-        .nav-links a {
-            color: rgba(255,255,255,0.7); text-decoration: none;
+        .nav-links a { 
+            color: rgba(255,255,255,0.7); text-decoration: none; 
             font-weight: 500; font-size: 0.875rem;
-            transition: all 0.3s; position: relative;
+            transition: all 0.3s; position: relative; 
             padding: 0.5rem 0;
             cursor: pointer;
             border: none; background: none;
             font-family: inherit;
         }
         .nav-links a:hover, .nav-links a.active { color: var(--gold); }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: 0; left: 0;
-            width: 0; height: 2px; background: var(--gradient-gold);
+        .nav-links a::after { 
+            content: ''; position: absolute; bottom: 0; left: 0; 
+            width: 0; height: 2px; background: var(--gradient-gold); 
             transition: width 0.3s; border-radius: 2px;
         }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
         .nav-user { display: flex; align-items: center; gap: 1rem; }
-        .user-avatar {
-            width: 36px; height: 36px; border-radius: 50%;
+        .user-avatar { 
+            width: 36px; height: 36px; border-radius: 50%; 
             object-fit: cover; border: 2px solid var(--gold);
             cursor: pointer; display: none;
         }
-        .user-name {
+        .user-name { 
             font-weight: 600; color: var(--gold); display: none;
             font-size: 0.85rem;
         }
-        .btn {
-            padding: 0.6rem 1.4rem; border-radius: 12px; border: none;
-            cursor: pointer; font-weight: 600; transition: all 0.3s;
-            text-decoration: none; display: inline-flex;
+        .btn { 
+            padding: 0.6rem 1.4rem; border-radius: 12px; border: none; 
+            cursor: pointer; font-weight: 600; transition: all 0.3s; 
+            text-decoration: none; display: inline-flex; 
             align-items: center; gap: 0.5rem; font-size: 0.875rem;
             font-family: 'Inter', sans-serif;
             justify-content: center;
         }
-        .btn-primary {
-            background: var(--gradient-gold); color: var(--primary);
+        .btn-primary { 
+            background: var(--gradient-gold); color: var(--primary); 
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold); }
-        .btn-outline {
-            background: transparent; border: 2px solid var(--gold);
-            color: var(--gold);
+        .btn-outline { 
+            background: transparent; border: 2px solid var(--gold); 
+            color: var(--gold); 
         }
         .btn-outline:hover { background: var(--gold); color: var(--primary); }
-        .btn-google {
-            background: #fff; color: #333; border: 1px solid #ddd;
+        .btn-google { 
+            background: #fff; color: #333; border: 1px solid #ddd; 
             width: 100%;
         }
         .btn-google:hover { background: #f8f9fa; }
         .btn-google i { color: #ea4335; font-size: 1.1rem; }
-        .btn-play {
+        .btn-play { 
             background: #000; color: #fff; border: 1px solid #333;
         }
         .btn-play i { color: #34a853; font-size: 1.2rem; }
         .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; }
         .btn-lg { padding: 0.875rem 2rem; font-size: 1rem; }
         .btn-glow { animation: glow 2s infinite; }
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px rgba(212,175,55,0.4); }
-            50% { box-shadow: 0 0 25px rgba(212,175,55,0.6); }
+        @keyframes glow { 
+            0%, 100% { box-shadow: 0 0 5px rgba(212,175,55,0.4); } 
+            50% { box-shadow: 0 0 25px rgba(212,175,55,0.6); } 
         }
-        .mobile-menu-btn {
-            display: none; background: none; border: none;
-            color: var(--white); font-size: 1.5rem; cursor: pointer;
+        .mobile-menu-btn { 
+            display: none; background: none; border: none; 
+            color: var(--white); font-size: 1.5rem; cursor: pointer; 
         }
 
+        /* ========== HERO SECTION ========== */
         .hero {
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden; padding: 6rem 1.5rem 4rem;
@@ -154,10 +156,10 @@
             pointer-events: none;
         }
         .hero-particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
-        .particle {
-            position: absolute; width: 4px; height: 4px;
-            background: var(--gold); border-radius: 50%;
-            opacity: 0.3; animation: float 15s infinite;
+        .particle { 
+            position: absolute; width: 4px; height: 4px; 
+            background: var(--gold); border-radius: 50%; 
+            opacity: 0.3; animation: float 15s infinite; 
         }
         @keyframes float {
             0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
@@ -169,14 +171,14 @@
         .hero-badge {
             display: inline-flex; align-items: center; gap: 0.5rem;
             background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold);
-            padding: 0.5rem 1.5rem; border-radius: 50px;
+            padding: 0.5rem 1.5rem; border-radius: 50px; 
             font-size: 0.85rem; color: var(--gold);
             margin-bottom: 1.5rem; animation: pulse 2s infinite;
             font-weight: 600;
         }
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
-            50% { box-shadow: 0 0 0 12px rgba(212, 175, 55, 0); }
+        @keyframes pulse { 
+            0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 
+            50% { box-shadow: 0 0 0 12px rgba(212, 175, 55, 0); } 
         }
         .hero-logo-area {
             margin-bottom: 1.5rem;
@@ -197,37 +199,38 @@
             cursor: pointer; transition: all 0.3s;
         }
         .hero-logo-change:hover { color: var(--gold); border-color: var(--gold); background: rgba(212,175,55,0.1); }
-        .hero h1 {
-            font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 900; line-height: 1.1;
+        .hero h1 { 
+            font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 900; line-height: 1.1; 
             margin-bottom: 1.25rem; font-family: 'Space Grotesk', sans-serif;
         }
-        .hero h1 span {
+        .hero h1 span { 
             background: var(--gradient-gold);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text; display: block;
         }
-        .hero-subtitle {
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 2rem; max-width: 600px;
+        .hero-subtitle { 
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem); 
+            color: rgba(255,255,255,0.7); 
+            margin-bottom: 2rem; max-width: 600px; 
             margin-left: auto; margin-right: auto; line-height: 1.7;
             padding: 0 1rem;
         }
         .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         .hero-image { margin-top: 2.5rem; position: relative; }
-        .hero-image img {
-            max-width: 400px; width: 100%; border-radius: 20px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            animation: levitate 6s ease-in-out infinite;
+        .hero-image img { 
+            max-width: 400px; width: 100%; border-radius: 20px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
+            animation: levitate 6s ease-in-out infinite; 
         }
-        @keyframes levitate {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        @keyframes levitate { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-15px); } 
         }
 
+        /* ========== STATS BAR ========== */
         .stats-bar {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
-            padding: 2rem 1.5rem; background: rgba(18, 18, 42, 0.6);
+            padding: 2rem 1.5rem; background: rgba(18, 18, 42, 0.6); 
             border-top: 1px solid var(--glass-border);
             border-bottom: 1px solid var(--glass-border);
         }
@@ -237,30 +240,32 @@
             width: 1px; background: var(--glass-border);
         }
         .stat-item:last-child::after { display: none; }
-        .stat-number {
-            font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900;
+        .stat-number { 
+            font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; 
             background: var(--gradient-gold);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; font-weight: 500; }
 
+        /* ========== SECTIONS ========== */
         .section { padding: 4rem 1.5rem; max-width: 1400px; margin: 0 auto; }
         .section-header { text-align: center; margin-bottom: 2.5rem; }
-        .section-header h2 {
+        .section-header h2 { 
             font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 800; margin-bottom: 0.75rem;
             font-family: 'Space Grotesk', sans-serif;
         }
-        .section-header p {
-            color: rgba(255,255,255,0.6); max-width: 600px;
+        .section-header p { 
+            color: rgba(255,255,255,0.6); max-width: 600px; 
             margin: 0 auto; line-height: 1.7; font-size: 0.95rem;
             padding: 0 1rem;
         }
-        .section-header .line {
-            width: 60px; height: 3px; background: var(--gradient-gold);
-            margin: 1rem auto; border-radius: 2px;
+        .section-header .line { 
+            width: 60px; height: 3px; background: var(--gradient-gold); 
+            margin: 1rem auto; border-radius: 2px; 
         }
 
+        /* ========== KNOCKOUT TABS ========== */
         .knockout-tabs {
             display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
             margin-bottom: 2rem;
@@ -279,6 +284,7 @@
         .knockout-round.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* ========== GROUPS ========== */
         .groups-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
         .group-card {
             background: var(--glass); border: 1px solid var(--glass-border);
@@ -289,8 +295,8 @@
         .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
         .group-title { font-size: 1rem; font-weight: 700; color: var(--gold); font-family: 'Space Grotesk'; }
         .group-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        .group-table th {
-            text-align: left; padding: 0.4rem; font-size: 0.65rem;
+        .group-table th { 
+            text-align: left; padding: 0.4rem; font-size: 0.65rem; 
             color: rgba(255,255,255,0.4); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
         }
         .group-table td { padding: 0.5rem 0.4rem; border-top: 1px solid var(--glass-border); }
@@ -303,31 +309,32 @@
         .stat-box.d { color: #fbbc05; font-weight: 600; }
         .stat-box.l { color: #ea4335; font-weight: 600; }
 
+        /* ========== KNOCKOUT MATCHES ========== */
         .knockout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
         .match-card {
             background: rgba(255,255,255,0.04); border-radius: 14px; padding: 1.25rem;
             border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s;
         }
         .match-card:hover { border-color: var(--gold); transform: scale(1.02); }
-        .match-date {
-            font-size: 0.75rem; color: var(--gold); margin-bottom: 0.5rem;
+        .match-date { 
+            font-size: 0.75rem; color: var(--gold); margin-bottom: 0.5rem; 
             font-weight: 600; display: flex; align-items: center; gap: 0.5rem;
         }
         .match-teams { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
         .match-team { display: flex; align-items: center; gap: 0.4rem; font-weight: 600; font-size: 0.85rem; }
         .match-team .flag { font-size: 1.3rem; }
-        .match-score {
-            font-size: 1rem; font-weight: 800; color: var(--gold);
-            background: rgba(212, 175, 55, 0.1); padding: 0.25rem 0.75rem;
+        .match-score { 
+            font-size: 1rem; font-weight: 800; color: var(--gold); 
+            background: rgba(212, 175, 55, 0.1); padding: 0.25rem 0.75rem; 
             border-radius: 8px; font-family: 'Space Grotesk'; white-space: nowrap;
         }
-        .match-info {
-            font-size: 0.75rem; color: rgba(255,255,255,0.5);
-            margin-top: 0.5rem; text-align: center;
+        .match-info { 
+            font-size: 0.75rem; color: rgba(255,255,255,0.5); 
+            margin-top: 0.5rem; text-align: center; 
         }
-        .match-status {
-            display: inline-block; padding: 0.15rem 0.5rem;
-            border-radius: 4px; font-size: 0.65rem; font-weight: 700;
+        .match-status { 
+            display: inline-block; padding: 0.15rem 0.5rem; 
+            border-radius: 4px; font-size: 0.65rem; font-weight: 700; 
             margin-left: auto; text-transform: uppercase; letter-spacing: 0.5px;
         }
         .status-live { background: #ea4335; color: white; animation: blink 1.5s infinite; }
@@ -335,6 +342,7 @@
         .status-upcoming { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
+        /* ========== STADIUMS ========== */
         .stadiums-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         .stadium-card {
             position: relative; border-radius: 20px; overflow: hidden; height: 240px;
@@ -349,38 +357,40 @@
             padding: 2rem 1.25rem 1.25rem;
         }
         .stadium-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
-        .stadium-location {
-            font-size: 0.8rem; color: rgba(255,255,255,0.7);
-            display: flex; align-items: center; gap: 0.5rem;
+        .stadium-location { 
+            font-size: 0.8rem; color: rgba(255,255,255,0.7); 
+            display: flex; align-items: center; gap: 0.5rem; 
         }
-        .stadium-capacity {
-            position: absolute; top: 1rem; right: 1rem;
-            background: rgba(10, 10, 26, 0.8); padding: 0.4rem 0.8rem;
-            border-radius: 50px; font-size: 0.75rem; font-weight: 600;
+        .stadium-capacity { 
+            position: absolute; top: 1rem; right: 1rem; 
+            background: rgba(10, 10, 26, 0.8); padding: 0.4rem 0.8rem; 
+            border-radius: 50px; font-size: 0.75rem; font-weight: 600; 
             border: 1px solid var(--gold); backdrop-filter: blur(10px);
         }
 
+        /* ========== FLAGS / TEAMS ========== */
         .flags-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.75rem; }
         .flag-item {
             background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 12px; padding: 1rem 0.5rem; text-align: center;
+            border-radius: 12px; padding: 1rem 0.5rem; text-align: center; 
             transition: all 0.3s; cursor: pointer;
         }
-        .flag-item:hover {
-            transform: translateY(-5px); border-color: var(--gold);
+        .flag-item:hover { 
+            transform: translateY(-5px); border-color: var(--gold); 
             background: rgba(212, 175, 55, 0.05); box-shadow: var(--shadow-gold);
         }
         .flag-item .flag-emoji { font-size: 2.2rem; display: block; margin-bottom: 0.4rem; }
         .flag-item .flag-name { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.8); }
 
+        /* ========== PRIZES ========== */
         .prizes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
         .prize-card {
             background: var(--glass); border: 1px solid var(--glass-border);
             border-radius: 20px; overflow: hidden;
             transition: all 0.4s; position: relative;
         }
-        .prize-card:hover {
-            transform: translateY(-8px); border-color: var(--gold);
+        .prize-card:hover { 
+            transform: translateY(-8px); border-color: var(--gold); 
             box-shadow: var(--shadow-gold);
         }
         .prize-image {
@@ -388,7 +398,7 @@
             border-bottom: 1px solid var(--glass-border);
         }
         .prize-content { padding: 1.5rem; text-align: center; }
-        .prize-amount {
+        .prize-amount { 
             font-size: 1.75rem; font-weight: 900; color: var(--gold);
             font-family: 'Space Grotesk'; margin-bottom: 0.5rem;
         }
@@ -400,6 +410,7 @@
             margin-top: 1rem;
         }
 
+        /* ========== MODALS ========== */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
@@ -417,10 +428,10 @@
             margin: auto;
         }
         .modal-overlay.active .modal { transform: scale(1); }
-        .modal-close {
-            position: absolute; top: 1.25rem; right: 1.25rem;
-            background: rgba(255,255,255,0.05); border: none;
-            color: rgba(255,255,255,0.5); font-size: 1.25rem;
+        .modal-close { 
+            position: absolute; top: 1.25rem; right: 1.25rem; 
+            background: rgba(255,255,255,0.05); border: none; 
+            color: rgba(255,255,255,0.5); font-size: 1.25rem; 
             cursor: pointer; transition: all 0.3s; width: 36px; height: 36px;
             border-radius: 10px; display: flex; align-items: center; justify-content: center;
         }
@@ -429,8 +440,8 @@
         .modal p { color: rgba(255,255,255,0.6); margin-bottom: 1.5rem; font-size: 0.9rem; }
 
         .form-group { margin-bottom: 1rem; }
-        .form-group label {
-            display: block; margin-bottom: 0.5rem;
+        .form-group label { 
+            display: block; margin-bottom: 0.5rem; 
             font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.8);
         }
         .form-group input {
@@ -440,30 +451,36 @@
             font-family: 'Inter', sans-serif;
         }
         .form-group input:focus {
-            outline: none; border-color: var(--gold);
+            outline: none; border-color: var(--gold); 
             background: rgba(255,255,255,0.06); box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
         }
         .form-group input::placeholder { color: rgba(255,255,255,0.3); }
-        .form-hint { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 0.5rem; }
         .form-error { color: #ea4335; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
         .form-success { color: #34a853; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+
+        .divider { 
+            display: flex; align-items: center; gap: 1rem; 
+            margin: 1.5rem 0; color: rgba(255,255,255,0.4); font-size: 0.85rem; 
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--glass-border); }
 
         .auth-switch { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.6); }
         .auth-switch a { color: var(--gold); cursor: pointer; font-weight: 600; }
 
-        .spinner {
-            width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: var(--gold); border-radius: 50%;
-            animation: spin 0.8s linear infinite; display: none;
+        .spinner { 
+            width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); 
+            border-top-color: var(--gold); border-radius: 50%; 
+            animation: spin 0.8s linear infinite; display: none; 
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* ========== FOOTER ========== */
         .footer {
             background: rgba(18, 18, 42, 0.5); border-top: 1px solid var(--glass-border);
             padding: 3rem 1.5rem; text-align: center; margin-top: 3rem;
         }
-        .footer-logo {
-            font-size: 1.5rem; font-weight: 900;
+        .footer-logo { 
+            font-size: 1.5rem; font-weight: 900; 
             color: var(--white);
             margin-bottom: 1rem; font-family: 'Space Grotesk';
         }
@@ -472,6 +489,11 @@
         .footer-links a:hover { color: var(--gold); }
         .footer-copy { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
 
+        /* ========== ANIMATIONS ========== */
+        .fade-in { opacity: 1; transform: translateY(0); transition: all 0.5s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Toast */
         .toast-container {
             position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 10000;
             display: flex; flex-direction: column; gap: 0.5rem;
@@ -490,9 +512,10 @@
         .toast.error { border-left: 3px solid #ea4335; }
         .toast.info { border-left: 3px solid var(--gold); }
 
+        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
             .navbar { padding: 0.6rem 1rem; }
-            .nav-links {
+            .nav-links { 
                 display: none; position: absolute; top: 100%; left: 0; right: 0;
                 background: var(--primary); flex-direction: column; padding: 1rem;
                 border-top: 1px solid var(--glass-border); gap: 0.5rem;
@@ -520,8 +543,10 @@
     </style>
 </head>
 <body>
+    <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
+    <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <a href="#home" class="nav-brand" onclick="scrollToSection('home')">
             <img src="https://cdn.vectorstock.com/813f8cbb1498fdb845a818e6575d252ed5b6c49d.jpg" alt="Fans Logo" class="nav-logo" id="navLogo">
@@ -544,6 +569,7 @@
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-particles" id="particles"></div>
         <div class="hero-content">
@@ -572,39 +598,78 @@
         </div>
     </section>
 
+    <!-- Stats Bar -->
     <div class="stats-bar">
-        <div class="stat-item"><div class="stat-number">48</div><div class="stat-label">Nations</div></div>
-        <div class="stat-item"><div class="stat-number">104</div><div class="stat-label">Matches</div></div>
-        <div class="stat-item"><div class="stat-number">16</div><div class="stat-label">Stadiums</div></div>
-        <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Host Countries</div></div>
+        <div class="stat-item fade-in">
+            <div class="stat-number">48</div>
+            <div class="stat-label">Nations</div>
+        </div>
+        <div class="stat-item fade-in">
+            <div class="stat-number">104</div>
+            <div class="stat-label">Matches</div>
+        </div>
+        <div class="stat-item fade-in">
+            <div class="stat-number">16</div>
+            <div class="stat-label">Stadiums</div>
+        </div>
+        <div class="stat-item fade-in">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Host Countries</div>
+        </div>
     </div>
 
+    <!-- Groups Section -->
     <section class="section" id="groups">
-        <div class="section-header"><h2>Group Standings</h2><div class="line"></div><p>Live standings from the 2026 FIFA World Cup group stage. Top 2 from each group plus 8 best third-placed teams advance to the Round of 32.</p></div>
+        <div class="section-header fade-in">
+            <h2>Group Standings</h2>
+            <div class="line"></div>
+            <p>Live standings from the 2026 FIFA World Cup group stage. Top 2 from each group plus 8 best third-placed teams advance to the Round of 32.</p>
+        </div>
         <div class="groups-grid" id="groupsGrid"></div>
     </section>
 
+    <!-- Knockout Section -->
     <section class="section" id="knockout">
-        <div class="section-header"><h2>Knockout Stage</h2><div class="line"></div><p>The road to the final. From Round of 32 to the World Cup Final at MetLife Stadium on July 19, 2026.</p></div>
-        <div class="knockout-tabs" id="knockoutTabs"></div>
+        <div class="section-header fade-in">
+            <h2>Knockout Stage</h2>
+            <div class="line"></div>
+            <p>The road to the final. From Round of 32 to the World Cup Final at MetLife Stadium on July 19, 2026.</p>
+        </div>
+        <div class="knockout-tabs fade-in" id="knockoutTabs"></div>
         <div class="knockout-container" id="knockoutContainer"></div>
     </section>
 
+    <!-- Stadiums Section -->
     <section class="section" id="stadiums">
-        <div class="section-header"><h2>Host Stadiums</h2><div class="line"></div><p>16 world-class venues across the United States, Canada, and Mexico.</p></div>
+        <div class="section-header fade-in">
+            <h2>Host Stadiums</h2>
+            <div class="line"></div>
+            <p>16 world-class venues across the United States, Canada, and Mexico.</p>
+        </div>
         <div class="stadiums-grid" id="stadiumsGrid"></div>
     </section>
 
+    <!-- Teams Section -->
     <section class="section" id="teams">
-        <div class="section-header"><h2>Participating Nations</h2><div class="line"></div><p>All 48 countries competing for football's ultimate prize.</p></div>
+        <div class="section-header fade-in">
+            <h2>Participating Nations</h2>
+            <div class="line"></div>
+            <p>All 48 countries competing for football's ultimate prize.</p>
+        </div>
         <div class="flags-grid" id="flagsGrid"></div>
     </section>
 
+    <!-- Prizes Section -->
     <section class="section" id="prizes">
-        <div class="section-header"><h2><i class="fas fa-gift" style="color: var(--gold);"></i> Prizes to Win</h2><div class="line"></div><p>Amazing rewards for lucky participants who complete tasks and make accurate predictions!</p></div>
+        <div class="section-header fade-in">
+            <h2><i class="fas fa-gift" style="color: var(--gold);"></i> Prizes to Win</h2>
+            <div class="line"></div>
+            <p>Amazing rewards for lucky participants who complete tasks and make accurate predictions!</p>
+        </div>
         <div class="prizes-grid" id="prizesGrid"></div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-logo"><i class="fas fa-futbol"></i> Fans</div>
         <div class="footer-links">
@@ -618,6 +683,7 @@
         <p class="footer-copy">© 2026 Fans App. Not affiliated with FIFA. All rights reserved.</p>
     </footer>
 
+    <!-- Auth Modal -->
     <div class="modal-overlay" id="authModal">
         <div class="modal">
             <button class="modal-close" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
@@ -640,7 +706,7 @@
                 <div class="form-group" id="referralGroup" style="display:none">
                     <label>Referral Code <span style="color:rgba(255,255,255,0.4);font-weight:400">(optional)</span></label>
                     <input type="text" id="signupReferralCode" placeholder="e.g., FANS-A7KQ3M">
-                    <div class="form-hint">Got invited by a friend? Enter their code here.</div>
+                    <div class="form-hint" style="font-size:0.75rem;color:rgba(255,255,255,0.4);margin-top:0.5rem">Got invited by a friend? Enter their code here.</div>
                 </div>
                 <div class="form-error" id="authError"></div>
                 <div class="form-success" id="authSuccess"></div>
@@ -658,28 +724,40 @@
     </div>
 
     <script>
+        // ==================== FIREBASE CONFIG ====================
         const firebaseConfig = {
             apiKey: "AIzaSyDJ1zgLmA5sb_oVXfwxzh9tHIp4WvvFris",
             authDomain: "fanbase-4eba3.firebaseapp.com",
-            databaseURL: "https://fanbase-4eba3-default-rtdb.firebaseio.com",
             projectId: "fanbase-4eba3",
             storageBucket: "fanbase-4eba3.firebasestorage.app",
             messagingSenderId: "264324879296",
-            appId: "1:264324879296:web:5832c926bbc6e0ab442e25",
-            measurementId: "G-542CS5CMS8"
+            appId: "1:264324879296:web:5832c926bbc6e0ab442e25"
         };
 
         let app, auth, db;
+        try {
+            if (typeof firebase !== 'undefined') {
+                app = firebase.initializeApp(firebaseConfig);
+                auth = firebase.auth();
+                db = firebase.firestore();
+            }
+        } catch(e) {
+            console.log("Firebase demo mode");
+        }
+
+        // ==================== STATE ====================
         let currentUser = null;
         let isSignUp = false;
-        let pendingReferralCode = '';
 
-        try {
-            app = firebase.initializeApp(firebaseConfig);
-            auth = firebase.auth();
-            db = firebase.firestore();
-        } catch (e) {
-            console.error('Firebase init error:', e);
+        // ==================== REFERRAL SYSTEM ====================
+        function captureReferralCode() {
+            const params = new URLSearchParams(window.location.search);
+            const ref = params.get('ref');
+            if (ref) {
+                try {
+                    sessionStorage.setItem('fans_ref_pending', ref);
+                } catch(e) {}
+            }
         }
 
         function generateReferralCode(uid) {
@@ -699,81 +777,24 @@
             return baseUrl + 'index.html?ref=' + encodeURIComponent(code);
         }
 
-        function captureReferralCode() {
-            const params = new URLSearchParams(window.location.search);
-            pendingReferralCode = (params.get('ref') || '').trim().toUpperCase();
-        }
-
-        function scrollToSection(id) {
-            const el = document.getElementById(id);
-            if (el) {
-                const offset = 80;
-                const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
-                window.scrollTo({ top, behavior: 'smooth' });
-            }
-            document.getElementById('navLinks').classList.remove('active');
-            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-            document.querySelectorAll('.nav-links a').forEach(a => {
-                if (a.getAttribute('href') === '#' + id) a.classList.add('active');
-            });
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
-
-        function goToDashboard() {
-            if (currentUser) window.location.href = 'dashboard.htm';
-            else openAuthModal();
-        }
-
-        function changeLogo() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    const dataUrl = evt.target.result;
-                    document.getElementById('heroLogo').src = dataUrl;
-                    document.getElementById('navLogo').src = dataUrl;
-                    try { localStorage.setItem('fans_logo', dataUrl); } catch (err) {}
-                    showToast('Logo updated successfully!', 'success');
-                };
-                reader.readAsDataURL(file);
-            };
-            input.click();
-        }
-
-        function loadLogo() {
-            try {
-                const saved = localStorage.getItem('fans_logo');
-                if (saved) {
-                    document.getElementById('heroLogo').src = saved;
-                    document.getElementById('navLogo').src = saved;
-                }
-            } catch (e) {}
-        }
-
-        function populateReferralInputFromPending() {
-            const refInput = document.getElementById('signupReferralCode');
-            if (refInput) refInput.value = pendingReferralCode || '';
-        }
-
+        // ==================== AUTH ====================
         function openAuthModal() {
-            if (pendingReferralCode && !isSignUp) toggleAuthMode();
+            const pendingRef = sessionStorage.getItem('fans_ref_pending') || '';
+            if (pendingRef && !isSignUp) {
+                toggleAuthMode();
+            }
             document.getElementById('authModal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            if (isSignUp) populateReferralInputFromPending();
+            if (isSignUp) {
+                const refInput = document.getElementById('signupReferralCode');
+                if (refInput) refInput.value = pendingRef;
+            }
         }
 
         function closeAuthModal() {
             document.getElementById('authModal').classList.remove('active');
             document.body.style.overflow = '';
             document.getElementById('authError').style.display = 'none';
-            document.getElementById('authSuccess').style.display = 'none';
         }
 
         function toggleAuthMode() {
@@ -784,103 +805,132 @@
             document.getElementById('switchLink').textContent = isSignUp ? 'Sign In' : 'Sign Up';
             document.getElementById('nameGroup').style.display = isSignUp ? 'block' : 'none';
             document.getElementById('referralGroup').style.display = isSignUp ? 'block' : 'none';
-            if (isSignUp) populateReferralInputFromPending();
         }
 
-        async function saveUserToDB(user, referredByCode) {
-            if (!db || !user) return;
-
-            const userRef = db.collection('users').doc(user.uid);
-            const existingDoc = await userRef.get();
-            const existingData = existingDoc.exists ? existingDoc.data() || {} : {};
-
-            const referralCode = existingData.referralCode || generateReferralCode(user.uid);
-            const referralLink = getReferralLink({ uid: user.uid, referralCode });
-            const normalizedReferralCode = (referredByCode || '').trim().toUpperCase();
-
-            const baseData = {
-                displayName: user.displayName || existingData.displayName || 'Fan',
-                email: user.email || existingData.email || '',
-                photoURL: user.photoURL || existingData.photoURL || '',
-                referralCode,
-                referralLink,
-                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-            };
-
-            if (!existingDoc.exists) {
-                baseData.referralCount = 0;
-                baseData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                baseData.task1 = { step1: false, step2: false, step3: false, team: '', regInfo: '' };
-                baseData.task2 = { franceScore: '', spainScore: '', englandScore: '', argentinaScore: '', code: '', codeLocked: false };
-            }
-
-            const shouldProcessReferral = !existingData.referralProcessed && normalizedReferralCode && normalizedReferralCode !== referralCode;
-
-            if (shouldProcessReferral) {
-                const referrerSnap = await db.collection('users').where('referralCode', '==', normalizedReferralCode).limit(1).get();
-                if (!referrerSnap.empty) {
-                    const referrerDoc = referrerSnap.docs[0];
-                    if (referrerDoc.id !== user.uid) {
-                        const batch = db.batch();
-                        batch.set(userRef, {
-                            ...baseData,
-                            referredBy: normalizedReferralCode,
-                            referredAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            referralProcessed: true
-                        }, { merge: true });
-                        batch.update(referrerDoc.ref, {
-                            referralCount: firebase.firestore.FieldValue.increment(1),
-                            lastReferredAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                        await batch.commit();
-                        return;
-                    }
-                }
-            }
-
-            await userRef.set(baseData, { merge: true });
-        }
-
-        async function handleAuth(e) {
+        function handleAuth(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value.trim();
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const name = document.getElementById('fullName').value.trim();
+            const name = document.getElementById('fullName').value;
             const spinner = document.getElementById('btnSpinner');
             const btnText = document.getElementById('btnText');
-            const refInput = document.getElementById('signupReferralCode');
-            const formReferralCode = refInput ? refInput.value.trim().toUpperCase() : '';
-            const effectiveRefCode = formReferralCode || pendingReferralCode || '';
 
             spinner.style.display = 'inline-block';
             btnText.style.display = 'none';
-            document.getElementById('authError').style.display = 'none';
 
-            try {
-                if (isSignUp) {
-                    const cred = await auth.createUserWithEmailAndPassword(email, password);
-                    if (name) await cred.user.updateProfile({ displayName: name });
-                    await saveUserToDB(auth.currentUser || cred.user, effectiveRefCode);
-                    showToast('Welcome, ' + (name || 'Fan') + '!', 'success');
-                } else {
-                    const cred = await auth.signInWithEmailAndPassword(email, password);
-                    await saveUserToDB(cred.user, '');
-                    showToast('Welcome back!', 'success');
-                }
+            let formReferralCode = '';
+            if (isSignUp) {
+                const refInput = document.getElementById('signupReferralCode');
+                if (refInput) formReferralCode = refInput.value.trim().toUpperCase();
+            }
 
-                pendingReferralCode = '';
-                closeAuthModal();
-                setTimeout(() => { window.location.href = 'dashboard.htm'; }, 800);
-            } catch (err) {
-                showAuthError(err.message || 'Authentication failed');
-            } finally {
-                spinner.style.display = 'none';
-                btnText.style.display = 'inline';
+            const effectiveRefCode = formReferralCode || sessionStorage.getItem('fans_ref_pending') || '';
+
+            if (!auth) {
+                // Demo mode
+                setTimeout(() => {
+                    const uid = 'demo_' + Date.now();
+                    simulateLogin({
+                        displayName: name || 'Demo User',
+                        email: email,
+                        photoURL: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name || 'User') + '&background=d4af37&color=fff',
+                        uid: uid
+                    }, isSignUp, effectiveRefCode);
+                    spinner.style.display = 'none';
+                    btnText.style.display = 'inline';
+                }, 1000);
+                return;
+            }
+
+            if (isSignUp) {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((cred) => {
+                        return cred.user.updateProfile({ displayName: name }).then(() => cred.user);
+                    })
+                    .then((user) => {
+                        saveUserToDB(user, effectiveRefCode);
+                        simulateLogin(user, true, effectiveRefCode);
+                    })
+                    .catch((err) => showAuthError(err.message))
+                    .finally(() => { spinner.style.display = 'none'; btnText.style.display = 'inline'; });
+            } else {
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((cred) => {
+                        saveUserToDB(cred.user, '');
+                        simulateLogin(cred.user, false, '');
+                    })
+                    .catch((err) => showAuthError(err.message))
+                    .finally(() => { spinner.style.display = 'none'; btnText.style.display = 'inline'; });
             }
         }
 
-        async function logout() {
-            if (auth) await auth.signOut();
+        function saveUserToDB(user, referredByCode) {
+            if (!db || !user) return;
+            const refCode = generateReferralCode(user.uid);
+            const refLink = getReferralLink({ uid: user.uid, referralCode: refCode });
+            const normalizedReferralCode = (referredByCode || '').trim().toUpperCase();
+
+            const userData = {
+                displayName: user.displayName || 'Fan',
+                email: user.email,
+                photoURL: user.photoURL || '',
+                referralCode: refCode,
+                referralLink: refLink,
+                referralCount: 0,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (normalizedReferralCode && normalizedReferralCode !== refCode) {
+                userData.referredBy = normalizedReferralCode;
+                userData.referredAt = firebase.firestore.FieldValue.serverTimestamp();
+            }
+
+            db.collection('users').doc(user.uid).set(userData, { merge: true }).catch(e => console.log('DB save skipped:', e.message));
+        }
+
+        function simulateLogin(user, isNewSignup, referredByCode) {
+            if (!user.referralCode) user.referralCode = generateReferralCode(user.uid);
+            if (!user.referralLink) user.referralLink = getReferralLink(user);
+            if (user.referralCount === undefined) user.referralCount = 0;
+
+            const normalizedReferralCode = (referredByCode || '').trim().toUpperCase();
+            if (isNewSignup && normalizedReferralCode && normalizedReferralCode !== user.referralCode) {
+                incrementReferrerCount(normalizedReferralCode, user);
+            }
+
+            sessionStorage.removeItem('fans_ref_pending');
+            currentUser = user;
+            updateUI(user);
+            closeAuthModal();
+            showToast('Welcome, ' + (user.displayName || 'Fan') + '! 🎉', 'success');
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+        }
+
+        function incrementReferrerCount(refCode, referredUser) {
+            const normalizedRefCode = (refCode || '').trim().toUpperCase();
+            if (!normalizedRefCode || !referredUser || !db) return;
+
+            db.collection('users').where('referralCode', '==', normalizedRefCode).get()
+                .then(snapshot => {
+                    if (snapshot.empty) return;
+                    const referrerDoc = snapshot.docs[0];
+                    const referrerUid = referrerDoc.id;
+                    if (referrerUid === referredUser.uid) return;
+
+                    const referrerData = referrerDoc.data() || {};
+                    const newCount = (referrerData.referralCount || 0) + 1;
+
+                    db.collection('users').doc(referrerUid).update({
+                        referralCount: newCount,
+                        lastReferredAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).catch(e => console.log('Referral count update skipped:', e));
+                })
+                .catch(e => console.log('Referral lookup skipped:', e));
+        }
+
+        function logout() {
+            if (auth) auth.signOut();
             currentUser = null;
             document.getElementById('userAvatar').style.display = 'none';
             document.getElementById('userName').style.display = 'none';
@@ -890,18 +940,11 @@
         }
 
         function updateUI(user) {
+            if (!user) return;
             const avatar = document.getElementById('userAvatar');
             const name = document.getElementById('userName');
             const authBtn = document.getElementById('authBtn');
             const logoutBtn = document.getElementById('logoutBtn');
-
-            if (!user) {
-                avatar.style.display = 'none';
-                name.style.display = 'none';
-                authBtn.style.display = 'inline-flex';
-                logoutBtn.style.display = 'none';
-                return;
-            }
 
             avatar.src = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || 'User') + '&background=d4af37&color=fff';
             avatar.style.display = 'block';
@@ -915,253 +958,12 @@
             const el = document.getElementById('authError');
             el.textContent = msg;
             el.style.display = 'block';
-            setTimeout(() => { el.style.display = 'none'; }, 5000);
-        }
-
-        const groupsData = {
-            'A': [{ name: 'Mexico', flag: '🇲🇽', p: 3, w: 2, d: 1, l: 0, gf: 4, ga: 1, pts: 7 }, { name: 'South Africa', flag: '🇿🇦', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 2, pts: 4 }, { name: 'South Korea', flag: '🇰🇷', p: 3, w: 1, d: 0, l: 2, gf: 3, ga: 4, pts: 3 }, { name: 'Czechia', flag: '🇨🇿', p: 3, w: 0, d: 2, l: 1, gf: 1, ga: 3, pts: 2 }],
-            'B': [{ name: 'Canada', flag: '🇨🇦', p: 3, w: 2, d: 1, l: 0, gf: 5, ga: 2, pts: 7 }, { name: 'Bosnia & Herz.', flag: '🇧🇦', p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 3, pts: 4 }, { name: 'Qatar', flag: '🇶🇦', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 4, pts: 3 }, { name: 'TBD', flag: '🏳️', p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 }],
-            'C': [{ name: 'Brazil', flag: '🇧🇷', p: 3, w: 3, d: 0, l: 0, gf: 8, ga: 2, pts: 9 }, { name: 'Morocco', flag: '🇲🇦', p: 3, w: 1, d: 1, l: 1, gf: 4, ga: 4, pts: 4 }, { name: 'Haiti', flag: '🇭🇹', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 5, pts: 3 }, { name: 'Scotland', flag: '🏴', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 4, pts: 1 }],
-            'D': [{ name: 'USA', flag: '🇺🇸', p: 3, w: 2, d: 1, l: 0, gf: 6, ga: 2, pts: 7 }, { name: 'Paraguay', flag: '🇵🇾', p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 3, pts: 4 }, { name: 'Australia', flag: '🇦🇺', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 5, pts: 3 }, { name: 'TBD', flag: '🏳️', p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 }],
-            'E': [{ name: 'Germany', flag: '🇩🇪', p: 3, w: 2, d: 0, l: 1, gf: 10, ga: 4, pts: 6 }, { name: 'Ecuador', flag: '🇪🇨', p: 3, w: 2, d: 0, l: 1, gf: 5, ga: 4, pts: 6 }, { name: 'Ivory Coast', flag: '🇨🇮', p: 3, w: 1, d: 0, l: 2, gf: 3, ga: 6, pts: 3 }, { name: 'Curaçao', flag: '🇨🇼', p: 3, w: 0, d: 0, l: 3, gf: 1, ga: 5, pts: 0 }],
-            'F': [{ name: 'Netherlands', flag: '🇳🇱', p: 3, w: 2, d: 1, l: 0, gf: 10, ga: 4, pts: 7 }, { name: 'Japan', flag: '🇯🇵', p: 3, w: 1, d: 1, l: 1, gf: 4, ga: 4, pts: 4 }, { name: 'Sweden', flag: '🇸🇪', p: 3, w: 1, d: 0, l: 2, gf: 3, ga: 7, pts: 3 }, { name: 'Tunisia', flag: '🇹🇳', p: 3, w: 0, d: 2, l: 1, gf: 2, ga: 4, pts: 2 }],
-            'G': [{ name: 'Belgium', flag: '🇧🇪', p: 3, w: 2, d: 1, l: 0, gf: 7, ga: 2, pts: 7 }, { name: 'Egypt', flag: '🇪🇬', p: 3, w: 1, d: 2, l: 0, gf: 3, ga: 2, pts: 5 }, { name: 'Iran', flag: '🇮🇷', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 4, pts: 3 }, { name: 'New Zealand', flag: '🇳🇿', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 5, pts: 1 }],
-            'H': [{ name: 'Spain', flag: '🇪🇸', p: 3, w: 2, d: 1, l: 0, gf: 5, ga: 0, pts: 7 }, { name: 'Uruguay', flag: '🇺🇾', p: 3, w: 2, d: 0, l: 1, gf: 4, ga: 2, pts: 6 }, { name: 'Cape Verde', flag: '🇨🇻', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 3, pts: 4 }, { name: 'Saudi Arabia', flag: '🇸🇦', p: 3, w: 0, d: 0, l: 3, gf: 0, ga: 6, pts: 0 }],
-            'I': [{ name: 'France', flag: '🇫🇷', p: 3, w: 3, d: 0, l: 0, gf: 10, ga: 2, pts: 9 }, { name: 'Norway', flag: '🇳🇴', p: 3, w: 2, d: 0, l: 1, gf: 8, ga: 6, pts: 6 }, { name: 'Senegal', flag: '🇸🇳', p: 3, w: 0, d: 1, l: 2, gf: 2, ga: 5, pts: 1 }, { name: 'Algeria', flag: '🇩🇿', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 8, pts: 1 }],
-            'J': [{ name: 'Argentina', flag: '🇦🇷', p: 3, w: 3, d: 0, l: 0, gf: 7, ga: 1, pts: 9 }, { name: 'Colombia', flag: '🇨🇴', p: 3, w: 1, d: 2, l: 0, gf: 4, ga: 2, pts: 5 }, { name: 'DR Congo', flag: '🇨🇩', p: 3, w: 0, d: 2, l: 1, gf: 2, ga: 4, pts: 2 }, { name: 'Uzbekistan', flag: '🇺🇿', p: 3, w: 0, d: 0, l: 3, gf: 1, ga: 7, pts: 0 }],
-            'K': [{ name: 'Portugal', flag: '🇵🇹', p: 3, w: 2, d: 1, l: 0, gf: 6, ga: 1, pts: 7 }, { name: 'Iraq', flag: '🇮🇶', p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 4, pts: 4 }, { name: 'TBD', flag: '🏳️', p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 }, { name: 'TBD', flag: '🏳️', p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 }],
-            'L': [{ name: 'England', flag: '🏴', p: 3, w: 2, d: 1, l: 0, gf: 6, ga: 2, pts: 7 }, { name: 'Croatia', flag: '🇭🇷', p: 3, w: 1, d: 0, l: 2, gf: 5, ga: 6, pts: 3 }, { name: 'Ghana', flag: '🇬🇭', p: 3, w: 0, d: 2, l: 1, gf: 1, ga: 2, pts: 2 }, { name: 'Panama', flag: '🇵🇦', p: 3, w: 0, d: 1, l: 2, gf: 0, ga: 2, pts: 1 }]
-        };
-
-        const knockoutData = {
-            'Round of 32': [
-                { date: 'June 28', team1: 'Canada', flag1: '🇨🇦', score: '1-0', team2: 'South Africa', flag2: '🇿🇦', status: 'FT', info: 'Los Angeles Stadium' },
-                { date: 'June 29', team1: 'Brazil', flag1: '🇧🇷', score: '2-1', team2: 'Japan', flag2: '🇯🇵', status: 'FT', info: 'Houston Stadium' },
-                { date: 'June 29', team1: 'Germany', flag1: '🇩🇪', score: '1-1 (2-4 pens)', team2: 'Paraguay', flag2: '🇵🇾', status: 'FT', info: 'Boston Stadium' },
-                { date: 'June 29', team1: 'Netherlands', flag1: '🇳🇱', score: '1-1 (2-3 pens)', team2: 'Morocco', flag2: '🇲🇦', status: 'FT', info: 'Monterrey Stadium' },
-                { date: 'June 30', team1: 'Ivory Coast', flag1: '🇨🇮', score: '1-2', team2: 'Norway', flag2: '🇳🇴', status: 'FT', info: 'Dallas Stadium' },
-                { date: 'June 30', team1: 'France', flag1: '🇫🇷', score: '3-0', team2: 'Sweden', flag2: '🇸🇪', status: 'FT', info: 'New York Stadium' },
-                { date: 'July 1', team1: 'Mexico', flag1: '🇲🇽', score: '2-0', team2: 'Ecuador', flag2: '🇪🇨', status: 'FT', info: 'Mexico City - Estadio Azteca' },
-                { date: 'July 1', team1: 'England', flag1: '🏴', score: '2-1', team2: 'DR Congo', flag2: '🇨🇩', status: 'FT', info: 'Atlanta Stadium' },
-                { date: 'July 2', team1: 'Belgium', flag1: '🇧🇪', score: '3-2 (AET)', team2: 'Senegal', flag2: '🇸🇳', status: 'FT', info: 'Seattle Stadium' },
-                { date: 'July 2', team1: 'USA', flag1: '🇺🇸', score: '2-0', team2: 'Bosnia & Herz.', flag2: '🇧🇦', status: 'FT', info: 'San Francisco Stadium' },
-                { date: 'July 2', team1: 'Spain', flag1: '🇪🇸', score: '3-0', team2: 'Austria', flag2: '🇦🇹', status: 'FT', info: 'Los Angeles Stadium' },
-                { date: 'July 3', team1: 'Portugal', flag1: '🇵🇹', score: '2-1', team2: 'Croatia', flag2: '🇭🇷', status: 'FT', info: 'Toronto Stadium' },
-                { date: 'July 3', team1: 'Switzerland', flag1: '🇨🇭', score: '2-0', team2: 'Algeria', flag2: '🇩🇿', status: 'FT', info: 'Vancouver Stadium' },
-                { date: 'July 3', team1: 'Australia', flag1: '🇦🇺', score: '1-1 (2-4 pens)', team2: 'Egypt', flag2: '🇪🇬', status: 'FT', info: 'Dallas Stadium' },
-                { date: 'July 4', team1: 'Argentina', flag1: '🇦🇷', score: '3-2 (AET)', team2: 'Cape Verde', flag2: '🇨🇻', status: 'FT', info: 'Miami Stadium' },
-                { date: 'July 4', team1: 'Colombia', flag1: '🇨🇴', score: '1-0', team2: 'Ghana', flag2: '🇬🇭', status: 'FT', info: 'Kansas City Stadium' }
-            ],
-            'Round of 16': [
-                { date: 'July 5', team1: 'Canada', flag1: '🇨🇦', score: 'vs', team2: 'Morocco', flag2: '🇲🇦', status: 'UPCOMING', info: 'Houston Stadium - 6:00 PM ET' },
-                { date: 'July 5', team1: 'France', flag1: '🇫🇷', score: 'vs', team2: 'Paraguay', flag2: '🇵🇾', status: 'UPCOMING', info: 'Philadelphia Stadium - 10:00 PM ET' },
-                { date: 'July 6', team1: 'Brazil', flag1: '🇧🇷', score: 'vs', team2: 'Norway', flag2: '🇳🇴', status: 'UPCOMING', info: 'MetLife Stadium - 9:00 PM ET' },
-                { date: 'July 6', team1: 'Mexico', flag1: '🇲🇽', score: 'vs', team2: 'England', flag2: '🏴', status: 'UPCOMING', info: 'Estadio Azteca - 1:00 AM ET' },
-                { date: 'July 7', team1: 'Spain', flag1: '🇪🇸', score: 'vs', team2: 'Portugal', flag2: '🇵🇹', status: 'UPCOMING', info: 'Arlington Stadium - 8:00 PM ET' },
-                { date: 'July 7', team1: 'USA', flag1: '🇺🇸', score: 'vs', team2: 'Belgium', flag2: '🇧🇪', status: 'UPCOMING', info: 'Seattle Stadium - 1:00 AM ET' },
-                { date: 'July 8', team1: 'Argentina', flag1: '🇦🇷', score: 'vs', team2: 'Egypt', flag2: '🇪🇬', status: 'UPCOMING', info: 'Atlanta Stadium - 5:00 PM ET' },
-                { date: 'July 8', team1: 'Switzerland', flag1: '🇨🇭', score: 'vs', team2: 'Colombia', flag2: '🇨🇴', status: 'UPCOMING', info: 'Vancouver Stadium - 9:00 PM ET' }
-            ],
-            'Quarter Finals': [
-                { date: 'July 10', team1: 'Winner R16-1', flag1: '🏳️', score: 'vs', team2: 'Winner R16-2', flag2: '🏳️', status: 'UPCOMING', info: 'Foxborough Stadium - 9:00 PM ET' },
-                { date: 'July 11', team1: 'Winner R16-3', flag1: '🏳️', score: 'vs', team2: 'Winner R16-4', flag2: '🏳️', status: 'UPCOMING', info: 'Miami Stadium - 10:00 PM ET' },
-                { date: 'July 11', team1: 'Winner R16-5', flag1: '🏳️', score: 'vs', team2: 'Winner R16-6', flag2: '🏳️', status: 'UPCOMING', info: 'Los Angeles Stadium - 8:00 PM ET' },
-                { date: 'July 12', team1: 'Winner R16-7', flag1: '🏳️', score: 'vs', team2: 'Winner R16-8', flag2: '🏳️', status: 'UPCOMING', info: 'Kansas City Stadium - 2:00 AM ET' }
-            ],
-            'Semi Finals': [
-                { date: 'July 14', team1: 'Winner QF-1', flag1: '🏳️', score: 'vs', team2: 'Winner QF-2', flag2: '🏳️', status: 'UPCOMING', info: 'Arlington Stadium - 8:00 PM ET' },
-                { date: 'July 15', team1: 'Winner QF-3', flag1: '🏳️', score: 'vs', team2: 'Winner QF-4', flag2: '🏳️', status: 'UPCOMING', info: 'Atlanta Stadium - 8:00 PM ET' }
-            ],
-            'Finals': [
-                { date: 'July 18', team1: 'Loser SF-1', flag1: '🏳️', score: 'vs', team2: 'Loser SF-2', flag2: '🏳️', status: 'UPCOMING', info: 'Miami Stadium - Third Place - 5:00 PM ET' },
-                { date: 'July 19', team1: 'Winner SF-1', flag1: '🏳️', score: 'vs', team2: 'Winner SF-2', flag2: '🏳️', status: 'UPCOMING', info: 'MetLife Stadium - WORLD CUP FINAL - 3:00 PM ET' }
-            ]
-        };
-
-        const flagsData = [
-            { name: 'Argentina', flag: '🇦🇷' }, { name: 'Australia', flag: '🇦🇺' }, { name: 'Austria', flag: '🇦🇹' },
-            { name: 'Belgium', flag: '🇧🇪' }, { name: 'Bosnia & Herz.', flag: '🇧🇦' }, { name: 'Brazil', flag: '🇧🇷' },
-            { name: 'Canada', flag: '🇨🇦' }, { name: 'Cape Verde', flag: '🇨🇻' }, { name: 'Colombia', flag: '🇨🇴' },
-            { name: 'Croatia', flag: '🇭🇷' }, { name: 'Czechia', flag: '🇨🇿' }, { name: 'DR Congo', flag: '🇨🇩' },
-            { name: 'Ecuador', flag: '🇪🇨' }, { name: 'Egypt', flag: '🇪🇬' }, { name: 'England', flag: '🏴' },
-            { name: 'France', flag: '🇫🇷' }, { name: 'Germany', flag: '🇩🇪' }, { name: 'Ghana', flag: '🇬🇭' },
-            { name: 'Haiti', flag: '🇭🇹' }, { name: 'Iran', flag: '🇮🇷' }, { name: 'Iraq', flag: '🇮🇶' },
-            { name: 'Ivory Coast', flag: '🇨🇮' }, { name: 'Japan', flag: '🇯🇵' }, { name: 'Mexico', flag: '🇲🇽' },
-            { name: 'Morocco', flag: '🇲🇦' }, { name: 'Netherlands', flag: '🇳🇱' }, { name: 'New Zealand', flag: '🇳🇿' },
-            { name: 'Norway', flag: '🇳🇴' }, { name: 'Panama', flag: '🇵🇦' }, { name: 'Paraguay', flag: '🇵🇾' },
-            { name: 'Portugal', flag: '🇵🇹' }, { name: 'Qatar', flag: '🇶🇦' }, { name: 'Saudi Arabia', flag: '🇸🇦' },
-            { name: 'Scotland', flag: '🏴' }, { name: 'Senegal', flag: '🇸🇳' }, { name: 'South Africa', flag: '🇿🇦' },
-            { name: 'South Korea', flag: '🇰🇷' }, { name: 'Spain', flag: '🇪🇸' }, { name: 'Sweden', flag: '🇸🇪' },
-            { name: 'Switzerland', flag: '🇨🇭' }, { name: 'Tunisia', flag: '🇹🇳' }, { name: 'USA', flag: '🇺🇸' },
-            { name: 'Uruguay', flag: '🇺🇾' }, { name: 'Uzbekistan', flag: '🇺🇿' }
-        ];
-
-        const prizesData = [
-            { image: 'https://images.unsplash.com/photo-1612287230217-8c7c6c170b95?w=600&q=80', amount: '$50', title: 'Semi-Finalist Prediction', desc: 'Correctly predict all 4 semi-finalist teams and win $50 cash prize!', badge: 'Task 2' },
-            { image: 'https://images.unsplash.com/photo-1574634534894-89d7a3f2f7c6?w=600&q=80', amount: '$500', title: 'World Cup Winner', desc: 'Pick the tournament champion correctly and take home the grand $500 prize!', badge: 'Task 2' },
-            { image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=600&q=80', amount: '$25', title: 'Early Bird Entry', desc: 'Complete Task 1 before July 10th and receive a $25 app credit bonus.', badge: 'Task 1' },
-            { image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=600&q=80', amount: '$100', title: 'Referral Champion', desc: 'Refer 5 friends and climb the referral leaderboard.', badge: 'Both' },
-            { image: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&q=80', amount: 'Jersey', title: 'Signed Jersey', desc: 'Random draw among all participants who complete both tasks. Win a signed team jersey!', badge: 'Lucky Draw' },
-            { image: 'https://images.unsplash.com/photo-1605901309584-818e25960a8f?w=600&q=80', amount: 'Console', title: 'PS5 / Xbox', desc: 'One lucky winner will receive a brand new gaming console. Complete all tasks to enter!', badge: 'Mega Draw' }
-        ];
-
-        const stadiumsData = [
-            { name: 'Estadio Azteca', city: 'Mexico City, Mexico', capacity: '87,523', matches: 5, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Estadio_Azteca_%282017%29.jpg/640px-Estadio_Azteca_%282017%29.jpg' },
-            { name: 'MetLife Stadium', city: 'East Rutherford, NJ, USA', capacity: '82,500', matches: 8, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/MetLife_stadium_%28Aerial_view%29.jpg/640px-MetLife_stadium_%28Aerial_view%29.jpg' },
-            { name: 'SoFi Stadium', city: 'Inglewood, CA, USA', capacity: '70,240', matches: 8, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/SoFi_Stadium_%28Aerial_view%29.jpg/640px-SoFi_Stadium_%28Aerial_view%29.jpg' },
-            { name: 'AT&T Stadium', city: 'Arlington, TX, USA', capacity: '80,000', matches: 8, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/ATT_Stadium_2013.jpg/640px-ATT_Stadium_2013.jpg' },
-            { name: 'Mercedes-Benz Stadium', city: 'Atlanta, GA, USA', capacity: '71,000', matches: 8, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mercedes-Benz_Stadium_2017.jpg/640px-Mercedes-Benz_Stadium_2017.jpg' },
-            { name: 'BC Place', city: 'Vancouver, Canada', capacity: '54,500', matches: 7, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/BC_Place_2015_Whitecaps.jpg/640px-BC_Place_2015_Whitecaps.jpg' },
-            { name: 'Hard Rock Stadium', city: 'Miami Gardens, FL, USA', capacity: '64,767', matches: 7, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Hard_Rock_Stadium_2017_2.jpg/640px-Hard_Rock_Stadium_2017_2.jpg' },
-            { name: 'Gillette Stadium', city: 'Foxborough, MA, USA', capacity: '65,878', matches: 7, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Gillette_Stadium_%28Top_View%29.jpg/640px-Gillette_Stadium_%28Top_View%29.jpg' },
-            { name: 'Lumen Field', city: 'Seattle, WA, USA', capacity: '69,000', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Lumen_Field_2011.jpg/640px-Lumen_Field_2011.jpg' },
-            { name: 'BMO Field', city: 'Toronto, Canada', capacity: '30,000', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/BMO_Field_2016_East_Stand.jpg/640px-BMO_Field_2016_East_Stand.jpg' },
-            { name: "Levi's Stadium", city: 'Santa Clara, CA, USA', capacity: '68,500', matches: 6, image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Levi%27s_Stadium_2014.jpg/640px-Levi%27s_Stadium_2014.jpg" },
-            { name: 'Lincoln Financial Field', city: 'Philadelphia, PA, USA', capacity: '69,596', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Lincoln_Financial_Field_%28Aerial_view%29.jpg/640px-Lincoln_Financial_Field_%28Aerial_view%29.jpg' },
-            { name: 'Arrowhead Stadium', city: 'Kansas City, MO, USA', capacity: '76,416', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Arrowhead_Stadium_2017.jpg/640px-Arrowhead_Stadium_2017.jpg' },
-            { name: 'NRG Stadium', city: 'Houston, TX, USA', capacity: '72,220', matches: 6, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/NRG_Stadium_2017.jpg/640px-NRG_Stadium_2017.jpg' },
-            { name: 'Estadio BBVA', city: 'Monterrey, Mexico', capacity: '53,500', matches: 4, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Estadio_BBVA_Bancomer_%28Aerial_view%29.jpg/640px-Estadio_BBVA_Bancomer_%28Aerial_view%29.jpg' },
-            { name: 'Estadio Akron', city: 'Guadalajara, Mexico', capacity: '49,850', matches: 4, image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Estadio_Akron_%28Aerial_view%29.jpg/640px-Estadio_Akron_%28Aerial_view%29.jpg' }
-        ];
-
-        function renderGroups() {
-            const grid = document.getElementById('groupsGrid');
-            grid.innerHTML = '';
-            Object.entries(groupsData).forEach(([group, teams]) => {
-                const card = document.createElement('div');
-                card.className = 'group-card';
-                card.innerHTML = `
-                    <div class="group-header">
-                        <span class="group-title">Group ${group}</span>
-                        <span style="font-size:0.75rem;color:rgba(255,255,255,0.4)">${teams.length} Teams</span>
-                    </div>
-                    <table class="group-table">
-                        <thead>
-                            <tr>
-                                <th>Team</th><th style="text-align:center">P</th><th style="text-align:center">W</th><th style="text-align:center">D</th><th style="text-align:center">L</th><th style="text-align:center">GD</th><th style="text-align:center">Pts</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${teams.map((team, i) => `
-                                <tr style="${i < 2 ? 'background:rgba(212,175,55,0.03)' : ''}">
-                                    <td><div class="team-row"><span class="team-flag">${team.flag}</span><span class="team-name">${team.name}</span>${i < 2 ? '<span style="color:var(--gold);font-size:0.7rem">✓</span>' : ''}</div></td>
-                                    <td style="text-align:center">${team.p}</td>
-                                    <td style="text-align:center" class="stat-box w">${team.w}</td>
-                                    <td style="text-align:center" class="stat-box d">${team.d}</td>
-                                    <td style="text-align:center" class="stat-box l">${team.l}</td>
-                                    <td style="text-align:center">${team.gf - team.ga > 0 ? '+' : ''}${team.gf - team.ga}</td>
-                                    <td style="text-align:center" class="points">${team.pts}</td>
-                                </tr>`).join('')}
-                        </tbody>
-                    </table>`;
-                grid.appendChild(card);
-            });
-        }
-
-        function renderKnockoutTabs() {
-            const tabsContainer = document.getElementById('knockoutTabs');
-            tabsContainer.innerHTML = '';
-            Object.keys(knockoutData).forEach((round, index) => {
-                const tab = document.createElement('button');
-                tab.className = 'knockout-tab' + (index === 0 ? ' active' : '');
-                tab.textContent = round;
-                tab.onclick = () => switchKnockoutRound(round, tab);
-                tabsContainer.appendChild(tab);
-            });
-        }
-
-        function switchKnockoutRound(round, clickedTab) {
-            document.querySelectorAll('.knockout-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.knockout-round').forEach(r => r.classList.remove('active'));
-            clickedTab.classList.add('active');
-            const roundEl = document.getElementById('round-' + round.replace(/\s+/g, ''));
-            if (roundEl) roundEl.classList.add('active');
-        }
-
-        function renderKnockout() {
-            const container = document.getElementById('knockoutContainer');
-            container.innerHTML = '';
-            Object.entries(knockoutData).forEach(([round, matches]) => {
-                const roundDiv = document.createElement('div');
-                roundDiv.className = 'knockout-round' + (round === 'Round of 32' ? ' active' : '');
-                roundDiv.id = 'round-' + round.replace(/\s+/g, '');
-                roundDiv.innerHTML = `<div class="knockout-grid">${matches.map(match => `
-                    <div class="match-card">
-                        <div class="match-date">${match.date}<span class="match-status status-${match.status.toLowerCase().replace(/\s+/g, '')}">${match.status}</span></div>
-                        <div class="match-teams">
-                            <div class="match-team"><span class="flag">${match.flag1}</span><span>${match.team1}</span></div>
-                            <div class="match-score">${match.score}</div>
-                            <div class="match-team"><span class="flag">${match.flag2}</span><span>${match.team2}</span></div>
-                        </div>
-                        <div class="match-info"><i class="fas fa-map-marker-alt"></i> ${match.info}</div>
-                    </div>`).join('')}</div>`;
-                container.appendChild(roundDiv);
-            });
-        }
-
-        function renderStadiums() {
-            const grid = document.getElementById('stadiumsGrid');
-            grid.innerHTML = '';
-            stadiumsData.forEach(stadium => {
-                const card = document.createElement('div');
-                card.className = 'stadium-card';
-                card.innerHTML = `
-                    <img src="${stadium.image}" alt="${stadium.name}" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #1a1a3e, #0a0a1a)'">
-                    <span class="stadium-capacity"><i class="fas fa-users"></i> ${stadium.capacity}</span>
-                    <div class="stadium-overlay">
-                        <div class="stadium-name">${stadium.name}</div>
-                        <div class="stadium-location"><i class="fas fa-map-pin"></i> ${stadium.city}</div>
-                        <div style="margin-top:0.5rem;font-size:0.8rem;color:var(--gold)"><i class="fas fa-futbol"></i> ${stadium.matches} Matches</div>
-                    </div>`;
-                grid.appendChild(card);
-            });
-        }
-
-        function renderFlags() {
-            const grid = document.getElementById('flagsGrid');
-            grid.innerHTML = '';
-            flagsData.forEach(country => {
-                const item = document.createElement('div');
-                item.className = 'flag-item';
-                item.innerHTML = `<span class="flag-emoji">${country.flag}</span><span class="flag-name">${country.name}</span>`;
-                grid.appendChild(item);
-            });
-        }
-
-        function renderPrizes() {
-            const grid = document.getElementById('prizesGrid');
-            grid.innerHTML = '';
-            prizesData.forEach(prize => {
-                const card = document.createElement('div');
-                card.className = 'prize-card';
-                card.innerHTML = `
-                    <img src="${prize.image}" alt="${prize.title}" class="prize-image" loading="lazy" onerror="this.style.display='none'">
-                    <div class="prize-content">
-                        <div class="prize-amount">${prize.amount}</div>
-                        <div class="prize-title">${prize.title}</div>
-                        <div class="prize-desc">${prize.desc}</div>
-                        <span class="prize-badge">${prize.badge}</span>
-                    </div>`;
-                grid.appendChild(card);
-            });
-        }
-
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-                particle.style.width = (3 + Math.random() * 5) + 'px';
-                particle.style.height = particle.style.width;
-                container.appendChild(particle);
-            }
+            setTimeout(() => el.style.display = 'none', 5000);
         }
 
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
+            if (!container) return;
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
@@ -1174,45 +976,78 @@
             }, 4000);
         }
 
-        function handleScroll() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                const offset = 80;
+                const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+            document.getElementById('navLinks').classList.remove('active');
         }
 
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function goToDashboard() {
+            if (currentUser) {
+                window.location.href = 'dashboard.html';
+            } else {
+                openAuthModal();
+            }
+        }
+
+        function loadLogo() {
+            try {
+                const saved = localStorage.getItem('fans_logo');
+                if (saved) {
+                    document.getElementById('heroLogo').src = saved;
+                    document.getElementById('navLogo').src = saved;
+                }
+            } catch (e) {}
+        }
+
+        function changeLogo() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        const dataUrl = evt.target.result;
+                        document.getElementById('heroLogo').src = dataUrl;
+                        document.getElementById('navLogo').src = dataUrl;
+                        try { localStorage.setItem('fans_logo', dataUrl); } catch(e) {}
+                        showToast('Logo updated successfully!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        }
+
+        // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
             captureReferralCode();
             loadLogo();
-            createParticles();
+            loadState();
             renderGroups();
             renderKnockoutTabs();
             renderKnockout();
             renderStadiums();
             renderFlags();
             renderPrizes();
-            handleScroll();
-            window.addEventListener('scroll', handleScroll);
 
-            if (auth) {
-                auth.onAuthStateChanged(async user => {
-                    if (!user) {
-                        currentUser = null;
-                        updateUI(null);
-                        return;
-                    }
-                    currentUser = user;
-                    try {
-                        await saveUserToDB(user, '');
-                    } catch (e) {
-                        console.error(e);
-                    }
-                    updateUI(user);
-                });
-            }
-
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAuthModal(); });
-            const authModal = document.getElementById('authModal');
-            authModal.addEventListener('click', e => { if (e.target === e.currentTarget) closeAuthModal(); });
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (navbar) {
+                    if (window.scrollY > 50) navbar.classList.add('scrolled');
+                    else navbar.classList.remove('scrolled');
+                }
+            });
         });
     </script>
 </body>
