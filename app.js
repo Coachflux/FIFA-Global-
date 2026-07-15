@@ -136,24 +136,22 @@ function updateLastLogin(user) {
 }
 
 /**
- * Atomically processes a referral using a Firestore transaction.
- * This prevents race conditions and ensures exactly-once counting.
+ * Processes a referral by looking up the referrer and atomically incrementing their count.
+ * 
+ * CRITICAL FIX: Firestore transactions CANNOT perform collection queries (.where()).
+ * We query for the referrer OUTSIDE the transaction, then do the atomic read+write INSIDE.
  */
-function processReferralTransaction(refCode, referredUser) {
+async function processReferral(refCode, referredUser) {
     const normalizedRefCode = (refCode || '').trim().toUpperCase();
     if (!normalizedRefCode || !referredUser || !db || !referredUser.uid) {
-        return Promise.resolve();
+        return;
     }
 
-    return db.runTransaction(async (transaction) => {
-        // Read referred user's current state
-        const referredRef = db.collection('users').doc(referredUser.uid);
-        const referredDoc = await transaction.get(referredRef);
-
+    try {
+        // STEP 1: Check if this user was already processed (prevents double-counting)
+        const referredDoc = await db.collection('users').doc(referredUser.uid).get();
         if (!referredDoc.exists) {
-            // User doc doesn't exist yet — will be created by createUserDocument
-            // We can't process referral until doc exists
-            console.log('Referred user doc not found, skipping referral processing');
+            console.log('Referred user doc not found yet, deferring referral processing');
             return;
         }
 
@@ -165,17 +163,19 @@ function processReferralTransaction(refCode, referredUser) {
             return;
         }
 
-        // Self-referral? Skip.
+        // Self-referral by code? Skip.
         if (referredData.referralCode === normalizedRefCode) {
             console.log('Self-referral detected, skipping');
             return;
         }
 
-        // Find referrer by code
-        const referrerQuery = db.collection('users').where('referralCode', '==', normalizedRefCode).limit(1);
-        const referrerSnapshot = await transaction.get(referrerQuery);
+        // STEP 2: Find the referrer by their referral code (OUTSIDE transaction)
+        const referrerSnapshot = await db.collection('users')
+            .where('referralCode', '==', normalizedRefCode)
+            .limit(1)
+            .get();
 
-        if (referredUser.referrerSnapshotEmpty = referrerSnapshot.empty) {
+        if (referrerSnapshot.empty) {
             console.log('Referrer not found for code:', normalizedRefCode);
             return;
         }
@@ -183,32 +183,56 @@ function processReferralTransaction(refCode, referredUser) {
         const referrerDoc = referrerSnapshot.docs[0];
         const referrerUid = referrerDoc.id;
 
-        // Self-referral check by UID
+        // Self-referral by UID? Skip.
         if (referrerUid === referredUser.uid) {
             console.log('Self-referral by UID detected, skipping');
             return;
         }
 
         const referrerRef = db.collection('users').doc(referrerUid);
-        const referrerData = referrerDoc.data() || {};
+        const referredRef = db.collection('users').doc(referredUser.uid);
 
-        // Atomically increment referrer's count
-        transaction.update(referrerRef, {
-            referralCount: (referrerData.referralCount || 0) + 1,
-            lastReferredAt: firebase.firestore.FieldValue.serverTimestamp()
+        // STEP 3: Atomic transaction — only direct document reads/writes allowed
+        await db.runTransaction(async (transaction) => {
+            // Read both documents inside transaction
+            const referrerSnap = await transaction.get(referrerRef);
+            const referredSnap = await transaction.get(referredRef);
+
+            if (!referredSnap.exists) {
+                console.log('Referred user doc missing during transaction');
+                return;
+            }
+
+            const referredCurrent = referredSnap.data() || {};
+
+            // Double-check inside transaction (race condition protection)
+            if (referredCurrent.referralProcessed === true) {
+                console.log('Referral already processed (transaction check)');
+                return;
+            }
+
+            const referrerCurrent = referrerSnap.exists ? (referrerSnap.data() || {}) : {};
+            const currentCount = typeof referrerCurrent.referralCount === 'number' ? referrerCurrent.referralCount : 0;
+
+            // Atomic increment on referrer
+            transaction.update(referrerRef, {
+                referralCount: currentCount + 1,
+                lastReferredAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // Mark referred user as processed
+            transaction.update(referredRef, {
+                referredBy: normalizedRefCode,
+                referredAt: firebase.firestore.FieldValue.serverTimestamp(),
+                referralProcessed: true
+            });
+
+            console.log('Referral processed successfully:', normalizedRefCode, '-> count:', currentCount + 1);
         });
 
-        // Mark referred user as processed
-        transaction.update(referredRef, {
-            referredBy: normalizedRefCode,
-            referredAt: firebase.firestore.FieldValue.serverTimestamp(),
-            referralProcessed: true
-        });
-
-        console.log('Referral processed successfully:', normalizedRefCode);
-    }).catch(e => {
-        console.log('Referral transaction failed:', e.message);
-    });
+    } catch (e) {
+        console.log('Referral processing failed:', e.message);
+    }
 }
 
 // ==================== NAVIGATION ====================
@@ -365,8 +389,8 @@ function handleAuth(e) {
             .then((user) => {
                 // Create user doc FIRST, then process referral
                 return createUserDocument(user, effectiveRefCode).then(() => {
-                    // Now that doc exists, process referral transaction
-                    return processReferralTransaction(effectiveRefCode, user).then(() => user);
+                    // Now that doc exists, process referral
+                    return processReferral(effectiveRefCode, user).then(() => user);
                 });
             })
             .then((user) => {
