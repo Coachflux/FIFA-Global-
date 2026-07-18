@@ -479,140 +479,141 @@ function showAuthError(msg) {
 // ==================== DATA ====================
 const groupsData = {
     'A': [
-        { name: 'Mexico', flag: '🇲🇽', p: 3, w: 2, d: 1, l: 0, gf: 4, ga: 1, pts: 7 },
-        { name: 'South Africa', flag: '🇿🇦', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 2, pts: 4 },
-        { name: 'South Korea', flag: '🇰🇷', p: 3, w: 1, d: 0, l: 2, gf: 3, ga: 4, pts: 3 },
-        { name: 'Czechia', flag: '🇨🇿', p: 3, w: 0, d: 2, l: 1, gf: 1, ga: 3, pts: 2 }
+        { name: 'Mexico', flag: '🇲🇽', p: 3, w: 3, d: 0, l: 0, gf: 6, ga: 0, pts: 9 },
+        { name: 'South Africa', flag: '🇿🇦', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 3, pts: 4 },
+        { name: 'South Korea', flag: '🇰🇷', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 3, pts: 3 },
+        { name: 'Czechia', flag: '🇨🇿', p: 3, w: 0, d: 1, l: 2, gf: 2, ga: 6, pts: 1 }
     ],
     'B': [
-        { name: 'Canada', flag: '🇨🇦', p: 3, w: 2, d: 1, l: 0, gf: 5, ga: 2, pts: 7 },
-        { name: 'Bosnia & Herz.', flag: '🇧🇦', p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 3, pts: 4 },
-        { name: 'Qatar', flag: '🇶🇦', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 4, pts: 3 },
-        { name: 'TBD', flag: '🏳️', p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 }
+        { name: 'Switzerland', flag: '🇨🇭', p: 3, w: 2, d: 1, l: 0, gf: 7, ga: 3, pts: 7 },
+        { name: 'Canada', flag: '🇨🇦', p: 3, w: 1, d: 1, l: 1, gf: 8, ga: 3, pts: 4 },
+        { name: 'Bosnia & Herz.', flag: '🇧🇦', p: 3, w: 1, d: 1, l: 1, gf: 5, ga: 6, pts: 4 },
+        { name: 'Qatar', flag: '🇶🇦', p: 3, w: 0, d: 1, l: 2, gf: 2, ga: 10, pts: 1 }
     ],
     'C': [
-        { name: 'Brazil', flag: '🇧🇷', p: 3, w: 3, d: 0, l: 0, gf: 8, ga: 2, pts: 9 },
-        { name: 'Morocco', flag: '🇲🇦', p: 3, w: 1, d: 1, l: 1, gf: 4, ga: 4, pts: 4 },
-        { name: 'Haiti', flag: '🇭🇹', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 5, pts: 3 },
-        { name: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 4, pts: 1 }
+        { name: 'Brazil', flag: '🇧🇷', p: 3, w: 2, d: 1, l: 0, gf: 7, ga: 1, pts: 7 },
+        { name: 'Morocco', flag: '🇲🇦', p: 3, w: 2, d: 1, l: 0, gf: 6, ga: 3, pts: 7 },
+        { name: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', p: 3, w: 1, d: 0, l: 2, gf: 1, ga: 4, pts: 3 },
+        { name: 'Haiti', flag: '🇭🇹', p: 3, w: 0, d: 0, l: 3, gf: 2, ga: 8, pts: 0 }
     ],
     'D': [
-        { name: 'USA', flag: '🇺🇸', p: 3, w: 2, d: 1, l: 0, gf: 6, ga: 2, pts: 7 },
-        { name: 'Paraguay', flag: '🇵🇾', p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 3, pts: 4 },
-        { name: 'Australia', flag: '🇦🇺', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 5, pts: 3 },
-        { name: 'TBD', flag: '🏳️', p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 }
+        { name: 'USA', flag: '🇺🇸', p: 3, w: 2, d: 0, l: 1, gf: 8, ga: 4, pts: 6 },
+        { name: 'Australia', flag: '🇦🇺', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 2, pts: 4 },
+        { name: 'Paraguay', flag: '🇵🇾', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 4, pts: 4 },
+        { name: 'Türkiye', flag: '🇹🇷', p: 3, w: 1, d: 0, l: 2, gf: 3, ga: 5, pts: 3 }
     ],
     'E': [
         { name: 'Germany', flag: '🇩🇪', p: 3, w: 2, d: 0, l: 1, gf: 10, ga: 4, pts: 6 },
-        { name: 'Ecuador', flag: '🇪🇨', p: 3, w: 2, d: 0, l: 1, gf: 5, ga: 4, pts: 6 },
-        { name: 'Ivory Coast', flag: '🇨🇮', p: 3, w: 1, d: 0, l: 2, gf: 3, ga: 6, pts: 3 },
-        { name: 'Curaçao', flag: '🇨🇼', p: 3, w: 0, d: 0, l: 3, gf: 1, ga: 5, pts: 0 }
+        { name: 'Ivory Coast', flag: '🇨🇮', p: 3, w: 2, d: 0, l: 1, gf: 4, ga: 2, pts: 6 },
+        { name: 'Ecuador', flag: '🇪🇨', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 2, pts: 4 },
+        { name: 'Curaçao', flag: '🇨🇼', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 9, pts: 1 }
     ],
     'F': [
         { name: 'Netherlands', flag: '🇳🇱', p: 3, w: 2, d: 1, l: 0, gf: 10, ga: 4, pts: 7 },
-        { name: 'Japan', flag: '🇯🇵', p: 3, w: 1, d: 1, l: 1, gf: 4, ga: 4, pts: 4 },
-        { name: 'Sweden', flag: '🇸🇪', p: 3, w: 1, d: 0, l: 2, gf: 3, ga: 7, pts: 3 },
-        { name: 'Tunisia', flag: '🇹🇳', p: 3, w: 0, d: 2, l: 1, gf: 2, ga: 4, pts: 2 }
+        { name: 'Japan', flag: '🇯🇵', p: 3, w: 1, d: 2, l: 0, gf: 7, ga: 3, pts: 5 },
+        { name: 'Sweden', flag: '🇸🇪', p: 3, w: 1, d: 1, l: 1, gf: 7, ga: 7, pts: 4 },
+        { name: 'Tunisia', flag: '🇹🇳', p: 3, w: 0, d: 0, l: 3, gf: 2, ga: 12, pts: 0 }
     ],
     'G': [
-        { name: 'Belgium', flag: '🇧🇪', p: 3, w: 2, d: 1, l: 0, gf: 7, ga: 2, pts: 7 },
-        { name: 'Egypt', flag: '🇪🇬', p: 3, w: 1, d: 2, l: 0, gf: 3, ga: 2, pts: 5 },
-        { name: 'Iran', flag: '🇮🇷', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 4, pts: 3 },
-        { name: 'New Zealand', flag: '🇳🇿', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 5, pts: 1 }
+        { name: 'Belgium', flag: '🇧🇪', p: 3, w: 1, d: 2, l: 0, gf: 6, ga: 2, pts: 5 },
+        { name: 'Egypt', flag: '🇪🇬', p: 3, w: 1, d: 2, l: 0, gf: 5, ga: 3, pts: 5 },
+        { name: 'Iran', flag: '🇮🇷', p: 3, w: 0, d: 3, l: 0, gf: 3, ga: 3, pts: 3 },
+        { name: 'New Zealand', flag: '🇳🇿', p: 3, w: 0, d: 1, l: 2, gf: 4, ga: 10, pts: 1 }
     ],
     'H': [
         { name: 'Spain', flag: '🇪🇸', p: 3, w: 2, d: 1, l: 0, gf: 5, ga: 0, pts: 7 },
-        { name: 'Uruguay', flag: '🇺🇾', p: 3, w: 2, d: 0, l: 1, gf: 4, ga: 2, pts: 6 },
-        { name: 'Cape Verde', flag: '🇨🇻', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 3, pts: 4 },
-        { name: 'Saudi Arabia', flag: '🇸🇦', p: 3, w: 0, d: 0, l: 3, gf: 0, ga: 6, pts: 0 }
+        { name: 'Cape Verde', flag: '🇨🇻', p: 3, w: 0, d: 3, l: 0, gf: 2, ga: 2, pts: 3 },
+        { name: 'Uruguay', flag: '🇺🇾', p: 3, w: 0, d: 2, l: 1, gf: 3, ga: 4, pts: 2 },
+        { name: 'Saudi Arabia', flag: '🇸🇦', p: 3, w: 0, d: 2, l: 1, gf: 1, ga: 5, pts: 2 }
     ],
     'I': [
         { name: 'France', flag: '🇫🇷', p: 3, w: 3, d: 0, l: 0, gf: 10, ga: 2, pts: 9 },
-        { name: 'Norway', flag: '🇳🇴', p: 3, w: 2, d: 0, l: 1, gf: 8, ga: 6, pts: 6 },
-        { name: 'Senegal', flag: '🇸🇳', p: 3, w: 0, d: 1, l: 2, gf: 2, ga: 5, pts: 1 },
-        { name: 'Algeria', flag: '🇩🇿', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 8, pts: 1 }
+        { name: 'Norway', flag: '🇳🇴', p: 3, w: 2, d: 0, l: 1, gf: 8, ga: 7, pts: 6 },
+        { name: 'Senegal', flag: '🇸🇳', p: 3, w: 1, d: 0, l: 2, gf: 8, ga: 6, pts: 3 },
+        { name: 'Iraq', flag: '🇮🇶', p: 3, w: 0, d: 0, l: 3, gf: 1, ga: 12, pts: 0 }
     ],
     'J': [
-        { name: 'Argentina', flag: '🇦🇷', p: 3, w: 3, d: 0, l: 0, gf: 7, ga: 1, pts: 9 },
-        { name: 'Colombia', flag: '🇨🇴', p: 3, w: 1, d: 2, l: 0, gf: 4, ga: 2, pts: 5 },
-        { name: 'DR Congo', flag: '🇨🇩', p: 3, w: 0, d: 2, l: 1, gf: 2, ga: 4, pts: 2 },
-        { name: 'Uzbekistan', flag: '🇺🇿', p: 3, w: 0, d: 0, l: 3, gf: 1, ga: 7, pts: 0 }
+        { name: 'Argentina', flag: '🇦🇷', p: 3, w: 3, d: 0, l: 0, gf: 8, ga: 1, pts: 9 },
+        { name: 'Austria', flag: '🇦🇹', p: 3, w: 1, d: 1, l: 1, gf: 6, ga: 6, pts: 4 },
+        { name: 'Algeria', flag: '🇩🇿', p: 3, w: 1, d: 1, l: 1, gf: 5, ga: 7, pts: 4 },
+        { name: 'Jordan', flag: '🇯🇴', p: 3, w: 0, d: 0, l: 3, gf: 3, ga: 8, pts: 0 }
     ],
     'K': [
-        { name: 'Portugal', flag: '🇵🇹', p: 3, w: 2, d: 1, l: 0, gf: 6, ga: 1, pts: 7 },
-        { name: 'Iraq', flag: '🇮🇶', p: 3, w: 1, d: 1, l: 1, gf: 3, ga: 4, pts: 4 },
-        { name: 'TBD', flag: '🏳️', p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 },
-        { name: 'TBD', flag: '🏳️', p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 }
+        { name: 'Colombia', flag: '🇨🇴', p: 3, w: 2, d: 1, l: 0, gf: 4, ga: 1, pts: 7 },
+        { name: 'Portugal', flag: '🇵🇹', p: 3, w: 1, d: 2, l: 0, gf: 6, ga: 1, pts: 5 },
+        { name: 'DR Congo', flag: '🇨🇩', p: 3, w: 1, d: 1, l: 1, gf: 4, ga: 3, pts: 4 },
+        { name: 'Uzbekistan', flag: '🇺🇿', p: 3, w: 0, d: 0, l: 3, gf: 2, ga: 11, pts: 0 }
     ],
     'L': [
         { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', p: 3, w: 2, d: 1, l: 0, gf: 6, ga: 2, pts: 7 },
-        { name: 'Croatia', flag: '🇭🇷', p: 3, w: 1, d: 0, l: 2, gf: 5, ga: 6, pts: 3 },
-        { name: 'Ghana', flag: '🇬🇭', p: 3, w: 0, d: 2, l: 1, gf: 1, ga: 2, pts: 2 },
-        { name: 'Panama', flag: '🇵🇦', p: 3, w: 0, d: 1, l: 2, gf: 0, ga: 2, pts: 1 }
+        { name: 'Croatia', flag: '🇭🇷', p: 3, w: 2, d: 0, l: 1, gf: 5, ga: 5, pts: 6 },
+        { name: 'Ghana', flag: '🇬🇭', p: 3, w: 1, d: 1, l: 1, gf: 2, ga: 2, pts: 4 },
+        { name: 'Panama', flag: '🇵🇦', p: 3, w: 0, d: 0, l: 3, gf: 0, ga: 4, pts: 0 }
     ]
 };
 
 const knockoutData = {
     'Round of 32': [
-        { date: 'June 28', team1: 'Canada', flag1: '🇨🇦', score: '1-0', team2: 'South Africa', flag2: '🇿🇦', status: 'FT', info: 'Los Angeles Stadium' },
+        { date: 'June 28', team1: 'Canada', flag1: '🇨🇦', score: '1-0', team2: 'South Africa', flag2: '🇿🇦', status: 'FT', info: 'Houston Stadium' },
         { date: 'June 29', team1: 'Brazil', flag1: '🇧🇷', score: '2-1', team2: 'Japan', flag2: '🇯🇵', status: 'FT', info: 'Houston Stadium' },
-        { date: 'June 29', team1: 'Germany', flag1: '🇩🇪', score: '1-1 (2-4 pens)', team2: 'Paraguay', flag2: '🇵🇾', status: 'FT', info: 'Boston Stadium' },
+        { date: 'June 29', team1: 'Germany', flag1: '🇩🇪', score: '1-1 (3-4 pens)', team2: 'Paraguay', flag2: '🇵🇾', status: 'FT', info: 'Boston Stadium' },
         { date: 'June 29', team1: 'Netherlands', flag1: '🇳🇱', score: '1-1 (2-3 pens)', team2: 'Morocco', flag2: '🇲🇦', status: 'FT', info: 'Monterrey Stadium' },
-        { date: 'June 30', team1: 'Ivory Coast', flag1: '🇨🇮', score: '1-2', team2: 'Norway', flag2: '🇳🇴', status: 'FT', info: 'Dallas Stadium' },
+        { date: 'June 30', team1: 'Norway', flag1: '🇳🇴', score: '2-1', team2: 'Ivory Coast', flag2: '🇨🇮', status: 'FT', info: 'Dallas Stadium' },
         { date: 'June 30', team1: 'France', flag1: '🇫🇷', score: '3-0', team2: 'Sweden', flag2: '🇸🇪', status: 'FT', info: 'New York Stadium' },
         { date: 'July 1', team1: 'Mexico', flag1: '🇲🇽', score: '2-0', team2: 'Ecuador', flag2: '🇪🇨', status: 'FT', info: 'Mexico City - Estadio Azteca' },
         { date: 'July 1', team1: 'England', flag1: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', score: '2-1', team2: 'DR Congo', flag2: '🇨🇩', status: 'FT', info: 'Atlanta Stadium' },
-        { date: 'July 2', team1: 'Belgium', flag1: '🇧🇪', score: '3-2 (AET)', team2: 'Senegal', flag2: '🇸🇳', status: 'FT', info: 'Seattle Stadium' },
-        { date: 'July 2', team1: 'USA', flag1: '🇺🇸', score: '2-0', team2: 'Bosnia & Herz.', flag2: '🇧🇦', status: 'FT', info: 'San Francisco Stadium' },
+        { date: 'July 1', team1: 'Belgium', flag1: '🇧🇪', score: '3-2 (AET)', team2: 'Senegal', flag2: '🇸🇳', status: 'FT', info: 'Seattle Stadium' },
+        { date: 'July 1', team1: 'USA', flag1: '🇺🇸', score: '2-0', team2: 'Bosnia & Herz.', flag2: '🇧🇦', status: 'FT', info: 'San Francisco Stadium' },
         { date: 'July 2', team1: 'Spain', flag1: '🇪🇸', score: '3-0', team2: 'Austria', flag2: '🇦🇹', status: 'FT', info: 'Los Angeles Stadium' },
-        { date: 'July 3', team1: 'Portugal', flag1: '🇵🇹', score: '2-1', team2: 'Croatia', flag2: '🇭🇷', status: 'FT', info: 'Toronto Stadium' },
-        { date: 'July 3', team1: 'Switzerland', flag1: '🇨🇭', score: '2-0', team2: 'Algeria', flag2: '🇩🇿', status: 'FT', info: 'Vancouver Stadium' },
-        { date: 'July 3', team1: 'Australia', flag1: '🇦🇺', score: '1-1 (2-4 pens)', team2: 'Egypt', flag2: '🇪🇬', status: 'FT', info: 'Dallas Stadium' },
-        { date: 'July 4', team1: 'Argentina', flag1: '🇦🇷', score: '3-2 (AET)', team2: 'Cape Verde', flag2: '🇨🇻', status: 'FT', info: 'Miami Stadium' },
-        { date: 'July 4', team1: 'Colombia', flag1: '🇨🇴', score: '1-0', team2: 'Ghana', flag2: '🇬🇭', status: 'FT', info: 'Kansas City Stadium' }
+        { date: 'July 2', team1: 'Portugal', flag1: '🇵🇹', score: '2-1', team2: 'Croatia', flag2: '🇭🇷', status: 'FT', info: 'Toronto Stadium' },
+        { date: 'July 2', team1: 'Switzerland', flag1: '🇨🇭', score: '2-0', team2: 'Algeria', flag2: '🇩🇿', status: 'FT', info: 'Vancouver Stadium' },
+        { date: 'July 3', team1: 'Egypt', flag1: '🇪🇬', score: '1-1 (4-2 pens)', team2: 'Australia', flag2: '🇦🇺', status: 'FT', info: 'Dallas Stadium' },
+        { date: 'July 3', team1: 'Argentina', flag1: '🇦🇷', score: '3-2 (AET)', team2: 'Cape Verde', flag2: '🇨🇻', status: 'FT', info: 'Miami Stadium' },
+        { date: 'July 3', team1: 'Colombia', flag1: '🇨🇴', score: '1-0', team2: 'Ghana', flag2: '🇬🇭', status: 'FT', info: 'Kansas City Stadium' }
     ],
     'Round of 16': [
-        { date: 'July 5', team1: 'Canada', flag1: '🇨🇦', score: 'vs', team2: 'Morocco', flag2: '🇲🇦', status: 'UPCOMING', info: 'Houston Stadium - 6:00 PM ET' },
-        { date: 'July 5', team1: 'France', flag1: '🇫🇷', score: 'vs', team2: 'Paraguay', flag2: '🇵🇾', status: 'UPCOMING', info: 'Philadelphia Stadium - 10:00 PM ET' },
-        { date: 'July 6', team1: 'Brazil', flag1: '🇧🇷', score: 'vs', team2: 'Norway', flag2: '🇳🇴', status: 'UPCOMING', info: 'MetLife Stadium - 9:00 PM ET' },
-        { date: 'July 6', team1: 'Mexico', flag1: '🇲🇽', score: 'vs', team2: 'England', flag2: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', status: 'UPCOMING', info: 'Estadio Azteca - 1:00 AM ET' },
-        { date: 'July 7', team1: 'Spain', flag1: '🇪🇸', score: 'vs', team2: 'Portugal', flag2: '🇵🇹', status: 'UPCOMING', info: 'Arlington Stadium - 8:00 PM ET' },
-        { date: 'July 7', team1: 'USA', flag1: '🇺🇸', score: 'vs', team2: 'Belgium', flag2: '🇧🇪', status: 'UPCOMING', info: 'Seattle Stadium - 1:00 AM ET' },
-        { date: 'July 8', team1: 'Argentina', flag1: '🇦🇷', score: 'vs', team2: 'Egypt', flag2: '🇪🇬', status: 'UPCOMING', info: 'Atlanta Stadium - 5:00 PM ET' },
-        { date: 'July 8', team1: 'Switzerland', flag1: '🇨🇭', score: 'vs', team2: 'Colombia', flag2: '🇨🇴', status: 'UPCOMING', info: 'Vancouver Stadium - 9:00 PM ET' }
+        { date: 'July 4', team1: 'Morocco', flag1: '🇲🇦', score: '3-0', team2: 'Canada', flag2: '🇨🇦', status: 'FT', info: 'Houston Stadium' },
+        { date: 'July 4', team1: 'France', flag1: '🇫🇷', score: '1-0', team2: 'Paraguay', flag2: '🇵🇾', status: 'FT', info: 'Philadelphia Stadium' },
+        { date: 'July 5', team1: 'Norway', flag1: '🇳🇴', score: '2-1', team2: 'Brazil', flag2: '🇧🇷', status: 'FT', info: 'MetLife Stadium' },
+        { date: 'July 5', team1: 'England', flag1: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', score: '3-2', team2: 'Mexico', flag2: '🇲🇽', status: 'FT', info: 'Estadio Azteca' },
+        { date: 'July 6', team1: 'Spain', flag1: '🇪🇸', score: '1-0', team2: 'Portugal', flag2: '🇵🇹', status: 'FT', info: 'Arlington Stadium' },
+        { date: 'July 6', team1: 'Belgium', flag1: '🇧🇪', score: '4-1', team2: 'USA', flag2: '🇺🇸', status: 'FT', info: 'Seattle Stadium' },
+        { date: 'July 7', team1: 'Argentina', flag1: '🇦🇷', score: '3-2', team2: 'Egypt', flag2: '🇪🇬', status: 'FT', info: 'Atlanta Stadium' },
+        { date: 'July 7', team1: 'Switzerland', flag1: '🇨🇭', score: '0-0 (4-3 pens)', team2: 'Colombia', flag2: '🇨🇴', status: 'FT', info: 'Vancouver Stadium' }
     ],
     'Quarter Finals': [
-        { date: 'July 10', team1: 'Winner R16-1', flag1: '🏳️', score: 'vs', team2: 'Winner R16-2', flag2: '🏳️', status: 'UPCOMING', info: 'Foxborough Stadium - 9:00 PM ET' },
-        { date: 'July 11', team1: 'Winner R16-3', flag1: '🏳️', score: 'vs', team2: 'Winner R16-4', flag2: '🏳️', status: 'UPCOMING', info: 'Miami Stadium - 10:00 PM ET' },
-        { date: 'July 11', team1: 'Winner R16-5', flag1: '🏳️', score: 'vs', team2: 'Winner R16-6', flag2: '🏳️', status: 'UPCOMING', info: 'Los Angeles Stadium - 8:00 PM ET' },
-        { date: 'July 12', team1: 'Winner R16-7', flag1: '🏳️', score: 'vs', team2: 'Winner R16-8', flag2: '🏳️', status: 'UPCOMING', info: 'Kansas City Stadium - 2:00 AM ET' }
+        { date: 'July 9', team1: 'France', flag1: '🇫🇷', score: '2-0', team2: 'Morocco', flag2: '🇲🇦', status: 'FT', info: 'Foxborough Stadium' },
+        { date: 'July 10', team1: 'Spain', flag1: '🇪🇸', score: '2-1', team2: 'Belgium', flag2: '🇧🇪', status: 'FT', info: 'Los Angeles Stadium' },
+        { date: 'July 11', team1: 'England', flag1: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', score: '2-1 (AET)', team2: 'Norway', flag2: '🇳🇴', status: 'FT', info: 'Miami Stadium' },
+        { date: 'July 11', team1: 'Argentina', flag1: '🇦🇷', score: '3-1 (AET)', team2: 'Switzerland', flag2: '🇨🇭', status: 'FT', info: 'Kansas City Stadium' }
     ],
     'Semi Finals': [
-        { date: 'July 14', team1: 'Winner QF-1', flag1: '🏳️', score: 'vs', team2: 'Winner QF-2', flag2: '🏳️', status: 'UPCOMING', info: 'Arlington Stadium - 8:00 PM ET' },
-        { date: 'July 15', team1: 'Winner QF-3', flag1: '🏳️', score: 'vs', team2: 'Winner QF-4', flag2: '🏳️', status: 'UPCOMING', info: 'Atlanta Stadium - 8:00 PM ET' }
+        { date: 'July 14', team1: 'Spain', flag1: '🇪🇸', score: '2-0', team2: 'France', flag2: '🇫🇷', status: 'FT', info: 'Arlington Stadium' },
+        { date: 'July 15', team1: 'Argentina', flag1: '🇦🇷', score: '2-1', team2: 'England', flag2: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', status: 'FT', info: 'Atlanta Stadium' }
     ],
     'Finals': [
-        { date: 'July 18', team1: 'Loser SF-1', flag1: '🏳️', score: 'vs', team2: 'Loser SF-2', flag2: '🏳️', status: 'UPCOMING', info: 'Miami Stadium - Third Place - 5:00 PM ET' },
-        { date: 'July 19', team1: 'Winner SF-1', flag1: '🏳️', score: 'vs', team2: 'Winner SF-2', flag2: '🏳️', status: 'UPCOMING', info: 'MetLife Stadium - WORLD CUP FINAL - 3:00 PM ET' }
+        { date: 'July 18', team1: 'France', flag1: '🇫🇷', score: 'vs', team2: 'England', flag2: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', status: 'UPCOMING', info: 'Miami Stadium - Third Place - 5:00 PM ET' },
+        { date: 'July 19', team1: 'Spain', flag1: '🇪🇸', score: 'vs', team2: 'Argentina', flag2: '🇦🇷', status: 'UPCOMING', info: 'MetLife Stadium - WORLD CUP FINAL - 3:00 PM ET' }
     ]
 };
 
 const flagsData = [
-    { name: 'Argentina', flag: '🇦🇷' }, { name: 'Australia', flag: '🇦🇺' }, { name: 'Austria', flag: '🇦🇹' },
-    { name: 'Belgium', flag: '🇧🇪' }, { name: 'Bosnia & Herz.', flag: '🇧🇦' }, { name: 'Brazil', flag: '🇧🇷' },
-    { name: 'Canada', flag: '🇨🇦' }, { name: 'Cape Verde', flag: '🇨🇻' }, { name: 'Colombia', flag: '🇨🇴' },
-    { name: 'Croatia', flag: '🇭🇷' }, { name: 'Czechia', flag: '🇨🇿' }, { name: 'DR Congo', flag: '🇨🇩' },
-    { name: 'Ecuador', flag: '🇪🇨' }, { name: 'Egypt', flag: '🇪🇬' }, { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-    { name: 'France', flag: '🇫🇷' }, { name: 'Germany', flag: '🇩🇪' }, { name: 'Ghana', flag: '🇬🇭' },
-    { name: 'Haiti', flag: '🇭🇹' }, { name: 'Iran', flag: '🇮🇷' }, { name: 'Iraq', flag: '🇮🇶' },
-    { name: 'Ivory Coast', flag: '🇨🇮' }, { name: 'Japan', flag: '🇯🇵' }, { name: 'Mexico', flag: '🇲🇽' },
+    { name: 'Algeria', flag: '🇩🇿' }, { name: 'Argentina', flag: '🇦🇷' }, { name: 'Australia', flag: '🇦🇺' },
+    { name: 'Austria', flag: '🇦🇹' }, { name: 'Belgium', flag: '🇧🇪' }, { name: 'Bosnia & Herz.', flag: '🇧🇦' },
+    { name: 'Brazil', flag: '🇧🇷' }, { name: 'Canada', flag: '🇨🇦' }, { name: 'Cape Verde', flag: '🇨🇻' },
+    { name: 'Colombia', flag: '🇨🇴' }, { name: 'Croatia', flag: '🇭🇷' }, { name: 'Curaçao', flag: '🇨🇼' },
+    { name: 'Czechia', flag: '🇨🇿' }, { name: 'DR Congo', flag: '🇨🇩' }, { name: 'Ecuador', flag: '🇪🇨' },
+    { name: 'Egypt', flag: '🇪🇬' }, { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' }, { name: 'France', flag: '🇫🇷' },
+    { name: 'Germany', flag: '🇩🇪' }, { name: 'Ghana', flag: '🇬🇭' }, { name: 'Haiti', flag: '🇭🇹' },
+    { name: 'Iran', flag: '🇮🇷' }, { name: 'Iraq', flag: '🇮🇶' }, { name: 'Ivory Coast', flag: '🇨🇮' },
+    { name: 'Japan', flag: '🇯🇵' }, { name: 'Jordan', flag: '🇯🇴' }, { name: 'Mexico', flag: '🇲🇽' },
     { name: 'Morocco', flag: '🇲🇦' }, { name: 'Netherlands', flag: '🇳🇱' }, { name: 'New Zealand', flag: '🇳🇿' },
     { name: 'Norway', flag: '🇳🇴' }, { name: 'Panama', flag: '🇵🇦' }, { name: 'Paraguay', flag: '🇵🇾' },
     { name: 'Portugal', flag: '🇵🇹' }, { name: 'Qatar', flag: '🇶🇦' }, { name: 'Saudi Arabia', flag: '🇸🇦' },
     { name: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }, { name: 'Senegal', flag: '🇸🇳' }, { name: 'South Africa', flag: '🇿🇦' },
     { name: 'South Korea', flag: '🇰🇷' }, { name: 'Spain', flag: '🇪🇸' }, { name: 'Sweden', flag: '🇸🇪' },
-    { name: 'Switzerland', flag: '🇨🇭' }, { name: 'Tunisia', flag: '🇹🇳' }, { name: 'USA', flag: '🇺🇸' },
-    { name: 'Uruguay', flag: '🇺🇾' }, { name: 'Uzbekistan', flag: '🇺🇿' }
+    { name: 'Switzerland', flag: '🇨🇭' }, { name: 'Tunisia', flag: '🇹🇳' }, { name: 'Türkiye', flag: '🇹🇷' },
+    { name: 'USA', flag: '🇺🇸' }, { name: 'Uruguay', flag: '🇺🇾' }, { name: 'Uzbekistan', flag: '🇺🇿' }
 ];
 
 const prizesData = [
