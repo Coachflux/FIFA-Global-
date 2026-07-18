@@ -491,7 +491,7 @@
     <nav class="navbar" id="navbar">
         <a href="index.html" class="nav-brand">
             <img src="https://cdn.vectorstock.com/813f8cbb1498fdb845a818e6575d252ed5b6c49d.jpg" alt="Fans Logo" class="nav-logo" id="navLogo">
-            <span class="nav-brand-text">Fans</span>
+            <span class="nav-brand-text">Kimi</span>
         </a>
         <ul class="nav-links" id="navLinks">
             <li><a href="index.html">Home</a></li>
@@ -585,8 +585,8 @@
                     <div class="referral-stat-label">Signed Up</div>
                 </div>
                 <div class="referral-stat">
-                    <div class="referral-stat-num" id="referralProgress">0/5</div>
-                    <div class="referral-stat-label">Toward $100 Prize</div>
+                    <div class="referral-stat-num" id="referralProgress">0/10</div>
+                    <div class="referral-stat-label">Toward $50 Prize</div>
                 </div>
             </div>
         </div>
@@ -785,9 +785,12 @@
                 <div class="task-step" id="t2Step3">
                     <div class="task-step-header">
                         <div class="task-step-num">3</div>
-                        <div class="task-step-title">Enter Your Address</div>
+                        <div class="task-step-title">Enter Your KIMI Address</div>
                     </div>
-                    <div class="task-step-desc">Provide your correct delivery address for prize shipment. This cannot be changed for 3 days after submission.</div>
+                    <div class="task-step-desc">Claim KIMI token and Provide your correct KIMI address for prize. This cannot be changed for 3 days after submission.</div>
+                    <a href="https://play.google.com/store/apps/details?id=com.fifa.worldcup" target="_blank" class="btn btn-play">
+                        <i class="fab fa-google-play"></i> Claim KIMI
+                    </a>
                     <div class="form-group">
                         <textarea id="t2AddressInput" placeholder="Enter your full address..." rows="3" style="width: 100%; padding: 0.875rem 1rem; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03); color: var(--white); font-size: 0.95rem; transition: all 0.3s; font-family: 'Inter', sans-serif; resize: vertical;" oninput="checkT2Step3()"></textarea>
                         <div class="form-hint"><i class="fas fa-lock"></i> Once submitted, your address will be locked for 3 days.</div>
@@ -800,24 +803,24 @@
                         </div>
                     </div>
                     <div class="form-success" id="t2Step3Success" style="display:none;">
-                        <i class="fas fa-check"></i> Address saved and locked!
+                        <i class="fas fa-check"></i> Your KIMI Address saved and locked!
                     </div>
                 </div>
 
                 <div class="task-step" id="t2Step4">
                     <div class="task-step-header">
                         <div class="task-step-num">4</div>
-                        <div class="task-step-title">Enter Referral Code</div>
+                        <div class="task-step-title">Enter Your USDT/BNB Address </div>
                     </div>
-                    <div class="task-step-desc">Paste the code you got from our social media channels. This code will be locked permanently.</div>
+                    <div class="task-step-desc">Paste your USDT/BNB wallet address to receive your prize after verification. This wallet address will be locked permanently.</div>
                     <div class="form-group">
-                        <input type="text" id="t2CodeInput" placeholder="Enter referral code (e.g., FANS2026)..." maxlength="20">
-                        <div class="form-hint">Get codes from Instagram, Twitter, or Facebook @FansWorldCup</div>
+                        <input type="text" id="t2CodeInput" placeholder="Paste USDT/BNB wallet address (e.g., xdsg12rnstywxoo3ela7)..." maxlength="20">
+                        <div class="form-hint">Get your USDT/BNB wallet address from any wallet exchange.</div>
                     </div>
 
                     <div class="confirm-dialog" id="codeConfirmDialog" style="display:none;">
                         <p><i class="fas fa-exclamation-triangle" style="color: var(--gold);"></i> Are you sure this code is correct? <strong id="confirmCodeText"></strong></p>
-                        <p style="font-size:0.8rem; color:rgba(255,255,255,0.5);">This code will be saved permanently and cannot be changed later.</p>
+                        <p style="font-size:0.8rem; color:rgba(255,255,255,0.5);">This address will be saved permanently and cannot be changed later.</p>
                         <div class="confirm-buttons">
                             <button class="btn btn-outline" onclick="cancelCodeConfirm()">No, Change It</button>
                             <button class="btn btn-primary" onclick="confirmCode()">Yes, I'm Sure</button>
@@ -828,7 +831,7 @@
                         <div class="permanent-code-label">Your Permanent Referral Code</div>
                         <div class="permanent-code" id="permanentCode"></div>
                         <div style="text-align:center; font-size:0.8rem; color:#34a853;">
-                            <i class="fas fa-lock"></i> This code is locked and cannot be changed
+                            <i class="fas fa-lock"></i> This wallet address is locked for verification to process payment and cannot be changed
                         </div>
                     </div>
                 </div>
