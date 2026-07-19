@@ -201,13 +201,13 @@ function updateReferralStats(user) {
 
     if (totalEl) totalEl.textContent = count;
     if (successEl) successEl.textContent = count;
-    if (progressEl) progressEl.textContent = Math.min(count, 5) + '/5';
+    if (progressEl) progressEl.textContent = Math.min(count, 10) + '/10';
 }
 
 // ==================== SHARE BUTTONS ====================
 function setupShareButtons(user) {
     const link = user.referralLink || getReferralLink(user);
-    const shareText = 'Join me on Fans for the 2026 FIFA World Cup! Predict, compete, and win prizes. Use my link to sign up:';
+    const shareText = 'Join me on KIMI Fans for the 2026 FIFA World Cup! Predict, compete, and win prizes. Use my link to sign up:';
     const fullText = shareText + ' ' + link;
 
     const wa = document.getElementById('shareWhatsapp');
@@ -236,7 +236,7 @@ function setupShareButtons(user) {
             e.preventDefault();
             if (navigator.share) {
                 navigator.share({
-                    title: 'Fans - 2026 FIFA World Cup',
+                    title: 'KIMI - 2026 FIFA World Cup',
                     text: shareText,
                     url: link
                 }).catch(function(err) {});
