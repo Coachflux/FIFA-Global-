@@ -265,7 +265,18 @@ function goToDashboard() {
 }
 
 // ==================== LOGO CHANGE (Firestore) ====================
-
+function loadLogo() {
+    if (!db) return;
+    db.collection('settings').doc('site').get().then(doc => {
+        if (doc.exists && doc.data().logo) {
+            const url = doc.data().logo;
+            const hero = document.getElementById('heroLogo');
+            const nav = document.getElementById('navLogo');
+            if (hero) hero.src = url;
+            if (nav) nav.src = url;
+        }
+    }).catch(() => {});
+}
 
 
 // ==================== AUTH MODAL ====================
