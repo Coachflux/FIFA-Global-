@@ -208,7 +208,7 @@ function updateReferralStats(user) {
 function setupShareButtons(user) {
     const link = user.referralLink || getReferralLink(user);
      
-    let logoUrl = 'https://kimifans.online/kimi-fans.png'; // ←
+    let logoUrl = 'kimi-fans.png'; // ←
     const heroLogo = document.getElementById('heroLogo');
     if (heroLogo && heroLogo.src) {
         logoUrl = heroLogo.src;
