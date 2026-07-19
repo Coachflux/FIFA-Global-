@@ -266,46 +266,7 @@ function goToDashboard() {
 
 // ==================== LOGO CHANGE (Firestore) ====================
 
-function changeLogo() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-            const dataUrl = evt.target.result;
-            document.getElementById('heroLogo').src = dataUrl;
-            document.getElementById('navLogo').src = dataUrl;
-            if (db) {
-                db.collection('settings').doc('site').set({
-                    logo: dataUrl,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true })
-                  .then(() => showToast('Logo updated successfully!', 'success'))
-                  .catch(err => showToast('Logo save failed: ' + err.message, 'error'));
-            } else {
-                showToast('Logo updated (offline preview)', 'info');
-            }
-        };
-        reader.readAsDataURL(file);
-    };
-    input.click();
-}
 
-function loadLogo() {
-    if (!db) return;
-    db.collection('settings').doc('site').get().then(doc => {
-        if (doc.exists && doc.data().logo) {
-            const url = doc.data().logo;
-            const hero = document.getElementById('heroLogo');
-            const nav = document.getElementById('navLogo');
-            if (hero) hero.src = url;
-            if (nav) nav.src = url;
-        }
-    }).catch(() => {});
-}
 
 // ==================== AUTH MODAL ====================
 
