@@ -207,6 +207,13 @@ function updateReferralStats(user) {
 // ==================== SHARE BUTTONS ====================
 function setupShareButtons(user) {
     const link = user.referralLink || getReferralLink(user);
+     
+    let logoUrl = 'https://kimifans.online/kimi-fans.png'; // ←
+    const heroLogo = document.getElementById('heroLogo');
+    if (heroLogo && heroLogo.src) {
+        logoUrl = heroLogo.src;
+    }
+  
     const shareText = 'Join me on KIMI Fans for the 2026 FIFA World Cup! Predict, compete, and win prizes. Use my link to sign up:';
     const fullText = shareText + ' ' + link;
 
